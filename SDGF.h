@@ -21,12 +21,12 @@ SVGALib homepage: http://www.svgalib.org/
 #include <time.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <errno.h>
 #include <sys/sysinfo.h>
 #include <sys/ioctl.h>
 #include <sys/soundcard.h>
 #include <linux/input.h>
 #include <linux/fb.h>
-#include <pthread.h>
 
 #define SDGF_KEY_NONE 0
 #define SDGF_KEY_UP KEY_UP
@@ -124,37 +124,6 @@ struct PCX_head
  unsigned short int screen_height:16;
  unsigned char filled[54];
 };
-
-struct SDGF_DSP_STREAM
-{
- int device;
- unsigned char *data;
- unsigned long int length;
- bool busy;
- bool stop;
-};
-
-SDGF_DSP_STREAM audio_stream;
-
-void *SDGF_DSP_Write(void *argument)
-{
- while(audio_stream.stop==false)
- {
-  if(audio_stream.busy==false)
-  {
-   if(audio_stream.data!=NULL)
-   {
-    audio_stream.busy=true;
-    write(audio_stream.device,audio_stream.data,audio_stream.length);
-    audio_stream.busy=false;
-    audio_stream.data=NULL;
-   }
-
-  }
-
- }
- return NULL;
-}
 
 class SDGF_Screen
 {
@@ -367,20 +336,21 @@ class SDGF_Sound
  private:
  int mixer;
  int sound;
- pthread_t audio;
  public:
  SDGF_Sound();
  ~SDGF_Sound();
  void set_volume(int volume);
  int get_volume();
  bool write_data(unsigned char *data, unsigned long int length);
+ unsigned char get_channels();
+ unsigned long int get_rate();
  SDGF_Sound* get_handle();
 };
 
 SDGF_Sound::SDGF_Sound()
 {
  int setting;
- sound=open("/dev/dsp",O_RDWR|O_EXCL,S_IRWXU|S_IRWXG|S_IRWXO);
+ sound=open("/dev/dsp",O_RDWR|O_EXCL|O_NONBLOCK,S_IRWXU|S_IRWXG|S_IRWXO);
  if (sound==-1)
  {
   puts("Can't get access to sound card");
@@ -421,24 +391,11 @@ SDGF_Sound::SDGF_Sound()
   puts("Can't configure sound card");
   exit(EXIT_FAILURE);
  }
- audio_stream.device=sound;
- audio_stream.data=NULL;
- audio_stream.length=0;
- audio_stream.busy=false;
- audio_stream.stop=false;
- if(pthread_create(&audio,NULL,&SDGF_DSP_Write,NULL)!=0)
- {
-  puts("Can't create audio playing thread");
-  exit(EXIT_FAILURE);
- }
 
 }
 
 SDGF_Sound::~SDGF_Sound()
 {
- audio_stream.stop=true;
- pthread_cancel(audio);
- pthread_join(audio,NULL);
  close(sound);
  close(mixer);
 }
@@ -473,17 +430,22 @@ int SDGF_Sound::get_volume()
 bool SDGF_Sound::write_data(unsigned char *data, unsigned long int length)
 {
  bool result;
- if(audio_stream.busy==false)
+ result=true;
+ if(write(sound,data,length)<=0)
  {
-  audio_stream.data=data;
-  audio_stream.length=length;
-  result=true;
- }
- else
- {
-  result=false;
+  if((errno==EAGAIN)||(errno==EBUSY)) result=false;
  }
  return result;
+}
+
+unsigned char SDGF_Sound::get_channels()
+{
+ return 2;
+}
+
+unsigned long int SDGF_Sound::get_rate()
+{
+ return 44100;
 }
 
 SDGF_Sound* SDGF_Sound::get_handle()
