@@ -207,16 +207,7 @@ void SDGF_Screen::refresh()
 
 void SDGF_Screen::clear_screen()
 {
- unsigned long int x,y;
- for (x=0;x<width;x++)
- {
-  for (y=0;y<height;y++)
-  {
-   this->draw_pixel(x,y,0,0,0);
-  }
-
- }
-
+ memset(buffer,0,configuration.smem_len);
 }
 
 unsigned long int SDGF_Screen::get_width()
@@ -342,8 +333,6 @@ class SDGF_Sound
  void set_volume(int volume);
  int get_volume();
  bool write_data(unsigned char *data, unsigned long int length);
- unsigned char get_channels();
- unsigned long int get_rate();
  SDGF_Sound* get_handle();
 };
 
@@ -371,13 +360,13 @@ SDGF_Sound::SDGF_Sound()
  setting=AFMT_S16_LE;
  if(ioctl(sound,SNDCTL_DSP_SETFMT,&setting)==-1)
  {
-  puts("Can't configure sound card");
+  puts("Can't set sound format");
   exit(EXIT_FAILURE);
  }
  setting=2;
  if(ioctl(sound,SNDCTL_DSP_CHANNELS,&setting)==-1)
  {
-  puts("Can't configure sound card");
+  puts("Can't set number of audio channels");
   exit(EXIT_FAILURE);
  }
  setting=44100;
@@ -388,7 +377,7 @@ SDGF_Sound::SDGF_Sound()
  }
  if(ioctl(sound,SNDCTL_DSP_NONBLOCK,NULL)==-1)
  {
-  puts("Can't configure sound card");
+  puts("Can't set sample rate");
   exit(EXIT_FAILURE);
  }
 
@@ -436,16 +425,6 @@ bool SDGF_Sound::write_data(unsigned char *data, unsigned long int length)
   if((errno==EAGAIN)||(errno==EBUSY)) result=false;
  }
  return result;
-}
-
-unsigned char SDGF_Sound::get_channels()
-{
- return 2;
-}
-
-unsigned long int SDGF_Sound::get_rate()
-{
- return 44100;
 }
 
 SDGF_Sound* SDGF_Sound::get_handle()
@@ -1019,7 +998,7 @@ bool SDGF_Collision::check_horizontal_collision(SDGF_Canvas &first,SDGF_Canvas &
  result=false;
  if((first.get_x()+first.get_width())>=second.get_x())
  {
-  if(first.get_x()<=(second.get_y()+second.get_width())) result=true;
+  if(first.get_x()<=(second.get_x()+second.get_width())) result=true;
  }
  return result;
 }
@@ -1053,34 +1032,89 @@ class SDGF_Image
 void SDGF_Image::load_tga(const char *name,SDGF_Canvas &Canvas)
 {
  FILE *target;
+ unsigned long int index,position,amount,compressed_length,uncompressed_length;
+ unsigned char *compressed;
+ unsigned char *uncompressed;
  TGA_head head;
  TGA_map color_map;
  TGA_image image;
- unsigned char *buffer;
  target=fopen(name,"rb");
  if(target==NULL)
  {
   puts("Can't open a image file");
   exit(EXIT_FAILURE);
  }
+ fseek(target,0,SEEK_END);
+ compressed_length=ftell(target)-18;
+ rewind(target);
  fread(&head,3,1,target);
  fread(&color_map,5,1,target);
  fread(&image,10,1,target);
- if(((head.type!=2)||(head.color_map!=0))||(image.color!=24))
+ if((head.color_map!=0)||(image.color!=24))
  {
-  puts("Incorrect image format");
+  puts("Invalid image format");
   exit(EXIT_FAILURE);
  }
- buffer=(unsigned char*)calloc(image.width*image.height,3);
- if(buffer==NULL)
+ if(head.type!=2)
+ {
+  if(head.type!=10)
+  {
+   puts("Invalid image format");
+   exit(EXIT_FAILURE);
+  }
+
+ }
+ index=0;
+ position=0;
+ uncompressed_length=3*(unsigned long int)image.width*(unsigned long int)image.height;
+ uncompressed=(unsigned char*)calloc(uncompressed_length,1);
+ if(uncompressed==NULL)
  {
   puts("Can't allocate memory for image buffer");
   exit(EXIT_FAILURE);
  }
- fread(buffer,3,image.width*image.height,target);
- Canvas.load_image(buffer,image.width,image.height);
- free(buffer);
- fclose(target);
+ if(head.type==2)
+ {
+  fread(uncompressed,uncompressed_length,1,target);
+  fclose(target);
+ }
+ if(head.type==10)
+ {
+  compressed=(unsigned char*)calloc(compressed_length,1);
+  if(compressed==NULL)
+  {
+   puts("Can't allocate memory for image buffer");
+   exit(EXIT_FAILURE);
+  }
+  fread(compressed,compressed_length,1,target);
+  fclose(target);
+  while(index<uncompressed_length)
+  {
+   if(compressed[position]<128)
+   {
+    amount=compressed[position]+1;
+    amount*=3;
+    memmove(uncompressed+index,compressed+(position+1),amount);
+    index+=amount;
+    position+=1+amount;
+   }
+   else
+   {
+    for(amount=compressed[position]-127;amount>0;amount--)
+    {
+     uncompressed[index]=compressed[position+1];
+     uncompressed[index+1]=compressed[position+2];
+     uncompressed[index+2]=compressed[position+3];
+     index+=3;
+    }
+    position+=4;
+   }
+
+  }
+  free(compressed);
+ }
+ Canvas.load_image(uncompressed,image.width,image.height);
+ free(uncompressed);
 }
 
 void SDGF_Image::load_pcx(const char *name,SDGF_Canvas &Canvas)
