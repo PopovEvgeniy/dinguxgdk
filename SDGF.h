@@ -186,15 +186,12 @@ SDGF_Screen::~SDGF_Screen()
 void SDGF_Screen::draw_pixel(const unsigned long int x,const unsigned long int y,const unsigned char red,const unsigned char green,const unsigned char blue)
 {
  unsigned long int offset;
- unsigned char *data=NULL;
  unsigned short int pixel;
  if ((x<width)&&(y<height))
  {
   offset=(x+setting.xoffset)*color+(y+setting.yoffset)*configuration.line_length;
   pixel=SDGF_GETRGB565(red,green,blue);
-  data=(unsigned char*)&pixel;
-  buffer[offset]=data[0];
-  buffer[offset+1]=data[1];
+  memmove(buffer+offset,&pixel,color);
  }
 
 }
@@ -1102,9 +1099,7 @@ void SDGF_Image::load_tga(const char *name,SDGF_Canvas &Canvas)
    {
     for(amount=compressed[position]-127;amount>0;amount--)
     {
-     uncompressed[index]=compressed[position+1];
-     uncompressed[index+1]=compressed[position+2];
-     uncompressed[index+2]=compressed[position+3];
+     memmove(uncompressed+index,compressed+(position+1),3);
      index+=3;
     }
     position+=4;
