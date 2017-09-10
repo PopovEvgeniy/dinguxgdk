@@ -5,6 +5,7 @@ int main(void)
  long int x,y,screen_width,screen_height;
  unsigned char frame,scroll_frame;
  SDGF_Screen screen;
+ SDGF_System System;
  SDGF_Gamepad gamepad;
  SDGF_Sound sound;
  SDGF_Audio audio;
@@ -18,6 +19,7 @@ int main(void)
  screen_height=screen.get_height();
  x=screen_width/2;
  y=screen_height/2;
+ System.enable_logging("log.txt");
  image.load_tga("space.tga");
  space.load_image(image);
  image.load_tga("ship.tga");

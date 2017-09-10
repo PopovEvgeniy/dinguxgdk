@@ -559,10 +559,10 @@ class SDGF_System
  SDGF_System();
  ~SDGF_System();
  unsigned long int get_random(const unsigned long int number);
- void pause(const unsigned int long second);
  void quit();
  void run(const char *command);
  char* read_environment(const char *variable);
+ void enable_logging(const char *name);
 };
 
 SDGF_System::SDGF_System()
@@ -580,17 +580,6 @@ unsigned long int SDGF_System::get_random(const unsigned long int number)
  return rand()%number;
 }
 
-void SDGF_System::pause(const unsigned int long second)
-{
- time_t start,stop;
- start=time(NULL);
- do
- {
-  stop=time(NULL);
- } while(difftime(stop,start)<second);
-
-}
-
 void SDGF_System::quit()
 {
  exit(EXIT_SUCCESS);
@@ -604,6 +593,16 @@ void SDGF_System::run(const char *command)
 char* SDGF_System::read_environment(const char *variable)
 {
  return getenv(variable);
+}
+
+void SDGF_System::enable_logging(const char *name)
+{
+ if(freopen(name,"wt",stdout)==NULL)
+ {
+  puts("Can't create log file");
+  exit(EXIT_FAILURE);
+ }
+
 }
 
 class SDGF_Timer
