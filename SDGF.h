@@ -132,6 +132,14 @@ struct PCX_head
  unsigned char filled[54];
 };
 
+struct SDGF_Box
+{
+ unsigned long int x:32;
+ unsigned long int y:32;
+ unsigned long int width:32;
+ unsigned long int height:32;
+};
+
 class SDGF_Screen
 {
  private:
@@ -237,6 +245,7 @@ SDGF_Screen* SDGF_Screen::get_handle()
 class SDGF_Gamepad
 {
  private:
+ bool active;
  int device;
  long int length;
  input_event input;
@@ -244,12 +253,24 @@ class SDGF_Gamepad
  public:
  SDGF_Gamepad();
  ~SDGF_Gamepad();
+ void initialize();
  void update();
- unsigned short int get_release();
+ unsigned short int get_hold();
  unsigned short int get_press();
+ unsigned short int get_release();
 };
 
 SDGF_Gamepad::SDGF_Gamepad()
+{
+ active=false;
+}
+
+SDGF_Gamepad::~SDGF_Gamepad()
+{
+ if(active==true) close(device);
+}
+
+void SDGF_Gamepad::initialize()
 {
  device=open("/dev/event0",O_RDONLY|O_NONBLOCK|O_NOCTTY);
  if (device==-1)
@@ -257,15 +278,11 @@ SDGF_Gamepad::SDGF_Gamepad()
   puts("Can't get access to gamepad");
   exit(EXIT_FAILURE);
  }
+ active=true;
  length=sizeof(input_event);
  memset(&input,0,length);
  key.button=0;
  key.state=SDGF_GAMEPAD_RELEASE;
-}
-
-SDGF_Gamepad::~SDGF_Gamepad()
-{
- close(device);
 }
 
 void SDGF_Gamepad::update()
@@ -285,11 +302,11 @@ void SDGF_Gamepad::update()
 
 }
 
-unsigned short int SDGF_Gamepad::get_release()
+unsigned short int SDGF_Gamepad::get_hold()
 {
  unsigned short int result;
  result=SDGF_KEY_NONE;
- if(key.state==SDGF_GAMEPAD_RELEASE) result=key.button;
+ if(key.state!=SDGF_GAMEPAD_RELEASE) result=key.button;
  return result;
 }
 
@@ -297,7 +314,15 @@ unsigned short int SDGF_Gamepad::get_press()
 {
  unsigned short int result;
  result=SDGF_KEY_NONE;
- if(key.state!=SDGF_GAMEPAD_RELEASE) result=key.button;
+ if(key.state==SDGF_GAMEPAD_PRESS) result=key.button;
+ return result;
+}
+
+unsigned short int SDGF_Gamepad::get_release()
+{
+ unsigned short int result;
+ result=SDGF_KEY_NONE;
+ if(key.state==SDGF_GAMEPAD_RELEASE) result=key.button;
  return result;
 }
 
@@ -1203,6 +1228,7 @@ class SDGF_Sprite:public SDGF_Canvas
  unsigned long int get_sprite_width();
  unsigned long int get_sprite_height();
  SDGF_Sprite* get_handle();
+ SDGF_Box get_box();
 };
 
 SDGF_Sprite::SDGF_Sprite()
@@ -1267,6 +1293,16 @@ SDGF_Sprite* SDGF_Sprite::get_handle()
  return this;
 }
 
+SDGF_Box SDGF_Sprite::get_box()
+{
+ SDGF_Box target;
+ target.x=current_x;
+ target.y=current_y;
+ target.width=width/frames;
+ target.height=height;
+ return target;
+}
+
 class SDGF_Text
 {
  private:
@@ -1326,34 +1362,34 @@ void SDGF_Text::draw_text(const char *text)
 class SDGF_Collision
 {
  public:
- bool check_horizontal_collision(SDGF_Sprite &first,SDGF_Sprite &second);
- bool check_vertical_collision(SDGF_Sprite &first,SDGF_Sprite &second);
- bool check_collision(SDGF_Sprite &first,SDGF_Sprite &second);
+ bool check_horizontal_collision(SDGF_Box first,SDGF_Box second);
+ bool check_vertical_collision(SDGF_Box first,SDGF_Box second);
+ bool check_collision(SDGF_Box first,SDGF_Box second);
 };
 
-bool SDGF_Collision::check_horizontal_collision(SDGF_Sprite &first,SDGF_Sprite &second)
+bool SDGF_Collision::check_horizontal_collision(SDGF_Box first,SDGF_Box second)
 {
  bool result;
  result=false;
- if((first.get_x()+first.get_sprite_width())>=second.get_x())
+ if((first.x+first.width)>=second.x)
  {
-  if(first.get_x()<=(second.get_x()+second.get_sprite_width())) result=true;
+  if(first.x<=(second.x+second.width)) result=true;
  }
  return result;
 }
 
-bool SDGF_Collision::check_vertical_collision(SDGF_Sprite &first,SDGF_Sprite &second)
+bool SDGF_Collision::check_vertical_collision(SDGF_Box first,SDGF_Box second)
 {
  bool result;
  result=false;
- if((first.get_y()+first.get_sprite_height())>=second.get_y())
+ if((first.y+first.height)>=second.y)
  {
-  if(first.get_y()<=(second.get_y()+second.get_sprite_height())) result=true;
+  if(first.y<=(second.y+second.height)) result=true;
  }
  return result;
 }
 
-bool SDGF_Collision::check_collision(SDGF_Sprite &first,SDGF_Sprite &second)
+bool SDGF_Collision::check_collision(SDGF_Box first,SDGF_Box second)
 {
  bool result;
  result=false;
