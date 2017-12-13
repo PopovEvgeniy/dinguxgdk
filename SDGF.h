@@ -1018,6 +1018,7 @@ class SDGF_Canvas
  public:
  SDGF_Canvas();
  ~SDGF_Canvas();
+ SDGF_Color *get_image();
  unsigned long int get_width();
  unsigned long int get_height();
  void set_frames(const unsigned long int amount);
@@ -1041,6 +1042,11 @@ SDGF_Canvas::~SDGF_Canvas()
 {
  surface=NULL;
  if(image!=NULL) free(image);
+}
+
+SDGF_Color *SDGF_Canvas::get_image()
+{
+ return image;
 }
 
 unsigned long int SDGF_Canvas::get_width()
@@ -1221,6 +1227,7 @@ class SDGF_Sprite:public SDGF_Canvas
  public:
  SDGF_Sprite();
  ~SDGF_Sprite();
+ void clone(SDGF_Sprite &target);
  void draw_sprite_frame(const unsigned long int x,const unsigned long int y,const unsigned long int frame);
  void draw_sprite(const unsigned long int x,const unsigned long int y);
  unsigned long int get_x();
@@ -1240,6 +1247,22 @@ SDGF_Sprite::SDGF_Sprite()
 SDGF_Sprite::~SDGF_Sprite()
 {
 
+}
+
+void SDGF_Sprite::clone(SDGF_Sprite &target)
+{
+ unsigned long int length;
+ frames=target.get_frames();
+ width=target.get_sprite_width();
+ height=target.get_sprite_height();
+ length=width*height*3;
+ image=(SDGF_Color*)calloc(length,1);
+ if(image==NULL)
+ {
+  puts("Can't allocate memory for image buffer");
+  exit(EXIT_FAILURE);
+ }
+ memmove(image,target.get_image(),length);
 }
 
 void SDGF_Sprite::draw_sprite_frame(const unsigned long int x,const unsigned long int y,const unsigned long int frame)
