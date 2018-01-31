@@ -1,7 +1,7 @@
 /*
 Simple dingux game framework license
 
-Copyright © 2015–2017, Popov Evgeniy Alekseyevich
+Copyright © 2015–2018, Popov Evgeniy Alekseyevich
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -53,7 +53,6 @@ SVGALib homepage: http://www.svgalib.org/
 #define SDGF_GAMEPAD_HOLDING 2
 #define SDGF_GAMEPAD_PRESS 1
 #define SDGF_GAMEPAD_RELEASE 0
-#define SDGF_GETRGB565(r,g,b) (b >> 3) +((g >> 2) << 5)+((r >> 3) << 11)
 
 struct SDGF_Color
 {
@@ -146,13 +145,16 @@ class SDGF_Screen
  int device;
  unsigned long int width;
  unsigned long int height;
+ unsigned long int start;
+ unsigned long int length;
+ unsigned short int *buffer;
  unsigned char color;
- unsigned char *buffer;
  fb_fix_screeninfo configuration;
  fb_var_screeninfo setting;
  public:
  SDGF_Screen();
  ~SDGF_Screen();
+ unsigned short int get_bgr565(const unsigned char red,const unsigned char green,const unsigned char blue);
  void draw_pixel(const unsigned long int x,const unsigned long int y,const unsigned char red,const unsigned char green,const unsigned char blue);
  void refresh();
  void clear_screen();
@@ -164,6 +166,7 @@ class SDGF_Screen
 
 SDGF_Screen::SDGF_Screen()
 {
+ buffer=NULL;
  device=open("/dev/fb0",O_RDWR);
  if(device==-1)
  {
@@ -183,7 +186,9 @@ SDGF_Screen::SDGF_Screen()
  width=setting.xres;
  height=setting.yres;
  color=setting.bits_per_pixel/8;
- buffer=(unsigned char*)calloc(configuration.smem_len,1);
+ length=width*height*color;
+ start=(setting.xoffset*color)+(setting.yoffset*configuration.line_length);
+ buffer=(unsigned short int*)calloc(length,1);
  if(buffer==NULL)
  {
   puts("Can't allocate memory for render buffer");
@@ -194,32 +199,33 @@ SDGF_Screen::SDGF_Screen()
 
 SDGF_Screen::~SDGF_Screen()
 {
- close(device);
- free(buffer);
+ if(device!=-1) close(device);
+ if(buffer!=NULL) free(buffer);
+}
+
+unsigned short int SDGF_Screen::get_bgr565(const unsigned char red,const unsigned char green,const unsigned char blue)
+{
+ return (blue >> 3) +((green >> 2) << 5)+((red >> 3) << 11);
 }
 
 void SDGF_Screen::draw_pixel(const unsigned long int x,const unsigned long int y,const unsigned char red,const unsigned char green,const unsigned char blue)
 {
- unsigned long int offset;
- unsigned short int pixel;
  if ((x<width)&&(y<height))
  {
-  offset=(x+setting.xoffset)*color+(y+setting.yoffset)*configuration.line_length;
-  pixel=SDGF_GETRGB565(red,green,blue);
-  memmove(buffer+offset,&pixel,color);
+  buffer[x+y*width]=this->get_bgr565(red,green,blue);
  }
 
 }
 
 void SDGF_Screen::refresh()
 {
- lseek(device,0,SEEK_SET);
- write(device,buffer,configuration.smem_len);
+ lseek(device,start,SEEK_SET);
+ write(device,buffer,length);
 }
 
 void SDGF_Screen::clear_screen()
 {
- memset(buffer,0,configuration.smem_len);
+ memset(buffer,0,length);
 }
 
 unsigned long int SDGF_Screen::get_width()
@@ -245,7 +251,6 @@ SDGF_Screen* SDGF_Screen::get_handle()
 class SDGF_Gamepad
 {
  private:
- bool active;
  int device;
  long int length;
  input_event input;
@@ -262,12 +267,13 @@ class SDGF_Gamepad
 
 SDGF_Gamepad::SDGF_Gamepad()
 {
- active=false;
+ length=sizeof(input_event);
+ memset(&input,0,length);
 }
 
 SDGF_Gamepad::~SDGF_Gamepad()
 {
- if(active==true) close(device);
+ if(device!=-1) close(device);
 }
 
 void SDGF_Gamepad::initialize()
@@ -278,9 +284,6 @@ void SDGF_Gamepad::initialize()
   puts("Can't get access to gamepad");
   exit(EXIT_FAILURE);
  }
- active=true;
- length=sizeof(input_event);
- memset(&input,0,length);
  key.button=0;
  key.state=SDGF_GAMEPAD_RELEASE;
 }

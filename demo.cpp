@@ -3,7 +3,9 @@
 int main(void)
 {
  long int x,y,screen_width,screen_height;
+ unsigned long int fps;
  unsigned char frame;
+ char perfomance[8];
  SDGF_Screen screen;
  SDGF_Gamepad gamepad;
  SDGF_Sound sound;
@@ -38,8 +40,12 @@ int main(void)
  sound.set_volume(255);
  player.initialize(sound.get_handle());
  audio.load_wave("space.wav",player);
+ fps=0;
+ memset(perfomance,0,8);
  while(1)
  {
+  screen.refresh();
+  fps++;
   if(player.play()==false) player.rewind_audio();
   gamepad.update();
   if(gamepad.get_press()==SDGF_KEY_X) break;
@@ -52,11 +58,12 @@ int main(void)
   if((x<=0)||(x>=screen_width)) x=screen_width/2;
   if((y<=0)||(y>=screen_height)) y=screen_height/2;
   space.draw_background();
-  text.draw_text("Technical demonstration #4");
+  text.draw_text(perfomance);
   ship.draw_sprite_frame(x,y,frame);
-  screen.refresh();
   if (timer.check_timer()==true)
   {
+   sprintf(perfomance,"%ld",fps);
+   fps=0;
    frame++;
    if (frame>2) frame=1;
   }
