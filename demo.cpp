@@ -8,9 +8,6 @@ int main(void)
  char perfomance[8];
  SDGF_Screen screen;
  SDGF_Gamepad gamepad;
- SDGF_Sound sound;
- SDGF_Audio audio;
- SDGF_Player player;
  SDGF_Timer timer;
  SDGF_Image image;
  SDGF_Background space;
@@ -37,16 +34,12 @@ int main(void)
  ship.set_frames(2);
  text.set_position(font.get_sprite_width(),font.get_sprite_height());
  timer.set_timer(1);
- sound.set_volume(255);
- player.initialize(sound.get_handle());
- audio.load_wave("space.wav",player);
  fps=0;
  memset(perfomance,0,8);
  while(1)
  {
   screen.refresh();
   fps++;
-  if(player.play()==false) player.rewind_audio();
   gamepad.update();
   if(gamepad.get_press()==SDGF_KEY_X) break;
   if(gamepad.get_press()==SDGF_KEY_A) ship.mirror_image(0);
