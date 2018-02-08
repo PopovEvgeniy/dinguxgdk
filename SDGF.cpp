@@ -302,7 +302,7 @@ void SDGF_Primitive::draw_line(const unsigned long int x1,const unsigned long in
  y=y1;
  shift_x=(float)delta_x/(float)steps;
  shift_y=(float)delta_y/(float)steps;
- for (index=steps;index>0;index--)
+ for (index=steps;index>0;--index)
  {
   x+=shift_x;
   y+=shift_y;
@@ -327,9 +327,9 @@ void SDGF_Primitive::draw_filled_rectangle(const unsigned long int x,const unsig
  unsigned long int step_x,step_y,stop_x,stop_y;
  stop_x=x+width;
  stop_y=y+height;
- for(step_x=x;step_x<stop_x;step_x++)
+ for(step_x=x;step_x<stop_x;++step_x)
  {
-  for(step_y=y;step_y<stop_y;step_y++)
+  for(step_y=y;step_y<stop_y;++step_y)
   {
    surface->draw_pixel(step_x,step_y,red,green,blue);
   }
@@ -424,7 +424,7 @@ void SDGF_Image::load_tga(const char *name)
    }
    else
    {
-    for(amount=compressed[position]-127;amount>0;amount--)
+    for(amount=compressed[position]-127;amount>0;--amount)
     {
      memmove(uncompressed+index,compressed+(position+1),3);
      index+=3;
@@ -500,7 +500,7 @@ void SDGF_Image::load_pcx(const char *name)
   }
   else
   {
-   for (repeat=original[index]-192;repeat>0;repeat--)
+   for (repeat=original[index]-192;repeat>0;--repeat)
    {
     uncompressed[position]=original[index+1];
     position++;
@@ -638,9 +638,9 @@ void SDGF_Canvas::mirror_image(const unsigned char kind)
  }
  if (kind==0)
  {
-  for (x=0;x<width;x++)
+  for (x=0;x<width;++x)
   {
-   for (y=0;y<height;y++)
+   for (y=0;y<height;++y)
    {
     index=x+(y*width);
     index2=(width-x-1)+(y*width);
@@ -652,9 +652,9 @@ void SDGF_Canvas::mirror_image(const unsigned char kind)
  }
  else
  {
-   for (x=0;x<width;x++)
+   for (x=0;x<width;++x)
   {
-   for (y=0;y<height;y++)
+   for (y=0;y<height;++y)
    {
     index=x+(y*width);
     index2=x+(height-y-1)*width;
@@ -681,9 +681,9 @@ void SDGF_Canvas::resize_image(const unsigned long int new_width,const unsigned 
  }
  x_ratio=(float)width/(float)new_width;
  y_ratio=(float)height/(float)new_height;
- for (x=0;x<new_width;x++)
+ for (x=0;x<new_width;++x)
  {
-  for (y=0;y<new_height;y++)
+  for (y=0;y<new_height;++y)
   {
    index=x+(y*new_width);
    index2=(unsigned long int)(x_ratio*(float)x)+width*(unsigned long int)(y_ratio*(float)y);
@@ -700,9 +700,9 @@ void SDGF_Canvas::resize_image(const unsigned long int new_width,const unsigned 
 void SDGF_Background::draw_background()
 {
  unsigned long int x,y,offset;
- for (x=0;x<width;x++)
+ for (x=0;x<width;++x)
  {
-  for (y=0;y<height;y++)
+  for (y=0;y<height;++y)
   {
    offset=x+(width*y);
    surface->draw_pixel(x,y,image[offset].red,image[offset].green,image[offset].blue);
@@ -717,9 +717,9 @@ void SDGF_Background::draw_horizontal_background(const unsigned long int frame)
  unsigned long int x,y,offset,start,frame_width;
  frame_width=width/frames;
  start=(frame-1)*frame_width;
- for (x=0;x<frame_width;x++)
+ for (x=0;x<frame_width;++x)
  {
-  for (y=0;y<height;y++)
+  for (y=0;y<height;++y)
   {
    offset=start+x+(width*y);
    surface->draw_pixel(x,y,image[offset].red,image[offset].green,image[offset].blue);
@@ -734,9 +734,9 @@ void SDGF_Background::draw_vertical_background(const unsigned long int frame)
  unsigned long int x,y,offset,start,frame_height;
  frame_height=height/frames;
  start=(frame-1)*frame_height;
- for (x=0;x<width;x++)
+ for (x=0;x<width;++x)
  {
-  for (y=0;y<frame_height;y++)
+  for (y=0;y<frame_height;++y)
   {
    offset=start+x+(width*y);
    surface->draw_pixel(x,y,image[offset].red,image[offset].green,image[offset].blue);
@@ -780,9 +780,9 @@ void SDGF_Sprite::draw_sprite_frame(const unsigned long int x,const unsigned lon
  current_y=y;
  frame_width=width/frames;
  start=(frame-1)*frame_width;
- for(sprite_x=0;sprite_x<frame_width;sprite_x++)
+ for(sprite_x=0;sprite_x<frame_width;++sprite_x)
  {
-  for(sprite_y=0;sprite_y<height;sprite_y++)
+  for(sprite_y=0;sprite_y<height;++sprite_y)
   {
    offset=start+sprite_x+(sprite_y*width);
    if(memcmp(&image[0],&image[offset],3)!=0) surface->draw_pixel(x+sprite_x,y+sprite_y,image[offset].red,image[offset].green,image[offset].blue);
@@ -860,15 +860,14 @@ void SDGF_Text::load_font(SDGF_Sprite *font)
 
 void SDGF_Text::draw_text(const char *text)
 {
- unsigned long int index,length,step_x,step_y;
+ unsigned long int index,length,step_x;
  length=strlen(text);
  step_x=current_x;
- step_y=current_y;
- for (index=0;index<length;index++)
+ for (index=0;index<length;++index)
  {
   if (text[index]>31)
   {
-   sprite->draw_sprite_frame(step_x,step_y,text[index]+1);
+   sprite->draw_sprite_frame(step_x,current_y,text[index]+1);
    step_x+=sprite->get_sprite_width();
   }
 
