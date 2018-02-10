@@ -1,4 +1,4 @@
-flags=-G0 -O0
+flags=-g0 -O0
 
 library:
 	@mipsel-linux-uclibc-g++ -c SDGF.cpp $(flags) -o SDGF.o
