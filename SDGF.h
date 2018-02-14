@@ -249,9 +249,9 @@ class SDGF_Canvas
 class SDGF_Background:public SDGF_Canvas
 {
  public:
- void draw_background();
  void draw_horizontal_background(const unsigned long int frame);
  void draw_vertical_background(const unsigned long int frame);
+ void draw_background();
 };
 
 class SDGF_Sprite:public SDGF_Canvas
@@ -259,6 +259,7 @@ class SDGF_Sprite:public SDGF_Canvas
  private:
  unsigned long int current_x;
  unsigned long int current_y;
+ bool compare_pixels(const SDGF_Color &first,const SDGF_Color &second);
  public:
  SDGF_Sprite();
  ~SDGF_Sprite();
