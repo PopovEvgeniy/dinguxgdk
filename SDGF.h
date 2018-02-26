@@ -31,6 +31,7 @@ SVGALib homepage: http://www.svgalib.org/
 #include <sys/sysinfo.h>
 #include <sys/ioctl.h>
 #include <linux/input.h>
+#include <sys/mman.h>
 #include <linux/fb.h>
 
 #define SDGF_KEY_NONE 0
@@ -129,6 +130,7 @@ class SDGF_Screen
  unsigned long int start;
  unsigned long int length;
  unsigned short int *buffer;
+ unsigned char *primary;
  unsigned char color;
  fb_fix_screeninfo configuration;
  fb_var_screeninfo setting;

@@ -27,7 +27,7 @@ SVGALib homepage: http://www.svgalib.org/
 SDGF_Screen::SDGF_Screen()
 {
  buffer=NULL;
- device=open("/dev/fb0",O_RDWR|O_SYNC);
+ device=open("/dev/fb0",O_RDWR);
  if(device==-1)
  {
   puts("Can't get access to frame buffer");
@@ -54,6 +54,12 @@ SDGF_Screen::SDGF_Screen()
   puts("Can't allocate memory for render buffer");
   exit(EXIT_FAILURE);
  }
+ primary=(unsigned char*)mmap(NULL,configuration.smem_len,PROT_READ|PROT_WRITE,MAP_SHARED,device,0);
+ if(primary==MAP_FAILED)
+ {
+  puts("Can't allocate memory for primary buffer");
+  exit(EXIT_FAILURE);
+ }
 
 }
 
@@ -61,6 +67,7 @@ SDGF_Screen::~SDGF_Screen()
 {
  if(device!=-1) close(device);
  if(buffer!=NULL) free(buffer);
+ if(primary!=MAP_FAILED) munmap(primary,configuration.smem_len);
 }
 
 unsigned short int SDGF_Screen::get_bgr565(const unsigned char red,const unsigned char green,const unsigned char blue)
@@ -79,13 +86,12 @@ void SDGF_Screen::draw_pixel(const unsigned long int x,const unsigned long int y
 
 void SDGF_Screen::refresh()
 {
- lseek(device,start,SEEK_SET);
- write(device,buffer,length);
+ memmove(primary+start,buffer,length);
 }
 
 void SDGF_Screen::clear_screen()
 {
- memset(buffer,0,length);
+ memset(primary,0,configuration.smem_len);
 }
 
 unsigned long int SDGF_Screen::get_width()
