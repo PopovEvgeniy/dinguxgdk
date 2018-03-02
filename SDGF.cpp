@@ -24,6 +24,48 @@ SVGALib homepage: http://www.svgalib.org/
 
 #include "SDGF.h"
 
+SDGF_Frame::SDGF_Frame()
+{
+ width=0;
+ height=0;
+ length=0;
+ buffer=NULL;
+}
+
+SDGF_Frame::~SDGF_Frame()
+{
+ if(buffer!=NULL) free(buffer);
+}
+
+unsigned short int SDGF_Frame::get_bgr565(const unsigned char red,const unsigned char green,const unsigned char blue)
+{
+ return (blue >> 3) +((green >> 2) << 5)+((red >> 3) << 11); // This code bases on code from SVGALib
+}
+
+void SDGF_Frame::draw_pixel(const unsigned long int x,const unsigned long int y,const unsigned char red,const unsigned char green,const unsigned char blue)
+{
+ if ((x<width)&&(y<height))
+ {
+  buffer[x+y*width]=this->get_bgr565(red,green,blue);
+ }
+
+}
+
+void SDGF_Frame::clear_screen()
+{
+ memset(buffer,0,length);
+}
+
+unsigned long int SDGF_Frame::get_width()
+{
+ return width;
+}
+
+unsigned long int SDGF_Frame::get_height()
+{
+ return height;
+}
+
 SDGF_Screen::SDGF_Screen()
 {
  buffer=NULL;
@@ -45,9 +87,8 @@ SDGF_Screen::SDGF_Screen()
  }
  width=setting.xres;
  height=setting.yres;
- color=setting.bits_per_pixel/8;
- length=width*height*color;
- start=(setting.xoffset*color)+(setting.yoffset*configuration.line_length);
+ length=width*height*(setting.bits_per_pixel/8);
+ start=(setting.xoffset*(setting.bits_per_pixel/8))+(setting.yoffset*configuration.line_length);
  buffer=(unsigned short int*)calloc(length,1);
  if(buffer==NULL)
  {
@@ -65,48 +106,13 @@ SDGF_Screen::SDGF_Screen()
 
 SDGF_Screen::~SDGF_Screen()
 {
- if(device!=-1) close(device);
- if(buffer!=NULL) free(buffer);
  if(primary!=MAP_FAILED) munmap(primary,configuration.smem_len);
-}
-
-unsigned short int SDGF_Screen::get_bgr565(const unsigned char red,const unsigned char green,const unsigned char blue)
-{
- return (blue >> 3) +((green >> 2) << 5)+((red >> 3) << 11); // This code bases on code from SVGALib
-}
-
-void SDGF_Screen::draw_pixel(const unsigned long int x,const unsigned long int y,const unsigned char red,const unsigned char green,const unsigned char blue)
-{
- if ((x<width)&&(y<height))
- {
-  buffer[x+y*width]=this->get_bgr565(red,green,blue);
- }
-
+ if(device!=-1) close(device);
 }
 
 void SDGF_Screen::refresh()
 {
  memmove(primary+start,buffer,length);
-}
-
-void SDGF_Screen::clear_screen()
-{
- memset(primary,0,configuration.smem_len);
-}
-
-unsigned long int SDGF_Screen::get_width()
-{
- return width;
-}
-
-unsigned long int SDGF_Screen::get_height()
-{
- return height;
-}
-
-unsigned char SDGF_Screen::get_color()
-{
- return color;
 }
 
 SDGF_Screen* SDGF_Screen::get_handle()
@@ -724,7 +730,7 @@ void SDGF_Background::draw_vertical_background(const unsigned long int frame)
 {
  unsigned long int x,y,offset,start,frame_height;
  frame_height=height/frames;
- start=(frame-1)*frame_height;
+ start=(frame-1)*frame_height*width;
  for (x=0;x<width;++x)
  {
   for (y=0;y<frame_height;++y)

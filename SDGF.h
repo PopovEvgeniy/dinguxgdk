@@ -121,29 +121,35 @@ struct SDGF_Box
  unsigned long int height:32;
 };
 
-class SDGF_Screen
+class SDGF_Frame
+{
+ protected:
+ unsigned long int width;
+ unsigned long int height;
+ unsigned long int length;
+ unsigned short int *buffer;
+ unsigned short int get_bgr565(const unsigned char red,const unsigned char green,const unsigned char blue);
+ public:
+ SDGF_Frame();
+ ~SDGF_Frame();
+ void draw_pixel(const unsigned long int x,const unsigned long int y,const unsigned char red,const unsigned char green,const unsigned char blue);
+ void clear_screen();
+ unsigned long int get_width();
+ unsigned long int get_height();
+};
+
+class SDGF_Screen:public SDGF_Frame
 {
  private:
  int device;
- unsigned long int width;
- unsigned long int height;
  unsigned long int start;
- unsigned long int length;
- unsigned short int *buffer;
  unsigned char *primary;
- unsigned char color;
  fb_fix_screeninfo configuration;
  fb_var_screeninfo setting;
  public:
  SDGF_Screen();
  ~SDGF_Screen();
- unsigned short int get_bgr565(const unsigned char red,const unsigned char green,const unsigned char blue);
- void draw_pixel(const unsigned long int x,const unsigned long int y,const unsigned char red,const unsigned char green,const unsigned char blue);
  void refresh();
- void clear_screen();
- unsigned long int get_width();
- unsigned long int get_height();
- unsigned char get_color();
  SDGF_Screen* get_handle();
 };
 
