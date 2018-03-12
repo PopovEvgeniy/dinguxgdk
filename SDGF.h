@@ -220,6 +220,7 @@ class SDGF_Image
  unsigned long int width;
  unsigned long int height;
  unsigned char *data;
+ unsigned char *create_buffer(const unsigned long int length);
  public:
  SDGF_Image();
  ~SDGF_Image();
@@ -240,6 +241,7 @@ class SDGF_Canvas
  unsigned long int frames;
  SDGF_Screen *surface;
  SDGF_Color *image;
+ SDGF_Color *create_buffer(const unsigned long int length);
  public:
  SDGF_Canvas();
  ~SDGF_Canvas();
@@ -299,7 +301,7 @@ class SDGF_Text
 class SDGF_Collision
 {
  public:
- bool check_horizontal_collision(SDGF_Box first,SDGF_Box second);
- bool check_vertical_collision(SDGF_Box first,SDGF_Box second);
- bool check_collision(SDGF_Box first,SDGF_Box second);
+ bool check_horizontal_collision(const SDGF_Box &first,const SDGF_Box &second);
+ bool check_vertical_collision(const SDGF_Box &first,const SDGF_Box &second);
+ bool check_collision(const SDGF_Box &first,const SDGF_Box &second);
 };

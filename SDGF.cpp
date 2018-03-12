@@ -362,6 +362,18 @@ SDGF_Image::~SDGF_Image()
  if(data!=NULL) free(data);
 }
 
+unsigned char *SDGF_Image::create_buffer(const unsigned long int length)
+{
+ unsigned char *result;
+ result=(unsigned char*)calloc(length,1);
+ if(result==NULL)
+ {
+  puts("Can't allocate memory for image buffer");
+  exit(EXIT_FAILURE);
+ }
+ return result;
+}
+
 void SDGF_Image::load_tga(const char *name)
 {
  FILE *target;
@@ -405,24 +417,14 @@ void SDGF_Image::load_tga(const char *name)
  index=0;
  position=0;
  uncompressed_length=3*(unsigned long int)image.width*(unsigned long int)image.height;
- uncompressed=(unsigned char*)calloc(uncompressed_length,1);
- if(uncompressed==NULL)
- {
-  puts("Can't allocate memory for image buffer");
-  exit(EXIT_FAILURE);
- }
+ uncompressed=this->create_buffer(uncompressed_length);
  if(head.type==2)
  {
   fread(uncompressed,uncompressed_length,1,target);
  }
  if(head.type==10)
  {
-  compressed=(unsigned char*)calloc(compressed_length,1);
-  if(compressed==NULL)
-  {
-   puts("Can't allocate memory for image buffer");
-   exit(EXIT_FAILURE);
-  }
+  compressed=this->create_buffer(compressed_length);
   fread(compressed,compressed_length,1,target);
   while(index<uncompressed_length)
   {
@@ -488,18 +490,8 @@ void SDGF_Image::load_pcx(const char *name)
  uncompressed_length=row*height;
  index=0;
  position=0;
- original=(unsigned char*)calloc(length,1);
- if(original==NULL)
- {
-  puts("Can't allocate memory for image buffer");
-  exit(EXIT_FAILURE);
- }
- uncompressed=(unsigned char*)calloc(uncompressed_length,1);
- if(uncompressed==NULL)
- {
-  puts("Can't allocate memory for image buffer");
-  exit(EXIT_FAILURE);
- }
+ original=this->create_buffer(length);
+ uncompressed=this->create_buffer(uncompressed_length);
  fread(original,length,1,target);
  fclose(target);
  while (index<length)
@@ -522,12 +514,7 @@ void SDGF_Image::load_pcx(const char *name)
 
  }
  free(original);
- original=(unsigned char*)calloc(uncompressed_length,1);
- if(original==NULL)
- {
-  puts("Can't allocate memory for image buffer");
-  exit(EXIT_FAILURE);
- }
+ original=this->create_buffer(uncompressed_length);
  for(x=0;x<width;++x)
  {
   for(y=0;y<height;++y)
@@ -591,6 +578,18 @@ SDGF_Canvas::~SDGF_Canvas()
  if(image!=NULL) free(image);
 }
 
+SDGF_Color *SDGF_Canvas::create_buffer(const unsigned long int length)
+{
+ SDGF_Color *result;
+ result=(SDGF_Color*)calloc(length,1);
+ if(result==NULL)
+ {
+  puts("Can't allocate memory for image buffer");
+  exit(EXIT_FAILURE);
+ }
+ return result;
+}
+
 SDGF_Color *SDGF_Canvas::get_image()
 {
  return image;
@@ -628,12 +627,7 @@ void SDGF_Canvas::load_image(SDGF_Image &buffer)
  height=buffer.get_height();
  length=buffer.get_data_length();
  if(image!=NULL) free(image);
- image=(SDGF_Color*)calloc(length,1);
- if (image==NULL)
- {
-  puts("Can't allocate memory for image buffer");
-  exit(EXIT_FAILURE);
- }
+ image=this->create_buffer(length);
  memmove(image,buffer.get_data(),length);
  buffer.destroy_image();
 }
@@ -642,12 +636,7 @@ void SDGF_Canvas::mirror_image(const unsigned char kind)
 {
  unsigned long int x,y,index,index2;
  SDGF_Color *mirrored_image;
- mirrored_image=(SDGF_Color*)calloc(width*height,3);
- if (mirrored_image==NULL)
- {
-  puts("Can't allocate memory for image buffer");
-  exit(EXIT_FAILURE);
- }
+ mirrored_image=image=this->create_buffer(width*height*3);
  if (kind==0)
  {
   for (x=0;x<width;++x)
@@ -685,12 +674,7 @@ void SDGF_Canvas::resize_image(const unsigned long int new_width,const unsigned 
  float x_ratio,y_ratio;
  unsigned long int x,y,index,index2;
  SDGF_Color *scaled_image;
- scaled_image=(SDGF_Color*)calloc(new_width*new_height,3);
- if (scaled_image==NULL)
- {
-  puts("Can't allocate memory for image buffer");
-  exit(EXIT_FAILURE);
- }
+ scaled_image=this->create_buffer(new_width*new_height*3);
  x_ratio=(float)width/(float)new_width;
  y_ratio=(float)height/(float)new_height;
  for (x=0;x<new_width;++x)
@@ -781,12 +765,7 @@ void SDGF_Sprite::clone(SDGF_Sprite &target)
  width=target.get_sprite_width();
  height=target.get_sprite_height();
  length=width*height*3;
- image=(SDGF_Color*)calloc(length,1);
- if(image==NULL)
- {
-  puts("Can't allocate memory for image buffer");
-  exit(EXIT_FAILURE);
- }
+ image=this->create_buffer(length);
  memmove(image,target.get_image(),length);
 }
 
@@ -872,7 +851,7 @@ void SDGF_Text::set_position(const unsigned long int x,const unsigned long int y
 void SDGF_Text::load_font(SDGF_Sprite *font)
 {
  sprite=font;
- sprite->set_frames(128);
+ sprite->set_frames(256);
 }
 
 void SDGF_Text::draw_text(const char *text)
@@ -882,9 +861,9 @@ void SDGF_Text::draw_text(const char *text)
  step_x=current_x;
  for (index=0;index<length;++index)
  {
-  if (text[index]>31)
+  if ((text[index]>31)||(text[index]<0))
   {
-   sprite->draw_sprite_frame(step_x,current_y,text[index]+1);
+   sprite->draw_sprite_frame(step_x,current_y,(unsigned long int)text[index]+1);
    step_x+=sprite->get_sprite_width();
   }
 
@@ -892,7 +871,7 @@ void SDGF_Text::draw_text(const char *text)
 
 }
 
-bool SDGF_Collision::check_horizontal_collision(SDGF_Box first,SDGF_Box second)
+bool SDGF_Collision::check_horizontal_collision(const SDGF_Box &first,const SDGF_Box &second)
 {
  bool result;
  result=false;
@@ -903,7 +882,7 @@ bool SDGF_Collision::check_horizontal_collision(SDGF_Box first,SDGF_Box second)
  return result;
 }
 
-bool SDGF_Collision::check_vertical_collision(SDGF_Box first,SDGF_Box second)
+bool SDGF_Collision::check_vertical_collision(const SDGF_Box &first,const SDGF_Box &second)
 {
  bool result;
  result=false;
@@ -914,7 +893,7 @@ bool SDGF_Collision::check_vertical_collision(SDGF_Box first,SDGF_Box second)
  return result;
 }
 
-bool SDGF_Collision::check_collision(SDGF_Box first,SDGF_Box second)
+bool SDGF_Collision::check_collision(const SDGF_Box &first,const SDGF_Box &second)
 {
  return this->check_horizontal_collision(first,second) || this->check_vertical_collision(first,second);
 }
