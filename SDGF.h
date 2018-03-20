@@ -22,6 +22,7 @@ Pixel packing algorithm bases on code from SVGALib. SVGALib is public domain.
 SVGALib homepage: http://www.svgalib.org/
 */
 
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -221,6 +222,9 @@ class SDGF_Image
  unsigned long int height;
  unsigned char *data;
  unsigned char *create_buffer(const unsigned long int length);
+ void clear_buffer();
+ FILE *open_image(const char *name);
+ unsigned long int get_file_size(FILE *target);
  public:
  SDGF_Image();
  ~SDGF_Image();
@@ -241,7 +245,7 @@ class SDGF_Canvas
  unsigned long int frames;
  SDGF_Screen *surface;
  SDGF_Color *image;
- SDGF_Color *create_buffer(const unsigned long int length);
+ SDGF_Color *create_buffer(const unsigned long int image_width,const unsigned long int image_height);
  public:
  SDGF_Canvas();
  ~SDGF_Canvas();
