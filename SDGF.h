@@ -205,14 +205,16 @@ class SDGF_Timer
 class SDGF_Primitive
 {
  private:
+ SDGF_Color color;
  SDGF_Screen *surface;
  public:
  SDGF_Primitive();
  ~SDGF_Primitive();
  void initialize(SDGF_Screen *Screen);
- void draw_line(const unsigned long int x1,const unsigned long int y1,const unsigned long int x2,const unsigned long int y2,const unsigned char red,const unsigned char green,const unsigned char blue);
- void draw_rectangle(const unsigned long int x,const unsigned long int y,const unsigned long int width,const unsigned long int height,const unsigned char red,const unsigned char green,const unsigned char blue);
- void draw_filled_rectangle(const unsigned long int x,const unsigned long int y,const unsigned long int width,const unsigned long int height,const unsigned char red,const unsigned char green,const unsigned char blue);
+ void set_color(const unsigned char red,const unsigned char green,const unsigned char blue);
+ void draw_line(const unsigned long int x1,const unsigned long int y1,const unsigned long int x2,const unsigned long int y2);
+ void draw_rectangle(const unsigned long int x,const unsigned long int y,const unsigned long int width,const unsigned long int height);
+ void draw_filled_rectangle(const unsigned long int x,const unsigned long int y,const unsigned long int width,const unsigned long int height);
 };
 
 class SDGF_Image
@@ -246,7 +248,7 @@ class SDGF_Canvas
  SDGF_Screen *surface;
  SDGF_Color *image;
  SDGF_Color *create_buffer(const unsigned long int image_width,const unsigned long int image_height);
- void draw_image_pixel(size_t offset,const unsigned long int x,const unsigned long int y);
+ void draw_image_pixel(const size_t offset,const unsigned long int x,const unsigned long int y);
  size_t get_offset(const unsigned long int start,const unsigned long int x,const unsigned long int y);
  private:
  void clear_buffer();
@@ -280,7 +282,7 @@ class SDGF_Sprite:public SDGF_Canvas
  unsigned long int current_x;
  unsigned long int current_y;
  bool compare_pixels(const SDGF_Color &first,const SDGF_Color &second);
- void draw_sprite_pixel(size_t offset,const unsigned long int x,const unsigned long int y);
+ void draw_sprite_pixel(const size_t offset,const unsigned long int x,const unsigned long int y);
  public:
  SDGF_Sprite();
  ~SDGF_Sprite();
