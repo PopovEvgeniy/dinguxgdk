@@ -41,6 +41,20 @@ SDGF_Frame::~SDGF_Frame()
  if(buffer!=NULL) free(buffer);
 }
 
+void SDGF_Frame::create_buffer(const unsigned long screen_width,const unsigned long screen_height)
+{
+ width=screen_width;
+ height=screen_height;
+ length=(size_t)width*(size_t)height;
+ buffer=(unsigned short int*)calloc(length,sizeof(unsigned short int));
+ if(buffer==NULL)
+ {
+  puts("Can't allocate memory for render buffer");
+  exit(EXIT_FAILURE);
+ }
+ length*=sizeof(unsigned short int);
+}
+
 unsigned short int SDGF_Frame::get_bgr565(const unsigned char red,const unsigned char green,const unsigned char blue)
 {
  return (blue >> 3) +((green >> 2) << 5)+((red >> 3) << 11); // This code bases on code from SVGALib
@@ -50,7 +64,7 @@ void SDGF_Frame::draw_pixel(const unsigned long int x,const unsigned long int y,
 {
  if ((x<width)&&(y<height))
  {
-  buffer[x+y*width]=this->get_bgr565(red,green,blue);
+  buffer[(size_t)x+(size_t)y*(size_t)width]=this->get_bgr565(red,green,blue);
  }
 
 }
@@ -73,12 +87,25 @@ unsigned long int SDGF_Frame::get_height()
 SDGF_Screen::SDGF_Screen()
 {
  buffer=NULL;
+ primary=(unsigned char*)MAP_FAILED;
  device=open("/dev/fb0",O_RDWR);
  if(device==-1)
  {
   puts("Can't get access to frame buffer");
   exit(EXIT_FAILURE);
  }
+ memset(&setting,0,sizeof(FBIOGET_VSCREENINFO));
+ memset(&configuration,0,sizeof(FBIOGET_FSCREENINFO));
+}
+
+SDGF_Screen::~SDGF_Screen()
+{
+ if(primary!=MAP_FAILED) munmap(primary,(size_t)configuration.smem_len);
+ if(device!=-1) close(device);
+}
+
+void SDGF_Screen::read_configuration()
+{
  if(ioctl(device,FBIOGET_VSCREENINFO,&setting)==-1)
  {
   puts("Can't read framebuffer setting");
@@ -89,18 +116,13 @@ SDGF_Screen::SDGF_Screen()
   puts("Can't read framebuffer setting");
   exit(EXIT_FAILURE);
  }
- width=setting.xres;
- height=setting.yres;
- length=width*height*(setting.bits_per_pixel/8);
- start=(setting.xoffset*(setting.bits_per_pixel/8))+(setting.yoffset*configuration.line_length);
- buffer=(unsigned short int*)calloc(length,1);
- if(buffer==NULL)
- {
-  puts("Can't allocate memory for render buffer");
-  exit(EXIT_FAILURE);
- }
- primary=(unsigned char*)mmap(NULL,configuration.smem_len,PROT_READ|PROT_WRITE,MAP_SHARED,device,0);
- if(primary==MAP_FAILED)
+
+}
+
+void SDGF_Screen::create_primary_buffer()
+{
+ primary=(unsigned char*)mmap(NULL,(size_t)configuration.smem_len,PROT_READ|PROT_WRITE,MAP_SHARED,device,0);
+ if(primary==(unsigned char*)MAP_FAILED)
  {
   puts("Can't allocate memory for primary buffer");
   exit(EXIT_FAILURE);
@@ -108,10 +130,17 @@ SDGF_Screen::SDGF_Screen()
 
 }
 
-SDGF_Screen::~SDGF_Screen()
+size_t SDGF_Screen::get_start_offset()
 {
- if(primary!=MAP_FAILED) munmap(primary,configuration.smem_len);
- if(device!=-1) close(device);
+ return (size_t)setting.xoffset*(size_t)(setting.bits_per_pixel/8)+(size_t)setting.yoffset*(size_t)configuration.line_length;
+}
+
+void SDGF_Screen::initialize()
+{
+ this->read_configuration();
+ this->create_primary_buffer();
+ this->create_buffer(setting.xres,setting.yres);
+ start=this->get_start_offset();
 }
 
 void SDGF_Screen::refresh()
@@ -151,7 +180,7 @@ void SDGF_Gamepad::update()
 {
  key.button=0;
  key.state=SDGF_GAMEPAD_RELEASE;
- while (read(device,&input,length)==length)
+ while (read(device,&input,length)>0)
  {
   if (input.type==EV_KEY)
   {

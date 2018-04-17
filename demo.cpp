@@ -13,6 +13,7 @@ int main(void)
  SDGF_Background space;
  SDGF_Sprite ship,font;
  SDGF_Text text;
+ screen.initialize();
  screen_width=screen.get_width();
  screen_height=screen.get_height();
  x=screen_width/2;

@@ -127,8 +127,9 @@ class SDGF_Frame
  protected:
  unsigned long int width;
  unsigned long int height;
- unsigned long int length;
+ size_t length;
  unsigned short int *buffer;
+ void create_buffer(const unsigned long screen_width,const unsigned long screen_height);
  unsigned short int get_bgr565(const unsigned char red,const unsigned char green,const unsigned char blue);
  public:
  SDGF_Frame();
@@ -143,13 +144,17 @@ class SDGF_Screen:public SDGF_Frame
 {
  private:
  int device;
- unsigned long int start;
+ size_t start;
  unsigned char *primary;
  fb_fix_screeninfo configuration;
  fb_var_screeninfo setting;
+ void read_configuration();
+ void create_primary_buffer();
+ size_t get_start_offset();
  public:
  SDGF_Screen();
  ~SDGF_Screen();
+ void initialize();
  void refresh();
  SDGF_Screen* get_handle();
 };
@@ -158,7 +163,7 @@ class SDGF_Gamepad
 {
  private:
  int device;
- long int length;
+ size_t length;
  input_event input;
  SDGF_Key key;
  public:
