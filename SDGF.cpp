@@ -309,6 +309,9 @@ bool SDGF_Timer::check_timer()
 SDGF_Primitive::SDGF_Primitive()
 {
  surface=NULL;
+ color.red=0;
+ color.green=0;
+ color.blue=0;
 }
 
 SDGF_Primitive::~SDGF_Primitive()
