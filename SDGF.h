@@ -54,6 +54,8 @@ SVGALib homepage: http://www.svgalib.org/
 #define SDGF_GAMEPAD_PRESS 1
 #define SDGF_GAMEPAD_RELEASE 0
 
+enum SDGF_MIRROR_TYPE {SDGF_MIRROR_HORIZONTAL=0,SDGF_MIRROR_VERTICAL=1};
+
 struct SDGF_Color
 {
  unsigned char blue:8;
@@ -267,7 +269,7 @@ class SDGF_Canvas
  unsigned long int get_frames();
  void initialize(SDGF_Screen *Screen);
  void load_image(SDGF_Image &buffer);
- void mirror_image(const unsigned char kind);
+ void mirror_image(const SDGF_MIRROR_TYPE kind);
  void resize_image(const unsigned long int new_width,const unsigned long int new_height);
 };
 

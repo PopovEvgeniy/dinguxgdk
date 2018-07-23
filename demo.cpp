@@ -43,8 +43,8 @@ int main(void)
   fps++;
   gamepad.update();
   if(gamepad.get_press()==SDGF_KEY_X) break;
-  if(gamepad.get_press()==SDGF_KEY_A) ship.mirror_image(0);
-  if(gamepad.get_press()==SDGF_KEY_B) ship.mirror_image(1);
+  if(gamepad.get_press()==SDGF_KEY_A) ship.mirror_image(SDGF_MIRROR_HORIZONTAL);
+  if(gamepad.get_press()==SDGF_KEY_B) ship.mirror_image(SDGF_MIRROR_VERTICAL);
   if(gamepad.get_hold()==SDGF_KEY_UP) y-=4;
   if(gamepad.get_hold()==SDGF_KEY_DOWN) y+=4;
   if(gamepad.get_hold()==SDGF_KEY_LEFT) x-=4;

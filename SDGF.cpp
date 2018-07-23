@@ -698,13 +698,13 @@ void SDGF_Canvas::load_image(SDGF_Image &buffer)
  buffer.destroy_image();
 }
 
-void SDGF_Canvas::mirror_image(const unsigned char kind)
+void SDGF_Canvas::mirror_image(const SDGF_MIRROR_TYPE kind)
 {
  unsigned long int x,y;
  size_t index,index2;
  SDGF_Color *mirrored_image;
  mirrored_image=this->create_buffer(width,height);
- if (kind==0)
+ if (kind==SDGF_MIRROR_HORIZONTAL)
  {
   for (x=0;x<width;++x)
   {
@@ -718,7 +718,7 @@ void SDGF_Canvas::mirror_image(const unsigned char kind)
   }
 
  }
- else
+ if (kind==SDGF_MIRROR_VERTICAL)
  {
    for (x=0;x<width;++x)
   {
