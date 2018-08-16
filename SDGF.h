@@ -263,8 +263,6 @@ class SDGF_Canvas
  SDGF_Canvas();
  ~SDGF_Canvas();
  SDGF_Color *get_image();
- unsigned long int get_width();
- unsigned long int get_height();
  void set_frames(const unsigned long int amount);
  unsigned long int get_frames();
  void initialize(SDGF_Screen *Screen);
@@ -293,18 +291,22 @@ class SDGF_Sprite:public SDGF_Canvas
  private:
  unsigned long int current_x;
  unsigned long int current_y;
+ unsigned long int sprite_width;
+ unsigned long int sprite_height;
+ unsigned long int start;
  bool compare_pixels(const SDGF_Color &first,const SDGF_Color &second);
  void draw_sprite_pixel(const size_t offset,const unsigned long int x,const unsigned long int y);
+ void draw_sprite_image(const unsigned long int x,const unsigned long int y);
  public:
  SDGF_Sprite();
  ~SDGF_Sprite();
+ unsigned long int get_x();
+ unsigned long int get_y();
+ unsigned long int get_width();
+ unsigned long int get_height();
  void clone(SDGF_Sprite &target);
  void draw_sprite_frame(const unsigned long int x,const unsigned long int y,const unsigned long int frame);
  void draw_sprite(const unsigned long int x,const unsigned long int y);
- unsigned long int get_x();
- unsigned long int get_y();
- unsigned long int get_sprite_width();
- unsigned long int get_sprite_height();
  SDGF_Sprite* get_handle();
  SDGF_Box get_box();
 };

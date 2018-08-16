@@ -33,7 +33,7 @@ int main(void)
  screen.clear_screen();
  frame=1;
  ship.set_frames(2);
- text.set_position(font.get_sprite_width(),font.get_sprite_height());
+ text.set_position(font.get_width(),font.get_height());
  timer.set_timer(1);
  fps=0;
  memset(perfomance,0,8);
