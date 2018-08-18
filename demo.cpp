@@ -30,9 +30,11 @@ int main(void)
  ship.initialize(screen.get_handle());
  font.initialize(screen.get_handle());
  space.resize_image(screen_width,screen_height);
+ space.set_kind(SDGF_NORMAL_BACKGROUND);
  screen.clear_screen();
  frame=1;
  ship.set_frames(2);
+ ship.set_kind(SDGF_ANIMATED_SPRITE);
  text.set_position(font.get_width(),font.get_height());
  timer.set_timer(1);
  fps=0;
@@ -53,7 +55,8 @@ int main(void)
   if((y<=0)||(y>=screen_height)) y=screen_height/2;
   space.draw_background();
   text.draw_text(perfomance);
-  ship.draw_sprite_frame(x,y,frame);
+  ship.set_target(frame);
+  ship.draw_sprite(x,y);
   if (timer.check_timer()==true)
   {
    sprintf(perfomance,"%ld",fps);

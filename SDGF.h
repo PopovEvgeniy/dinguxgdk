@@ -1,20 +1,23 @@
 /*
 Simple dingux game framework license
 
-Copyright © 2015–2018, Popov Evgeniy Alekseyevich
+Copyright (C) 2015-2018 Popov Evgeniy Alekseyevich
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+This software is provided 'as-is', without any express or implied
+warranty.  In no event will the authors be held liable for any damages
+arising from the use of this software.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+Permission is granted to anyone to use this software for any purpose,
+including commercial applications, and to alter it and redistribute it
+freely, subject to the following restrictions:
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+1. The origin of this software must not be misrepresented; you must not
+   claim that you wrote the original software. If you use this software
+   in a product, an acknowledgment in the product documentation would be
+   appreciated but is not required.
+2. Altered source versions must be plainly marked as such, and must not be
+   misrepresented as being the original software.
+3. This notice may not be removed or altered from any source distribution.
 
 Third–party code license
 
@@ -55,6 +58,8 @@ SVGALib homepage: http://www.svgalib.org/
 #define SDGF_GAMEPAD_RELEASE 0
 
 enum SDGF_MIRROR_TYPE {SDGF_MIRROR_HORIZONTAL=0,SDGF_MIRROR_VERTICAL=1};
+enum SDGF_BACKGROUND_TYPE {SDGF_NORMAL_BACKGROUND=0,SDGF_HORIZONTAL_BACKGROUND=1,SDGF_VERTICAL_BACKGROUND=2};
+enum SDGF_SPRITE_TYPE {SDGF_SINGE_SPRITE=0,SDGF_ANIMATED_SPRITE=1};
 
 struct SDGF_Color
 {
@@ -248,21 +253,26 @@ class SDGF_Image
 
 class SDGF_Canvas
 {
- protected:
+ private:
  unsigned long int width;
  unsigned long int height;
  unsigned long int frames;
  SDGF_Screen *surface;
+ void clear_buffer();
+ protected:
  SDGF_Color *image;
+ void set_width(const unsigned long int image_width);
+ void set_height(const unsigned long int image_height);
  SDGF_Color *create_buffer(const unsigned long int image_width,const unsigned long int image_height);
  void draw_image_pixel(const size_t offset,const unsigned long int x,const unsigned long int y);
  size_t get_offset(const unsigned long int start,const unsigned long int x,const unsigned long int y);
- private:
- void clear_buffer();
  public:
  SDGF_Canvas();
  ~SDGF_Canvas();
  SDGF_Color *get_image();
+ size_t get_length();
+ unsigned long int get_image_width();
+ unsigned long int get_image_height();
  void set_frames(const unsigned long int amount);
  unsigned long int get_frames();
  void initialize(SDGF_Screen *Screen);
@@ -275,14 +285,15 @@ class SDGF_Background:public SDGF_Canvas
 {
  private:
  unsigned long int start;
- unsigned long int frame_width;
- unsigned long int frame_height;
- void draw_background_image();
+ unsigned long int background_width;
+ unsigned long int background_height;
+ unsigned long int frame;
+ SDGF_BACKGROUND_TYPE current_kind;
  public:
  SDGF_Background();
  ~SDGF_Background();
- void draw_horizontal_background(const unsigned long int frame);
- void draw_vertical_background(const unsigned long int frame);
+ void set_kind(SDGF_BACKGROUND_TYPE kind);
+ void set_target(const unsigned long int target);
  void draw_background();
 };
 
@@ -293,10 +304,11 @@ class SDGF_Sprite:public SDGF_Canvas
  unsigned long int current_y;
  unsigned long int sprite_width;
  unsigned long int sprite_height;
+ unsigned long int frame;
  unsigned long int start;
+ SDGF_SPRITE_TYPE current_kind;
  bool compare_pixels(const SDGF_Color &first,const SDGF_Color &second);
  void draw_sprite_pixel(const size_t offset,const unsigned long int x,const unsigned long int y);
- void draw_sprite_image(const unsigned long int x,const unsigned long int y);
  public:
  SDGF_Sprite();
  ~SDGF_Sprite();
@@ -304,11 +316,13 @@ class SDGF_Sprite:public SDGF_Canvas
  unsigned long int get_y();
  unsigned long int get_width();
  unsigned long int get_height();
- void clone(SDGF_Sprite &target);
- void draw_sprite_frame(const unsigned long int x,const unsigned long int y,const unsigned long int frame);
- void draw_sprite(const unsigned long int x,const unsigned long int y);
  SDGF_Sprite* get_handle();
  SDGF_Box get_box();
+ void set_kind(const SDGF_SPRITE_TYPE kind);
+ SDGF_SPRITE_TYPE get_kind();
+ void set_target(const unsigned long int target);
+ void clone(SDGF_Sprite &target);
+ void draw_sprite(const unsigned long int x,const unsigned long int y);
 };
 
 class SDGF_Text
