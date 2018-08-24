@@ -59,7 +59,7 @@ SVGALib homepage: http://www.svgalib.org/
 
 enum SDGF_MIRROR_TYPE {SDGF_MIRROR_HORIZONTAL=0,SDGF_MIRROR_VERTICAL=1};
 enum SDGF_BACKGROUND_TYPE {SDGF_NORMAL_BACKGROUND=0,SDGF_HORIZONTAL_BACKGROUND=1,SDGF_VERTICAL_BACKGROUND=2};
-enum SDGF_SPRITE_TYPE {SDGF_SINGE_SPRITE=0,SDGF_ANIMATED_SPRITE=1};
+enum SDGF_SPRITE_TYPE {SDGF_SINGE_SPRITE=0,SDGF_HORIZONTAL_STRIP=1,SDGF_VERTICAL_STRIP=2};
 
 struct SDGF_Color
 {
@@ -321,7 +321,7 @@ class SDGF_Sprite:public SDGF_Canvas
  void set_kind(const SDGF_SPRITE_TYPE kind);
  SDGF_SPRITE_TYPE get_kind();
  void set_target(const unsigned long int target);
- void clone(SDGF_Sprite &target);
+ void clone(SDGF_Sprite *target);
  void draw_sprite(const unsigned long int x,const unsigned long int y);
 };
 

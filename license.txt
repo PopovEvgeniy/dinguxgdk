@@ -1,5 +1,3 @@
-Simple dingux game framework license
-
 Copyright (C) 2015-2018 Popov Evgeniy Alekseyevich
 
 This software is provided 'as-is', without any express or implied
@@ -17,8 +15,3 @@ freely, subject to the following restrictions:
 2. Altered source versions must be plainly marked as such, and must not be
    misrepresented as being the original software.
 3. This notice may not be removed or altered from any source distribution.
-
-Third–party code license
-
-Pixel packing algorithm bases on code from SVGALib. SVGALib is public domain.
-SVGALib homepage: http://www.svgalib.org/

@@ -34,7 +34,7 @@ int main(void)
  screen.clear_screen();
  frame=1;
  ship.set_frames(2);
- ship.set_kind(SDGF_ANIMATED_SPRITE);
+ ship.set_kind(SDGF_HORIZONTAL_STRIP);
  text.set_position(font.get_width(),font.get_height());
  timer.set_timer(1);
  fps=0;

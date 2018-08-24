@@ -922,10 +922,15 @@ void SDGF_Sprite::set_kind(const SDGF_SPRITE_TYPE kind)
   sprite_height=this->get_image_height();
   start=0;
   break;
-  case SDGF_ANIMATED_SPRITE:
+  case SDGF_HORIZONTAL_STRIP:
   sprite_width=this->get_image_width()/this->get_frames();
   sprite_height=this->get_image_height();
   start=(frame-1)*sprite_width;
+  break;
+  case SDGF_VERTICAL_STRIP:
+  sprite_width=this->get_image_width();
+  sprite_height=this->get_image_height()/this->get_frames();
+  start=(frame-1)*sprite_width*sprite_height;
   break;
  }
  current_kind=kind;
@@ -946,14 +951,14 @@ void SDGF_Sprite::set_target(const unsigned long int target)
 
 }
 
-void SDGF_Sprite::clone(SDGF_Sprite &target)
+void SDGF_Sprite::clone(SDGF_Sprite *target)
 {
- this->set_width(target.get_image_width());
- this->set_height(target.get_image_height());
- this->set_frames(target.get_frames());
- this->set_kind(target.get_kind());
- image=this->create_buffer(target.get_image_width(),target.get_image_width());
- memmove(image,target.get_image(),target.get_length());
+ this->set_width(target->get_image_width());
+ this->set_height(target->get_image_height());
+ this->set_frames(target->get_frames());
+ this->set_kind(target->get_kind());
+ image=this->create_buffer(target->get_image_width(),target->get_image_width());
+ memmove(image,target->get_image(),target->get_length());
 }
 
 void SDGF_Sprite::draw_sprite(const unsigned long int x,const unsigned long int y)
@@ -1008,7 +1013,7 @@ void SDGF_Text::load_font(SDGF_Sprite *font)
 {
  sprite=font;
  sprite->set_frames(128);
- sprite->set_kind(SDGF_ANIMATED_SPRITE);
+ sprite->set_kind(SDGF_HORIZONTAL_STRIP);
 }
 
 void SDGF_Text::draw_text(const char *text)
