@@ -129,6 +129,8 @@ struct SDGF_Box
  unsigned long int height:32;
 };
 
+void SDGF_Show_Error(const char *message);
+
 class SDGF_Frame
 {
  protected:
@@ -321,7 +323,7 @@ class SDGF_Sprite:public SDGF_Canvas
  void set_kind(const SDGF_SPRITE_TYPE kind);
  SDGF_SPRITE_TYPE get_kind();
  void set_target(const unsigned long int target);
- void clone(SDGF_Sprite *target);
+ void clone(SDGF_Sprite &target);
  void draw_sprite(const unsigned long int x,const unsigned long int y);
 };
 

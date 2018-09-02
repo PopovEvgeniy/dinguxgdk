@@ -31,6 +31,12 @@ SVGALib homepage: http://www.svgalib.org/
 
 #include "SDGF.h"
 
+void SDGF_Show_Error(const char *message)
+{
+ puts(message);
+ exit(EXIT_FAILURE);
+}
+
 SDGF_Frame::SDGF_Frame()
 {
  width=0;
@@ -52,8 +58,7 @@ void SDGF_Frame::create_buffer(const unsigned long screen_width,const unsigned l
  buffer=(unsigned short int*)calloc(length,sizeof(unsigned short int));
  if(buffer==NULL)
  {
-  puts("Can't allocate memory for render buffer");
-  exit(EXIT_FAILURE);
+  SDGF_Show_Error("Can't allocate memory for render buffer");
  }
  length*=sizeof(unsigned short int);
 }
@@ -94,8 +99,7 @@ SDGF_Screen::SDGF_Screen()
  device=open("/dev/fb0",O_RDWR);
  if(device==-1)
  {
-  puts("Can't get access to frame buffer");
-  exit(EXIT_FAILURE);
+  SDGF_Show_Error("Can't get access to frame buffer");
  }
  memset(&setting,0,sizeof(FBIOGET_VSCREENINFO));
  memset(&configuration,0,sizeof(FBIOGET_FSCREENINFO));
@@ -111,13 +115,11 @@ void SDGF_Screen::read_configuration()
 {
  if(ioctl(device,FBIOGET_VSCREENINFO,&setting)==-1)
  {
-  puts("Can't read framebuffer setting");
-  exit(EXIT_FAILURE);
+  SDGF_Show_Error("Can't read framebuffer setting");
  }
  if(ioctl(device,FBIOGET_FSCREENINFO,&configuration)==-1)
  {
-  puts("Can't read framebuffer setting");
-  exit(EXIT_FAILURE);
+  SDGF_Show_Error("Can't read framebuffer setting");
  }
 
 }
@@ -127,8 +129,7 @@ void SDGF_Screen::create_primary_buffer()
  primary=(unsigned char*)mmap(NULL,(size_t)configuration.smem_len,PROT_READ|PROT_WRITE,MAP_SHARED,device,0);
  if(primary==(unsigned char*)MAP_FAILED)
  {
-  puts("Can't allocate memory for primary buffer");
-  exit(EXIT_FAILURE);
+  SDGF_Show_Error("Can't allocate memory for primary buffer");
  }
 
 }
@@ -172,8 +173,7 @@ void SDGF_Gamepad::initialize()
  device=open("/dev/event0",O_RDONLY|O_NONBLOCK|O_NOCTTY);
  if (device==-1)
  {
-  puts("Can't get access to gamepad");
-  exit(EXIT_FAILURE);
+  SDGF_Show_Error("Can't get access to gamepad");
  }
  key.button=0;
  key.state=SDGF_GAMEPAD_RELEASE;
@@ -272,8 +272,7 @@ void SDGF_System::enable_logging(const char *name)
 {
  if(freopen(name,"wt",stdout)==NULL)
  {
-  puts("Can't create log file");
-  exit(EXIT_FAILURE);
+  SDGF_Show_Error("Can't create log file");
  }
 
 }
@@ -417,8 +416,7 @@ unsigned char *SDGF_Image::create_buffer(const size_t length)
  result=(unsigned char*)calloc(length,sizeof(unsigned char));
  if(result==NULL)
  {
-  puts("Can't allocate memory for image buffer");
-  exit(EXIT_FAILURE);
+  SDGF_Show_Error("Can't allocate memory for image buffer");
  }
  return result;
 }
@@ -439,8 +437,7 @@ FILE *SDGF_Image::open_image(const char *name)
  target=fopen(name,"rb");
  if(target==NULL)
  {
-  puts("Can't open a image file");
-  exit(EXIT_FAILURE);
+  SDGF_Show_Error("Can't open a image file");
  }
  return target;
 }
@@ -471,15 +468,13 @@ void SDGF_Image::load_tga(const char *name)
  fread(&image,10,1,target);
  if((head.color_map!=0)||(image.color!=24))
  {
-  puts("Invalid image format");
-  exit(EXIT_FAILURE);
+  SDGF_Show_Error("Invalid image format");
  }
  if(head.type!=2)
  {
   if(head.type!=10)
   {
-   puts("Invalid image format");
-   exit(EXIT_FAILURE);
+   SDGF_Show_Error("Invalid image format");
   }
 
  }
@@ -539,8 +534,7 @@ void SDGF_Image::load_pcx(const char *name)
  fread(&head,128,1,target);
  if((head.color*head.planes!=24)&&(head.compress!=1))
  {
-  puts("Incorrect image format");
-  exit(EXIT_FAILURE);
+  SDGF_Show_Error("Incorrect image format");
  }
  width=head.max_x-head.min_x+1;
  height=head.max_y-head.min_y+1;
@@ -655,8 +649,7 @@ SDGF_Color *SDGF_Canvas::create_buffer(const unsigned long int image_width,const
  result=(SDGF_Color*)calloc(length,3);
  if(result==NULL)
  {
-  puts("Can't allocate memory for image buffer");
-  exit(EXIT_FAILURE);
+  SDGF_Show_Error("Can't allocate memory for image buffer");
  }
  return result;
 }
@@ -951,14 +944,14 @@ void SDGF_Sprite::set_target(const unsigned long int target)
 
 }
 
-void SDGF_Sprite::clone(SDGF_Sprite *target)
+void SDGF_Sprite::clone(SDGF_Sprite &target)
 {
- this->set_width(target->get_image_width());
- this->set_height(target->get_image_height());
- this->set_frames(target->get_frames());
- this->set_kind(target->get_kind());
- image=this->create_buffer(target->get_image_width(),target->get_image_width());
- memmove(image,target->get_image(),target->get_length());
+ this->set_width(target.get_image_width());
+ this->set_height(target.get_image_height());
+ this->set_frames(target.get_frames());
+ this->set_kind(target.get_kind());
+ image=this->create_buffer(target.get_image_width(),target.get_image_width());
+ memmove(image,target.get_image(),target.get_length());
 }
 
 void SDGF_Sprite::draw_sprite(const unsigned long int x,const unsigned long int y)
