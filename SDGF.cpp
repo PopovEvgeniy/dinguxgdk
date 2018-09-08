@@ -63,6 +63,16 @@ void SDGF_Frame::create_buffer(const unsigned long screen_width,const unsigned l
  length*=sizeof(unsigned short int);
 }
 
+unsigned short int *SDGF_Frame::get_buffer()
+{
+ return buffer;
+}
+
+size_t SDGF_Frame::get_length()
+{
+ return length;
+}
+
 unsigned short int SDGF_Frame::get_bgr565(const unsigned char red,const unsigned char green,const unsigned char blue)
 {
  return (blue >> 3) +((green >> 2) << 5)+((red >> 3) << 11); // This code bases on code from SVGALib
@@ -94,8 +104,6 @@ unsigned long int SDGF_Frame::get_height()
 
 SDGF_Screen::SDGF_Screen()
 {
- buffer=NULL;
- primary=(unsigned char*)MAP_FAILED;
  device=open("/dev/fb0",O_RDWR);
  if(device==-1)
  {
@@ -107,7 +115,6 @@ SDGF_Screen::SDGF_Screen()
 
 SDGF_Screen::~SDGF_Screen()
 {
- if(primary!=MAP_FAILED) munmap(primary,(size_t)configuration.smem_len);
  if(device!=-1) close(device);
 }
 
@@ -124,32 +131,22 @@ void SDGF_Screen::read_configuration()
 
 }
 
-void SDGF_Screen::create_primary_buffer()
+unsigned long int SDGF_Screen::get_start_offset()
 {
- primary=(unsigned char*)mmap(NULL,(size_t)configuration.smem_len,PROT_READ|PROT_WRITE,MAP_SHARED,device,0);
- if(primary==(unsigned char*)MAP_FAILED)
- {
-  SDGF_Show_Error("Can't allocate memory for primary buffer");
- }
-
-}
-
-size_t SDGF_Screen::get_start_offset()
-{
- return (size_t)setting.xoffset*(size_t)(setting.bits_per_pixel/8)+(size_t)setting.yoffset*(size_t)configuration.line_length;
+ return setting.xoffset*(setting.bits_per_pixel/8)+setting.yoffset*configuration.line_length;
 }
 
 void SDGF_Screen::initialize()
 {
  this->read_configuration();
- this->create_primary_buffer();
  this->create_buffer(setting.xres,setting.yres);
  start=this->get_start_offset();
 }
 
 void SDGF_Screen::refresh()
 {
- memmove(primary+start,buffer,length);
+ lseek(device,start,SEEK_SET);
+ write(device,this->get_buffer(),this->get_length());
 }
 
 SDGF_Screen* SDGF_Screen::get_handle()

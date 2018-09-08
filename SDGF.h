@@ -35,7 +35,6 @@ SVGALib homepage: http://www.svgalib.org/
 #include <sys/sysinfo.h>
 #include <sys/ioctl.h>
 #include <linux/input.h>
-#include <sys/mman.h>
 #include <linux/fb.h>
 
 #define SDGF_KEY_NONE 0
@@ -133,12 +132,15 @@ void SDGF_Show_Error(const char *message);
 
 class SDGF_Frame
 {
- protected:
+ private:
  unsigned long int width;
  unsigned long int height;
  size_t length;
  unsigned short int *buffer;
+ protected:
  void create_buffer(const unsigned long screen_width,const unsigned long screen_height);
+ unsigned short int *get_buffer();
+ size_t get_length();
  unsigned short int get_bgr565(const unsigned char red,const unsigned char green,const unsigned char blue);
  public:
  SDGF_Frame();
@@ -153,13 +155,11 @@ class SDGF_Screen:public SDGF_Frame
 {
  private:
  int device;
- size_t start;
- unsigned char *primary;
+ unsigned long int start;
  fb_fix_screeninfo configuration;
  fb_var_screeninfo setting;
  void read_configuration();
- void create_primary_buffer();
- size_t get_start_offset();
+ unsigned long int get_start_offset();
  public:
  SDGF_Screen();
  ~SDGF_Screen();
