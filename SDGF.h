@@ -340,8 +340,9 @@ class SDGF_Sprite:public SDGF_Canvas
  void set_kind(const SDGF_SPRITE_TYPE kind);
  SDGF_SPRITE_TYPE get_kind();
  void set_target(const unsigned long int target);
+ void set_position(const unsigned long int x,const unsigned long int y);
  void clone(SDGF_Sprite &target);
- void draw_sprite(const unsigned long int x,const unsigned long int y);
+ void draw_sprite();
 };
 
 class SDGF_Text

@@ -56,7 +56,8 @@ int main(void)
   space.draw_background();
   text.draw_text(perfomance);
   ship.set_target(frame);
-  ship.draw_sprite(x,y);
+  ship.set_position(x,y);
+  ship.draw_sprite();
   if (timer.check_timer()==true)
   {
    sprintf(perfomance,"%ld",fps);
