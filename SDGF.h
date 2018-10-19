@@ -142,6 +142,7 @@ class SDGF_Frame
  unsigned short int *get_buffer();
  size_t get_length();
  unsigned short int get_bgr565(const unsigned char red,const unsigned char green,const unsigned char blue);
+ size_t get_offset(const unsigned long int x,const unsigned long int y);
  public:
  SDGF_Frame();
  ~SDGF_Frame();

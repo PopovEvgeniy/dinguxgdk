@@ -78,11 +78,16 @@ unsigned short int SDGF_Frame::get_bgr565(const unsigned char red,const unsigned
  return (blue >> 3) +((green >> 2) << 5)+((red >> 3) << 11); // This code bases on code from SVGALib
 }
 
+size_t SDGF_Frame::get_offset(const unsigned long int x,const unsigned long int y)
+{
+ return (size_t)x+(size_t)y*(size_t)width;
+}
+
 void SDGF_Frame::draw_pixel(const unsigned long int x,const unsigned long int y,const unsigned char red,const unsigned char green,const unsigned char blue)
 {
  if ((x<width)&&(y<height))
  {
-  buffer[(size_t)x+(size_t)y*(size_t)width]=this->get_bgr565(red,green,blue);
+  buffer[this->get_offset(x,y)]=this->get_bgr565(red,green,blue);
  }
 
 }
