@@ -5,7 +5,7 @@
 /*
 Simple dingux game framework license
 
-Copyright (C) 2015-2018 Popov Evgeniy Alekseyevich
+Copyright (C) 2015-2019 Popov Evgeniy Alekseyevich
 
 This software is provided 'as-is', without any express or implied
 warranty.  In no event will the authors be held liable for any damages
@@ -39,28 +39,62 @@ void SDGF_Show_Error(const char *message)
 
 SDGF_Frame::SDGF_Frame()
 {
- width=0;
- height=0;
+ frame_width=0;
+ frame_height=0;
+ pixels=0;
  length=0;
  buffer=NULL;
+ shadow=NULL;
 }
 
 SDGF_Frame::~SDGF_Frame()
 {
- if(buffer!=NULL) free(buffer);
+ if(buffer!=NULL)
+ {
+  free(buffer);
+  buffer=NULL;
+ }
+ if(shadow!=NULL)
+ {
+  free(shadow);
+  shadow=NULL;
+ }
+
 }
 
-void SDGF_Frame::create_buffer(const unsigned long screen_width,const unsigned long screen_height)
+unsigned short int SDGF_Frame::get_bgr565(const unsigned char red,const unsigned char green,const unsigned char blue)
 {
- width=screen_width;
- height=screen_height;
- length=(size_t)width*(size_t)height;
- buffer=(unsigned short int*)calloc(length,sizeof(unsigned short int));
- if(buffer==NULL)
+ return (blue >> 3) +((green >> 2) << 5)+((red >> 3) << 11); // This code bases on code from SVGALib
+}
+
+size_t SDGF_Frame::get_offset(const unsigned long int x,const unsigned long int y)
+{
+ return (size_t)x+(size_t)y*(size_t)frame_width;
+}
+
+void SDGF_Frame::set_size(const unsigned long int surface_width,const unsigned long int surface_height)
+{
+ frame_width=surface_width;
+ frame_height=surface_height;
+}
+
+unsigned short int *SDGF_Frame::create_buffer(const char *error)
+{
+ unsigned short int *target;
+ pixels=(size_t)frame_width*(size_t)frame_height;
+ target=(unsigned short int*)calloc(pixels,sizeof(unsigned short int));
+ length=pixels*sizeof(unsigned short int);
+ if(target==NULL)
  {
-  SDGF_Show_Error("Can't allocate memory for render buffer");
+  SDGF_Show_Error(error);
  }
- length*=sizeof(unsigned short int);
+ return target;
+}
+
+void SDGF_Frame::create_buffers()
+{
+ buffer=this->create_buffer("Can't allocate memory for render buffer");
+ shadow=this->create_buffer("Can't allocate memory for shadow buffer");
 }
 
 unsigned short int *SDGF_Frame::get_buffer()
@@ -73,19 +107,9 @@ size_t SDGF_Frame::get_length()
  return length;
 }
 
-unsigned short int SDGF_Frame::get_bgr565(const unsigned char red,const unsigned char green,const unsigned char blue)
-{
- return (blue >> 3) +((green >> 2) << 5)+((red >> 3) << 11); // This code bases on code from SVGALib
-}
-
-size_t SDGF_Frame::get_offset(const unsigned long int x,const unsigned long int y)
-{
- return (size_t)x+(size_t)y*(size_t)width;
-}
-
 void SDGF_Frame::draw_pixel(const unsigned long int x,const unsigned long int y,const unsigned char red,const unsigned char green,const unsigned char blue)
 {
- if ((x<width)&&(y<height))
+ if((x<frame_width)&&(y<frame_height))
  {
   buffer[this->get_offset(x,y)]=this->get_bgr565(red,green,blue);
  }
@@ -94,20 +118,76 @@ void SDGF_Frame::draw_pixel(const unsigned long int x,const unsigned long int y,
 
 void SDGF_Frame::clear_screen()
 {
- memset(buffer,0,length);
+ size_t index;
+ for (index=0;index<pixels;++index)
+ {
+  buffer[index]=0;
+ }
+
+}
+
+void SDGF_Frame::save()
+{
+ size_t index;
+ for (index=0;index<pixels;++index)
+ {
+  shadow[index]=buffer[index];
+ }
+
+}
+
+void SDGF_Frame::restore()
+{
+ size_t index;
+ for (index=0;index<pixels;++index)
+ {
+  buffer[index]=shadow[index];
+ }
+
 }
 
 unsigned long int SDGF_Frame::get_width()
 {
- return width;
+ return frame_width;
 }
 
 unsigned long int SDGF_Frame::get_height()
 {
- return height;
+ return frame_height;
 }
 
-SDGF_Screen::SDGF_Screen()
+SDGF_FPS::SDGF_FPS()
+{
+ start=time(NULL);
+ current=0;
+ fps=0;
+}
+
+SDGF_FPS::~SDGF_FPS()
+{
+
+}
+
+void SDGF_FPS::update_counter()
+{
+ time_t stop;
+ if(current==0) start=time(NULL);
+ ++current;
+ stop=time(NULL);
+ if(difftime(stop,start)>=1)
+ {
+  fps=current;
+  current=0;
+ }
+
+}
+
+unsigned long int SDGF_FPS::get_fps()
+{
+ return fps;
+}
+
+SDGF_Render::SDGF_Render()
 {
  device=open("/dev/fb0",O_RDWR);
  if(device==-1)
@@ -118,12 +198,12 @@ SDGF_Screen::SDGF_Screen()
  memset(&configuration,0,sizeof(FBIOGET_FSCREENINFO));
 }
 
-SDGF_Screen::~SDGF_Screen()
+SDGF_Render::~SDGF_Render()
 {
  if(device!=-1) close(device);
 }
 
-void SDGF_Screen::read_configuration()
+void SDGF_Render::read_configuration()
 {
  if(ioctl(device,FBIOGET_VSCREENINFO,&setting)==-1)
  {
@@ -136,22 +216,39 @@ void SDGF_Screen::read_configuration()
 
 }
 
-unsigned long int SDGF_Screen::get_start_offset()
+unsigned long int SDGF_Render::get_start_offset()
 {
  return setting.xoffset*(setting.bits_per_pixel/8)+setting.yoffset*configuration.line_length;
 }
 
-void SDGF_Screen::initialize()
-{
- this->read_configuration();
- this->create_buffer(setting.xres,setting.yres);
- start=this->get_start_offset();
-}
-
-void SDGF_Screen::refresh()
+void SDGF_Render::refresh()
 {
  lseek(device,start,SEEK_SET);
  write(device,this->get_buffer(),this->get_length());
+}
+
+void SDGF_Render::initialize()
+{
+ this->read_configuration();
+ this->set_size(setting.xres,setting.yres);
+ this->create_buffers();
+ start=this->get_start_offset();
+}
+
+SDGF_Screen::SDGF_Screen()
+{
+
+}
+
+SDGF_Screen::~SDGF_Screen()
+{
+
+}
+
+void SDGF_Screen::update()
+{
+ this->refresh();
+ this->update_counter();
 }
 
 SDGF_Screen* SDGF_Screen::get_handle()
@@ -695,6 +792,16 @@ void SDGF_Canvas::clear_buffer()
  if(image!=NULL) free(image);
 }
 
+void SDGF_Canvas::save()
+{
+ surface->save();
+}
+
+void SDGF_Canvas::restore()
+{
+ surface->restore();
+}
+
 void SDGF_Canvas::set_width(const unsigned long int image_width)
 {
  width=image_width;
@@ -841,12 +948,34 @@ SDGF_Background::SDGF_Background()
  start=0;
  background_width=0;
  background_height=0;
+ current=0;
  frame=1;
  current_kind=SDGF_NORMAL_BACKGROUND;
 }
 
 SDGF_Background::~SDGF_Background()
 {
+
+}
+
+void SDGF_Background::draw_background_pixel(const unsigned long int x,const unsigned long int y)
+{
+ size_t offset;
+ offset=this->get_offset(start,x,y);
+ this->draw_image_pixel(offset,x,y);
+}
+
+void SDGF_Background::slow_draw_background()
+{
+ unsigned long int x,y;
+ for(x=0;x<background_width;++x)
+ {
+  for(y=0;y<background_height;++y)
+  {
+   this->draw_background_pixel(x,y);
+  }
+
+ }
 
 }
 
@@ -885,16 +1014,15 @@ void SDGF_Background::set_target(const unsigned long int target)
 
 void SDGF_Background::draw_background()
 {
- unsigned long int x,y;
- size_t offset;
- for(x=0;x<background_width;++x)
+ if (current!=frame)
  {
-  for(y=0;y<background_height;++y)
-  {
-   offset=this->get_offset(start,x,y);
-   this->draw_image_pixel(offset,x,y);
-  }
-
+  this->slow_draw_background();
+  this->save();
+  current=frame;
+ }
+ else
+ {
+  this->restore();
  }
 
 }
@@ -933,6 +1061,16 @@ bool SDGF_Sprite::compare_pixels(const SDGF_Color &first,const SDGF_Color &secon
 void SDGF_Sprite::draw_sprite_pixel(const size_t offset,const unsigned long int x,const unsigned long int y)
 {
  if(this->compare_pixels(image[0],image[offset])==true) this->draw_image_pixel(offset,x,y);
+}
+
+void SDGF_Sprite::set_x(const unsigned long int x)
+{
+ current_x=x;
+}
+
+void SDGF_Sprite::set_y(const unsigned long int y)
+{
+ current_y=y;
 }
 
 unsigned long int SDGF_Sprite::get_x()
@@ -1045,22 +1183,22 @@ SDGF_Text::SDGF_Text()
  current_x=0;
  current_y=0;
  step_x=0;
- sprite=NULL;
+ font=NULL;
 }
 
 SDGF_Text::~SDGF_Text()
 {
- sprite=NULL;
+ font=NULL;
 }
 
 void SDGF_Text::draw_character(const char target)
 {
  if(target>31)
  {
-  sprite->set_target((unsigned long int)target+1);
-  sprite->set_position(step_x,current_y);
-  sprite->draw_sprite();
-  step_x+=sprite->get_width();
+  font->set_position(step_x,current_y);
+  font->set_target((unsigned long int)target+1);
+  font->draw_sprite();
+  step_x+=font->get_width();
  }
 
 }
@@ -1071,11 +1209,11 @@ void SDGF_Text::set_position(const unsigned long int x,const unsigned long int y
  current_y=y;
 }
 
-void SDGF_Text::load_font(SDGF_Sprite *font)
+void SDGF_Text::load_font(SDGF_Sprite *target)
 {
- sprite=font;
- sprite->set_frames(128);
- sprite->set_kind(SDGF_HORIZONTAL_STRIP);
+ font=target;
+ font->set_frames(128);
+ font->set_kind(SDGF_HORIZONTAL_STRIP);
 }
 
 void SDGF_Text::draw_text(const char *text)

@@ -3,7 +3,6 @@
 int main(void)
 {
  long int x,y,screen_width,screen_height;
- unsigned long int fps;
  unsigned char frame;
  char perfomance[8];
  SDGF_Screen screen;
@@ -37,12 +36,10 @@ int main(void)
  ship.set_kind(SDGF_HORIZONTAL_STRIP);
  text.set_position(font.get_width(),font.get_height());
  timer.set_timer(1);
- fps=0;
  memset(perfomance,0,8);
  while(1)
  {
-  screen.refresh();
-  fps++;
+  screen.update();
   gamepad.update();
   if(gamepad.get_press()==SDGF_KEY_X) break;
   if(gamepad.get_press()==SDGF_KEY_A) ship.mirror_image(SDGF_MIRROR_HORIZONTAL);
@@ -53,6 +50,7 @@ int main(void)
   if(gamepad.get_hold()==SDGF_KEY_RIGHT) x+=4;
   if((x<=0)||(x>=screen_width)) x=screen_width/2;
   if((y<=0)||(y>=screen_height)) y=screen_height/2;
+  sprintf(perfomance,"%ld",screen.get_fps());
   space.draw_background();
   text.draw_text(perfomance);
   ship.set_target(frame);
@@ -60,8 +58,6 @@ int main(void)
   ship.draw_sprite();
   if (timer.check_timer()==true)
   {
-   sprintf(perfomance,"%ld",fps);
-   fps=0;
    frame++;
    if (frame>2) frame=1;
   }

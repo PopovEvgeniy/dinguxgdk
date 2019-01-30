@@ -1,7 +1,7 @@
 /*
 Simple dingux game framework license
 
-Copyright (C) 2015-2018 Popov Evgeniy Alekseyevich
+Copyright (C) 2015-2019 Popov Evgeniy Alekseyevich
 
 This software is provided 'as-is', without any express or implied
 warranty.  In no event will the authors be held liable for any damages
@@ -133,26 +133,46 @@ void SDGF_Show_Error(const char *message);
 class SDGF_Frame
 {
  private:
- unsigned long int width;
- unsigned long int height;
+ size_t pixels;
  size_t length;
+ unsigned long int frame_width;
+ unsigned long int frame_height;
  unsigned short int *buffer;
- protected:
- void create_buffer(const unsigned long screen_width,const unsigned long screen_height);
- unsigned short int *get_buffer();
- size_t get_length();
+ unsigned short int *shadow;
  unsigned short int get_bgr565(const unsigned char red,const unsigned char green,const unsigned char blue);
  size_t get_offset(const unsigned long int x,const unsigned long int y);
+ protected:
+ void set_size(const unsigned long int surface_width,const unsigned long int surface_height);
+ unsigned short int *create_buffer(const char *error);
+ void create_buffers();
+ unsigned short int *get_buffer();
+ size_t get_length();
  public:
  SDGF_Frame();
  ~SDGF_Frame();
  void draw_pixel(const unsigned long int x,const unsigned long int y,const unsigned char red,const unsigned char green,const unsigned char blue);
  void clear_screen();
+ void save();
+ void restore();
  unsigned long int get_width();
  unsigned long int get_height();
 };
 
-class SDGF_Screen:public SDGF_Frame
+class SDGF_FPS
+{
+ private:
+ time_t start;
+ unsigned long int current;
+ unsigned long int fps;
+ protected:
+ void update_counter();
+ public:
+ SDGF_FPS();
+ ~SDGF_FPS();
+ unsigned long int get_fps();
+};
+
+class SDGF_Render:public SDGF_Frame
 {
  private:
  int device;
@@ -161,11 +181,20 @@ class SDGF_Screen:public SDGF_Frame
  fb_var_screeninfo setting;
  void read_configuration();
  unsigned long int get_start_offset();
+ protected:
+ void refresh();
+ public:
+ SDGF_Render();
+ ~SDGF_Render();
+ void initialize();
+};
+
+class SDGF_Screen:public SDGF_Render,public SDGF_FPS
+{
  public:
  SDGF_Screen();
  ~SDGF_Screen();
- void initialize();
- void refresh();
+ void update();
  SDGF_Screen* get_handle();
 };
 
@@ -281,6 +310,8 @@ class SDGF_Canvas
  void clear_buffer();
  protected:
  SDGF_Color *image;
+ void save();
+ void restore();
  void set_width(const unsigned long int image_width);
  void set_height(const unsigned long int image_height);
  SDGF_Color *create_buffer(const unsigned long int image_width,const unsigned long int image_height);
@@ -308,7 +339,10 @@ class SDGF_Background:public SDGF_Canvas
  unsigned long int background_width;
  unsigned long int background_height;
  unsigned long int frame;
+ unsigned long int current;
  SDGF_BACKGROUND_TYPE current_kind;
+ void draw_background_pixel(const unsigned long int x,const unsigned long int y);
+ void slow_draw_background();
  public:
  SDGF_Background();
  ~SDGF_Background();
@@ -332,6 +366,8 @@ class SDGF_Sprite:public SDGF_Canvas
  public:
  SDGF_Sprite();
  ~SDGF_Sprite();
+ void set_x(const unsigned long int x);
+ void set_y(const unsigned long int y);
  unsigned long int get_x();
  unsigned long int get_y();
  unsigned long int get_width();
@@ -352,13 +388,13 @@ class SDGF_Text
  unsigned long int current_x;
  unsigned long int current_y;
  unsigned long int step_x;
- SDGF_Sprite *sprite;
+ SDGF_Sprite *font;
  void draw_character(const char target);
  public:
  SDGF_Text();
  ~SDGF_Text();
  void set_position(const unsigned long int x,const unsigned long int y);
- void load_font(SDGF_Sprite *font);
+ void load_font(SDGF_Sprite *target);
  void draw_text(const char *text);
 };
 
