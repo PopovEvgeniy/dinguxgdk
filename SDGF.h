@@ -354,6 +354,7 @@ class SDGF_Background:public SDGF_Canvas
 class SDGF_Sprite:public SDGF_Canvas
 {
  private:
+ bool transparent;
  unsigned long int current_x;
  unsigned long int current_y;
  unsigned long int sprite_width;
@@ -366,6 +367,8 @@ class SDGF_Sprite:public SDGF_Canvas
  public:
  SDGF_Sprite();
  ~SDGF_Sprite();
+ void set_transparent(const bool enabled);
+ bool get_transparent();
  void set_x(const unsigned long int x);
  void set_y(const unsigned long int y);
  unsigned long int get_x();
