@@ -31,13 +31,16 @@ SVGALib homepage: http://www.svgalib.org/
 
 #include "SDGF.h"
 
-void SDGF_Show_Error(const char *message)
+void Show_Error(const char *message)
 {
  puts(message);
  exit(EXIT_FAILURE);
 }
 
-SDGF_Frame::SDGF_Frame()
+namespace SDGF
+{
+
+Frame::Frame()
 {
  frame_width=0;
  frame_height=0;
@@ -47,7 +50,7 @@ SDGF_Frame::SDGF_Frame()
  shadow=NULL;
 }
 
-SDGF_Frame::~SDGF_Frame()
+Frame::~Frame()
 {
  if(buffer!=NULL)
  {
@@ -62,23 +65,23 @@ SDGF_Frame::~SDGF_Frame()
 
 }
 
-unsigned short int SDGF_Frame::get_bgr565(const unsigned char red,const unsigned char green,const unsigned char blue)
+unsigned short int Frame::get_bgr565(const unsigned char red,const unsigned char green,const unsigned char blue)
 {
  return (blue >> 3) +((green >> 2) << 5)+((red >> 3) << 11); // This code bases on code from SVGALib
 }
 
-size_t SDGF_Frame::get_offset(const unsigned long int x,const unsigned long int y)
+size_t Frame::get_offset(const unsigned long int x,const unsigned long int y)
 {
  return (size_t)x+(size_t)y*(size_t)frame_width;
 }
 
-void SDGF_Frame::set_size(const unsigned long int surface_width,const unsigned long int surface_height)
+void Frame::set_size(const unsigned long int surface_width,const unsigned long int surface_height)
 {
  frame_width=surface_width;
  frame_height=surface_height;
 }
 
-unsigned short int *SDGF_Frame::create_buffer(const char *error)
+unsigned short int *Frame::create_buffer(const char *error)
 {
  unsigned short int *target;
  pixels=(size_t)frame_width*(size_t)frame_height;
@@ -86,28 +89,28 @@ unsigned short int *SDGF_Frame::create_buffer(const char *error)
  length=pixels*sizeof(unsigned short int);
  if(target==NULL)
  {
-  SDGF_Show_Error(error);
+  Show_Error(error);
  }
  return target;
 }
 
-void SDGF_Frame::create_buffers()
+void Frame::create_buffers()
 {
  buffer=this->create_buffer("Can't allocate memory for render buffer");
  shadow=this->create_buffer("Can't allocate memory for shadow buffer");
 }
 
-unsigned short int *SDGF_Frame::get_buffer()
+unsigned short int *Frame::get_buffer()
 {
  return buffer;
 }
 
-size_t SDGF_Frame::get_length()
+size_t Frame::get_length()
 {
  return length;
 }
 
-void SDGF_Frame::draw_pixel(const unsigned long int x,const unsigned long int y,const unsigned char red,const unsigned char green,const unsigned char blue)
+void Frame::draw_pixel(const unsigned long int x,const unsigned long int y,const unsigned char red,const unsigned char green,const unsigned char blue)
 {
  if((x<frame_width)&&(y<frame_height))
  {
@@ -116,7 +119,7 @@ void SDGF_Frame::draw_pixel(const unsigned long int x,const unsigned long int y,
 
 }
 
-void SDGF_Frame::clear_screen()
+void Frame::clear_screen()
 {
  size_t index;
  for (index=0;index<pixels;++index)
@@ -126,7 +129,7 @@ void SDGF_Frame::clear_screen()
 
 }
 
-void SDGF_Frame::save()
+void Frame::save()
 {
  size_t index;
  for (index=0;index<pixels;++index)
@@ -136,7 +139,7 @@ void SDGF_Frame::save()
 
 }
 
-void SDGF_Frame::restore()
+void Frame::restore()
 {
  size_t index;
  for (index=0;index<pixels;++index)
@@ -146,29 +149,29 @@ void SDGF_Frame::restore()
 
 }
 
-unsigned long int SDGF_Frame::get_width()
+unsigned long int Frame::get_width()
 {
  return frame_width;
 }
 
-unsigned long int SDGF_Frame::get_height()
+unsigned long int Frame::get_height()
 {
  return frame_height;
 }
 
-SDGF_FPS::SDGF_FPS()
+FPS::FPS()
 {
  start=time(NULL);
  current=0;
  fps=0;
 }
 
-SDGF_FPS::~SDGF_FPS()
+FPS::~FPS()
 {
 
 }
 
-void SDGF_FPS::update_counter()
+void FPS::update_counter()
 {
  time_t stop;
  if(current==0) start=time(NULL);
@@ -182,52 +185,52 @@ void SDGF_FPS::update_counter()
 
 }
 
-unsigned long int SDGF_FPS::get_fps()
+unsigned long int FPS::get_fps()
 {
  return fps;
 }
 
-SDGF_Render::SDGF_Render()
+Render::Render()
 {
  device=open("/dev/fb0",O_RDWR);
  if(device==-1)
  {
-  SDGF_Show_Error("Can't get access to frame buffer");
+  Show_Error("Can't get access to frame buffer");
  }
  memset(&setting,0,sizeof(FBIOGET_VSCREENINFO));
  memset(&configuration,0,sizeof(FBIOGET_FSCREENINFO));
 }
 
-SDGF_Render::~SDGF_Render()
+Render::~Render()
 {
  if(device!=-1) close(device);
 }
 
-void SDGF_Render::read_configuration()
+void Render::read_configuration()
 {
  if(ioctl(device,FBIOGET_VSCREENINFO,&setting)==-1)
  {
-  SDGF_Show_Error("Can't read framebuffer setting");
+  Show_Error("Can't read framebuffer setting");
  }
  if(ioctl(device,FBIOGET_FSCREENINFO,&configuration)==-1)
  {
-  SDGF_Show_Error("Can't read framebuffer setting");
+  Show_Error("Can't read framebuffer setting");
  }
 
 }
 
-unsigned long int SDGF_Render::get_start_offset()
+unsigned long int Render::get_start_offset()
 {
  return setting.xoffset*(setting.bits_per_pixel/8)+setting.yoffset*configuration.line_length;
 }
 
-void SDGF_Render::refresh()
+void Render::refresh()
 {
  lseek(device,start,SEEK_SET);
  write(device,this->get_buffer(),this->get_length());
 }
 
-void SDGF_Render::initialize()
+void Render::initialize()
 {
  this->read_configuration();
  this->set_size(setting.xres,setting.yres);
@@ -235,91 +238,91 @@ void SDGF_Render::initialize()
  start=this->get_start_offset();
 }
 
-SDGF_Screen::SDGF_Screen()
+Screen::Screen()
 {
 
 }
 
-SDGF_Screen::~SDGF_Screen()
+Screen::~Screen()
 {
 
 }
 
-void SDGF_Screen::update()
+void Screen::update()
 {
  this->refresh();
  this->update_counter();
 }
 
-SDGF_Screen* SDGF_Screen::get_handle()
+Screen* Screen::get_handle()
 {
  return this;
 }
 
-SDGF_Gamepad::SDGF_Gamepad()
+Gamepad::Gamepad()
 {
  length=sizeof(input_event);
  memset(&input,0,length);
 }
 
-SDGF_Gamepad::~SDGF_Gamepad()
+Gamepad::~Gamepad()
 {
  if(device!=-1) close(device);
 }
 
-void SDGF_Gamepad::initialize()
+void Gamepad::initialize()
 {
  device=open("/dev/event0",O_RDONLY|O_NONBLOCK|O_NOCTTY);
  if (device==-1)
  {
-  SDGF_Show_Error("Can't get access to gamepad");
+  Show_Error("Can't get access to gamepad");
  }
  key.button=0;
- key.state=SDGF_GAMEPAD_RELEASE;
+ key.state=GAMEPAD_RELEASE;
 }
 
-void SDGF_Gamepad::update()
+void Gamepad::update()
 {
  key.button=0;
- key.state=SDGF_GAMEPAD_RELEASE;
+ key.state=GAMEPAD_RELEASE;
  while (read(device,&input,length)>0)
  {
   if (input.type==EV_KEY)
   {
    key.button=input.code;
    key.state=input.value;
-   if(key.state!=SDGF_GAMEPAD_HOLDING) break;
+   if(key.state!=GAMEPAD_HOLDING) break;
   }
 
  }
 
 }
 
-unsigned short int SDGF_Gamepad::get_hold()
+unsigned short int Gamepad::get_hold()
 {
  unsigned short int result;
- result=SDGF_KEY_NONE;
- if(key.state!=SDGF_GAMEPAD_RELEASE) result=key.button;
+ result=BUTTON_NONE;
+ if(key.state!=GAMEPAD_RELEASE) result=key.button;
  return result;
 }
 
-unsigned short int SDGF_Gamepad::get_press()
+unsigned short int Gamepad::get_press()
 {
  unsigned short int result;
- result=SDGF_KEY_NONE;
- if(key.state==SDGF_GAMEPAD_PRESS) result=key.button;
+ result=BUTTON_NONE;
+ if(key.state==GAMEPAD_PRESS) result=key.button;
  return result;
 }
 
-unsigned short int SDGF_Gamepad::get_release()
+unsigned short int Gamepad::get_release()
 {
  unsigned short int result;
- result=SDGF_KEY_NONE;
- if(key.state==SDGF_GAMEPAD_RELEASE) result=key.button;
+ result=BUTTON_NONE;
+ if(key.state==GAMEPAD_RELEASE) result=key.button;
  return result;
 }
 
-unsigned long int SDGF_Memory::get_total_memory()
+unsigned long int Memory::get_total_memory()
 {
  unsigned long int memory;
  struct sysinfo information;
@@ -328,7 +331,7 @@ unsigned long int SDGF_Memory::get_total_memory()
  return memory;
 }
 
-unsigned long int SDGF_Memory::get_free_memory()
+unsigned long int Memory::get_free_memory()
 {
  unsigned long int memory;
  struct sysinfo information;
@@ -337,81 +340,81 @@ unsigned long int SDGF_Memory::get_free_memory()
  return memory;
 }
 
-SDGF_System::SDGF_System()
+System::System()
 {
  srand(time(NULL));
 }
 
-SDGF_System::~SDGF_System()
+System::~System()
 {
 
 }
 
-unsigned long int SDGF_System::get_random(const unsigned long int number)
+unsigned long int System::get_random(const unsigned long int number)
 {
  return rand()%number;
 }
 
-void SDGF_System::quit()
+void System::quit()
 {
  exit(EXIT_SUCCESS);
 }
 
-void SDGF_System::run(const char *command)
+void System::run(const char *command)
 {
  system(command);
 }
 
-char* SDGF_System::read_environment(const char *variable)
+char* System::read_environment(const char *variable)
 {
  return getenv(variable);
 }
 
-void SDGF_System::enable_logging(const char *name)
+void System::enable_logging(const char *name)
 {
  if(freopen(name,"wt",stdout)==NULL)
  {
-  SDGF_Show_Error("Can't create log file");
+  Show_Error("Can't create log file");
  }
 
 }
 
-SDGF_File::SDGF_File()
+Binary_File::Binary_File()
 {
  target=NULL;
 }
 
-SDGF_File::~SDGF_File()
+Binary_File::~Binary_File()
 {
  if(target!=NULL) fclose(target);
 }
 
-void SDGF_File::open(const char *name)
+void Binary_File::open(const char *name)
 {
  target=fopen(name,"w+b");
  if(target==NULL)
  {
-  SDGF_Show_Error("Can't open the binary file");
+  Show_Error("Can't open the binary file");
  }
 
 }
 
-void SDGF_File::close()
+void Binary_File::close()
 {
  if(target!=NULL) fclose(target);
 }
 
-void SDGF_File::set_position(const off_t offset)
+void Binary_File::set_position(const off_t offset)
 {
  fseek(target,offset,SEEK_SET);
 }
 
-long int SDGF_File::get_position()
+long int Binary_File::get_position()
 {
  return ftell(target);
 }
 
-long int SDGF_File::get_length()
+long int Binary_File::get_length()
 {
  long int result;
  fseek(target,0,SEEK_END);
@@ -420,17 +423,17 @@ long int SDGF_File::get_length()
  return result;
 }
 
-void SDGF_File::read(void *buffer,const size_t length)
+void Binary_File::read(void *buffer,const size_t length)
 {
  fread(buffer,length,1,target);
 }
 
-void SDGF_File::write(void *buffer,const size_t length)
+void Binary_File::write(void *buffer,const size_t length)
 {
  fwrite(buffer,length,1,target);
 }
 
-bool SDGF_File::check_error()
+bool Binary_File::check_error()
 {
  bool result;
  result=false;
@@ -438,24 +441,24 @@ bool SDGF_File::check_error()
  return result;
 }
 
-SDGF_Timer::SDGF_Timer()
+Timer::Timer()
 {
  interval=0;
  start=time(NULL);
 }
 
-SDGF_Timer::~SDGF_Timer()
+Timer::~Timer()
 {
 
 }
 
-void SDGF_Timer::set_timer(const unsigned long int seconds)
+void Timer::set_timer(const unsigned long int seconds)
 {
  interval=seconds;
  start=time(NULL);
 }
 
-bool SDGF_Timer::check_timer()
+bool Timer::check_timer()
 {
  bool result;
  time_t stop;
@@ -469,7 +472,7 @@ bool SDGF_Timer::check_timer()
  return result;
 }
 
-SDGF_Primitive::SDGF_Primitive()
+Primitive::Primitive()
 {
  surface=NULL;
  color.red=0;
@@ -477,7 +480,7 @@ SDGF_Primitive::SDGF_Primitive()
  color.blue=0;
 }
 
-SDGF_Primitive::~SDGF_Primitive()
+Primitive::~Primitive()
 {
  color.red=0;
  color.green=0;
@@ -485,19 +488,19 @@ SDGF_Primitive::~SDGF_Primitive()
  surface=NULL;
 }
 
-void SDGF_Primitive::initialize(SDGF_Screen *Screen)
+void Primitive::initialize(Screen *Screen)
 {
  surface=Screen;
 }
 
-void SDGF_Primitive::set_color(const unsigned char red,const unsigned char green,const unsigned char blue)
+void Primitive::set_color(const unsigned char red,const unsigned char green,const unsigned char blue)
 {
  color.red=red;
  color.green=green;
  color.blue=blue;
 }
 
-void SDGF_Primitive::draw_line(const unsigned long int x1,const unsigned long int y1,const unsigned long int x2,const unsigned long int y2)
+void Primitive::draw_line(const unsigned long int x1,const unsigned long int y1,const unsigned long int x2,const unsigned long int y2)
 {
  unsigned long int delta_x,delta_y,index,steps;
  float x,y,shift_x,shift_y;
@@ -532,7 +535,7 @@ void SDGF_Primitive::draw_line(const unsigned long int x1,const unsigned long in
 
 }
 
-void SDGF_Primitive::draw_rectangle(const unsigned long int x,const unsigned long int y,const unsigned long int width,const unsigned long int height)
+void Primitive::draw_rectangle(const unsigned long int x,const unsigned long int y,const unsigned long int width,const unsigned long int height)
 {
  unsigned long int stop_x,stop_y;
  stop_x=x+width;
@@ -543,7 +546,7 @@ void SDGF_Primitive::draw_rectangle(const unsigned long int x,const unsigned lon
  this->draw_line(stop_x,y,stop_x,stop_y);
 }
 
-void SDGF_Primitive::draw_filled_rectangle(const unsigned long int x,const unsigned long int y,const unsigned long int width,const unsigned long int height)
+void Primitive::draw_filled_rectangle(const unsigned long int x,const unsigned long int y,const unsigned long int width,const unsigned long int height)
 {
  unsigned long int step_x,step_y,stop_x,stop_y;
  stop_x=x+width;
@@ -559,30 +562,30 @@ void SDGF_Primitive::draw_filled_rectangle(const unsigned long int x,const unsig
 
 }
 
-SDGF_Image::SDGF_Image()
+Image::Image()
 {
  width=0;
  height=0;
  data=NULL;
 }
 
-SDGF_Image::~SDGF_Image()
+Image::~Image()
 {
  if(data!=NULL) free(data);
 }
 
-unsigned char *SDGF_Image::create_buffer(const size_t length)
+unsigned char *Image::create_buffer(const size_t length)
 {
  unsigned char *result;
  result=(unsigned char*)calloc(length,sizeof(unsigned char));
  if(result==NULL)
  {
-  SDGF_Show_Error("Can't allocate memory for image buffer");
+  Show_Error("Can't allocate memory for image buffer");
  }
  return result;
 }
 
-void SDGF_Image::clear_buffer()
+void Image::clear_buffer()
 {
  if(data!=NULL)
  {
@@ -592,18 +595,18 @@ void SDGF_Image::clear_buffer()
 
 }
 
-FILE *SDGF_Image::open_image(const char *name)
+FILE *Image::open_image(const char *name)
 {
  FILE *target;
  target=fopen(name,"rb");
  if(target==NULL)
  {
-  SDGF_Show_Error("Can't open a image file");
+  Show_Error("Can't open a image file");
  }
  return target;
 }
 
-unsigned long int SDGF_Image::get_file_size(FILE *target)
+unsigned long int Image::get_file_size(FILE *target)
 {
  unsigned long int length;
  fseek(target,0,SEEK_END);
@@ -612,7 +615,7 @@ unsigned long int SDGF_Image::get_file_size(FILE *target)
  return length;
 }
 
-void SDGF_Image::load_tga(const char *name)
+void Image::load_tga(const char *name)
 {
  FILE *target;
  size_t index,position,amount,compressed_length,uncompressed_length;
@@ -629,13 +632,13 @@ void SDGF_Image::load_tga(const char *name)
  fread(&image,10,1,target);
  if((head.color_map!=0)||(image.color!=24))
  {
-  SDGF_Show_Error("Invalid image format");
+  Show_Error("Invalid image format");
  }
  if(head.type!=2)
  {
   if(head.type!=10)
   {
-   SDGF_Show_Error("Invalid image format");
+   Show_Error("Invalid image format");
   }
 
  }
@@ -680,7 +683,7 @@ void SDGF_Image::load_tga(const char *name)
  data=uncompressed;
 }
 
-void SDGF_Image::load_pcx(const char *name)
+void Image::load_pcx(const char *name)
 {
  FILE *target;
  unsigned long int x,y;
@@ -695,7 +698,7 @@ void SDGF_Image::load_pcx(const char *name)
  fread(&head,128,1,target);
  if((head.color*head.planes!=24)&&(head.compress!=1))
  {
-  SDGF_Show_Error("Incorrect image format");
+  Show_Error("Incorrect image format");
  }
  width=head.max_x-head.min_x+1;
  height=head.max_y-head.min_y+1;
@@ -745,34 +748,34 @@ void SDGF_Image::load_pcx(const char *name)
  data=original;
 }
 
-unsigned long int SDGF_Image::get_width()
+unsigned long int Image::get_width()
 {
  return width;
 }
 
-unsigned long int SDGF_Image::get_height()
+unsigned long int Image::get_height()
 {
  return height;
 }
 
-size_t SDGF_Image::get_data_length()
+size_t Image::get_data_length()
 {
  return (size_t)width*(size_t)height*3;
 }
 
-unsigned char *SDGF_Image::get_data()
+unsigned char *Image::get_data()
 {
  return data;
 }
 
-void SDGF_Image::destroy_image()
+void Image::destroy_image()
 {
  width=0;
  height=0;
  this->clear_buffer();
 }
 
-SDGF_Canvas::SDGF_Canvas()
+Canvas::Canvas()
 {
  image=NULL;
  surface=NULL;
@@ -781,96 +784,96 @@ SDGF_Canvas::SDGF_Canvas()
  frames=1;
 }
 
-SDGF_Canvas::~SDGF_Canvas()
+Canvas::~Canvas()
 {
  surface=NULL;
  if(image!=NULL) free(image);
 }
 
-void SDGF_Canvas::clear_buffer()
+void Canvas::clear_buffer()
 {
  if(image!=NULL) free(image);
 }
 
-void SDGF_Canvas::save()
+void Canvas::save()
 {
  surface->save();
 }
 
-void SDGF_Canvas::restore()
+void Canvas::restore()
 {
  surface->restore();
 }
 
-void SDGF_Canvas::set_width(const unsigned long int image_width)
+void Canvas::set_width(const unsigned long int image_width)
 {
  width=image_width;
 }
 
-void SDGF_Canvas::set_height(const unsigned long int image_height)
+void Canvas::set_height(const unsigned long int image_height)
 {
  height=image_height;
 }
 
-SDGF_Color *SDGF_Canvas::create_buffer(const unsigned long int image_width,const unsigned long int image_height)
+IMG_Pixel *Canvas::create_buffer(const unsigned long int image_width,const unsigned long int image_height)
 {
- SDGF_Color *result;
+ IMG_Pixel *result;
  size_t length;
  length=(size_t)image_width*(size_t)image_height;
- result=(SDGF_Color*)calloc(length,3);
+ result=(IMG_Pixel*)calloc(length,3);
  if(result==NULL)
  {
-  SDGF_Show_Error("Can't allocate memory for image buffer");
+  Show_Error("Can't allocate memory for image buffer");
  }
  return result;
 }
 
-void SDGF_Canvas::draw_image_pixel(const size_t offset,const unsigned long int x,const unsigned long int y)
+void Canvas::draw_image_pixel(const size_t offset,const unsigned long int x,const unsigned long int y)
 {
  surface->draw_pixel(x,y,image[offset].red,image[offset].green,image[offset].blue);
 }
 
-size_t SDGF_Canvas::get_offset(const unsigned long int start,const unsigned long int x,const unsigned long int y)
+size_t Canvas::get_offset(const unsigned long int start,const unsigned long int x,const unsigned long int y)
 {
  return (size_t)start+(size_t)x+(size_t)y*(size_t)width;
 }
 
-SDGF_Color *SDGF_Canvas::get_image()
+IMG_Pixel *Canvas::get_image()
 {
  return image;
 }
 
-size_t SDGF_Canvas::get_length()
+size_t Canvas::get_length()
 {
  return (size_t)width*(size_t)height;
 }
 
-unsigned long int SDGF_Canvas::get_image_width()
+unsigned long int Canvas::get_image_width()
 {
  return width;
 }
 
-unsigned long int SDGF_Canvas::get_image_height()
+unsigned long int Canvas::get_image_height()
 {
  return height;
 }
 
-void SDGF_Canvas::set_frames(const unsigned long int amount)
+void Canvas::set_frames(const unsigned long int amount)
 {
  if(amount>1) frames=amount;
 }
 
-unsigned long int SDGF_Canvas::get_frames()
+unsigned long int Canvas::get_frames()
 {
  return frames;
 }
 
-void SDGF_Canvas::initialize(SDGF_Screen *Screen)
+void Canvas::initialize(Screen *Screen)
 {
  surface=Screen;
 }
 
-void SDGF_Canvas::load_image(SDGF_Image &buffer)
+void Canvas::load_image(Image &buffer)
 {
  width=buffer.get_width();
  height=buffer.get_height();
@@ -880,13 +883,13 @@ void SDGF_Canvas::load_image(SDGF_Image &buffer)
  buffer.destroy_image();
 }
 
-void SDGF_Canvas::mirror_image(const SDGF_MIRROR_TYPE kind)
+void Canvas::mirror_image(const MIRROR_TYPE kind)
 {
  unsigned long int x,y;
  size_t index,index2;
- SDGF_Color *mirrored_image;
+ IMG_Pixel *mirrored_image;
  mirrored_image=this->create_buffer(width,height);
- if (kind==SDGF_MIRROR_HORIZONTAL)
+ if (kind==MIRROR_HORIZONTAL)
  {
   for (x=0;x<width;++x)
   {
@@ -900,7 +903,7 @@ void SDGF_Canvas::mirror_image(const SDGF_MIRROR_TYPE kind)
   }
 
  }
- if(kind==SDGF_MIRROR_VERTICAL)
+ if(kind==MIRROR_VERTICAL)
  {
    for (x=0;x<width;++x)
   {
@@ -918,12 +921,12 @@ void SDGF_Canvas::mirror_image(const SDGF_MIRROR_TYPE kind)
  image=mirrored_image;
 }
 
-void SDGF_Canvas::resize_image(const unsigned long int new_width,const unsigned long int new_height)
+void Canvas::resize_image(const unsigned long int new_width,const unsigned long int new_height)
 {
  float x_ratio,y_ratio;
  unsigned long int x,y;
  size_t index,index2;
- SDGF_Color *scaled_image;
+ IMG_Pixel *scaled_image;
  scaled_image=this->create_buffer(new_width,new_height);
  x_ratio=(float)width/(float)new_width;
  y_ratio=(float)height/(float)new_height;
@@ -943,29 +946,29 @@ void SDGF_Canvas::resize_image(const unsigned long int new_width,const unsigned 
  height=new_height;
 }
 
-SDGF_Background::SDGF_Background()
+Background::Background()
 {
  start=0;
  background_width=0;
  background_height=0;
  current=0;
  frame=1;
- current_kind=SDGF_NORMAL_BACKGROUND;
+ current_kind=NORMAL_BACKGROUND;
 }
 
-SDGF_Background::~SDGF_Background()
+Background::~Background()
 {
 
 }
 
-void SDGF_Background::draw_background_pixel(const unsigned long int x,const unsigned long int y)
+void Background::draw_background_pixel(const unsigned long int x,const unsigned long int y)
 {
  size_t offset;
  offset=this->get_offset(start,x,y);
  this->draw_image_pixel(offset,x,y);
 }
 
-void SDGF_Background::slow_draw_background()
+void Background::slow_draw_background()
 {
  unsigned long int x,y;
  for(x=0;x<background_width;++x)
@@ -979,21 +982,21 @@ void SDGF_Background::slow_draw_background()
 
 }
 
-void SDGF_Background::set_kind(SDGF_BACKGROUND_TYPE kind)
+void Background::set_kind(BACKGROUND_TYPE kind)
 {
  switch(kind)
  {
-  case SDGF_NORMAL_BACKGROUND:
+  case NORMAL_BACKGROUND:
   background_width=this->get_image_width();
   background_height=this->get_image_height();
   start=0;
   break;
-  case SDGF_HORIZONTAL_BACKGROUND:
+  case HORIZONTAL_BACKGROUND:
   background_width=this->get_image_width()/this->get_frames();
   background_height=this->get_image_height();
   start=(frame-1)*background_width;
   break;
-  case SDGF_VERTICAL_BACKGROUND:
+  case VERTICAL_BACKGROUND:
   background_width=this->get_image_width();
   background_height=this->get_image_height()/this->get_frames();
   start=(frame-1)*background_width*background_height;
@@ -1002,7 +1005,7 @@ void SDGF_Background::set_kind(SDGF_BACKGROUND_TYPE kind)
  current_kind=kind;
 }
 
-void SDGF_Background::set_target(const unsigned long int target)
+void Background::set_target(const unsigned long int target)
 {
  if((target>0)&&(target<=this->get_frames()))
  {
@@ -1012,7 +1015,7 @@ void SDGF_Background::set_target(const unsigned long int target)
 
 }
 
-void SDGF_Background::draw_background()
+void Background::draw_background()
 {
  if (current!=frame)
  {
@@ -1027,7 +1030,7 @@ void SDGF_Background::draw_background()
 
 }
 
-SDGF_Sprite::SDGF_Sprite()
+Sprite::Sprite()
 {
  transparent=true;
  current_x=0;
@@ -1036,15 +1039,15 @@ SDGF_Sprite::SDGF_Sprite()
  sprite_height=0;
  frame=0;
  start=0;
- current_kind=SDGF_SINGE_SPRITE;
+ current_kind=SINGLE_SPRITE;
 }
 
-SDGF_Sprite::~SDGF_Sprite()
+Sprite::~Sprite()
 {
 
 }
 
-bool SDGF_Sprite::compare_pixels(const SDGF_Color &first,const SDGF_Color &second)
+bool Sprite::compare_pixels(const IMG_Pixel &first,const IMG_Pixel &second)
 {
  bool result;
  result=false;
@@ -1059,7 +1062,7 @@ bool SDGF_Sprite::compare_pixels(const SDGF_Color &first,const SDGF_Color &secon
  return result;
 }
 
-void SDGF_Sprite::draw_sprite_pixel(const size_t offset,const unsigned long int x,const unsigned long int y)
+void Sprite::draw_sprite_pixel(const size_t offset,const unsigned long int x,const unsigned long int y)
 {
  if (transparent==true)
  {
@@ -1072,54 +1075,54 @@ void SDGF_Sprite::draw_sprite_pixel(const size_t offset,const unsigned long int 
 
 }
 
-void SDGF_Sprite::set_transparent(const bool enabled)
+void Sprite::set_transparent(const bool enabled)
 {
  transparent=enabled;
 }
 
-bool SDGF_Sprite::get_transparent()
+bool Sprite::get_transparent()
 {
  return transparent;
 }
 
-void SDGF_Sprite::set_x(const unsigned long int x)
+void Sprite::set_x(const unsigned long int x)
 {
  current_x=x;
 }
 
-void SDGF_Sprite::set_y(const unsigned long int y)
+void Sprite::set_y(const unsigned long int y)
 {
  current_y=y;
 }
 
-unsigned long int SDGF_Sprite::get_x()
+unsigned long int Sprite::get_x()
 {
  return current_x;
 }
 
-unsigned long int SDGF_Sprite::get_y()
+unsigned long int Sprite::get_y()
 {
  return current_y;
 }
 
-unsigned long int SDGF_Sprite::get_width()
+unsigned long int Sprite::get_width()
 {
  return sprite_width;
 }
 
-unsigned long int SDGF_Sprite::get_height()
+unsigned long int Sprite::get_height()
 {
  return sprite_height;
 }
 
-SDGF_Sprite* SDGF_Sprite::get_handle()
+Sprite* Sprite::get_handle()
 {
  return this;
 }
 
-SDGF_Box SDGF_Sprite::get_box()
+Box_Collision Sprite::get_box()
 {
- SDGF_Box target;
+ Box_Collision target;
  target.x=current_x;
  target.y=current_y;
  target.width=sprite_width;
@@ -1127,21 +1130,21 @@ SDGF_Box SDGF_Sprite::get_box()
  return target;
 }
 
-void SDGF_Sprite::set_kind(const SDGF_SPRITE_TYPE kind)
+void Sprite::set_kind(const SPRITE_TYPE kind)
 {
  switch(kind)
  {
-  case SDGF_SINGE_SPRITE:
+  case SINGLE_SPRITE:
   sprite_width=this->get_image_width();
   sprite_height=this->get_image_height();
   start=0;
   break;
-  case SDGF_HORIZONTAL_STRIP:
+  case HORIZONTAL_STRIP:
   sprite_width=this->get_image_width()/this->get_frames();
   sprite_height=this->get_image_height();
   start=(frame-1)*sprite_width;
   break;
-  case SDGF_VERTICAL_STRIP:
+  case VERTICAL_STRIP:
   sprite_width=this->get_image_width();
   sprite_height=this->get_image_height()/this->get_frames();
   start=(frame-1)*sprite_width*sprite_height;
@@ -1150,12 +1153,12 @@ void SDGF_Sprite::set_kind(const SDGF_SPRITE_TYPE kind)
  current_kind=kind;
 }
 
-SDGF_SPRITE_TYPE SDGF_Sprite::get_kind()
+SPRITE_TYPE Sprite::get_kind()
 {
  return current_kind;
 }
 
-void SDGF_Sprite::set_target(const unsigned long int target)
+void Sprite::set_target(const unsigned long int target)
 {
  if((target>0)&&(target<=this->get_frames()))
  {
@@ -1165,13 +1168,13 @@ void SDGF_Sprite::set_target(const unsigned long int target)
 
 }
 
-void SDGF_Sprite::set_position(const unsigned long int x,const unsigned long int y)
+void Sprite::set_position(const unsigned long int x,const unsigned long int y)
 {
  current_x=x;
  current_y=y;
 }
 
-void SDGF_Sprite::clone(SDGF_Sprite &target)
+void Sprite::clone(Sprite &target)
 {
  this->set_width(target.get_image_width());
  this->set_height(target.get_image_height());
@@ -1182,7 +1185,7 @@ void SDGF_Sprite::clone(SDGF_Sprite &target)
  memmove(image,target.get_image(),target.get_length());
 }
 
-void SDGF_Sprite::draw_sprite()
+void Sprite::draw_sprite()
 {
  size_t offset;
  unsigned long int sprite_x,sprite_y;
@@ -1198,7 +1201,7 @@ void SDGF_Sprite::draw_sprite()
 
 }
 
-SDGF_Text::SDGF_Text()
+Text::Text()
 {
  current_x=0;
  current_y=0;
@@ -1206,12 +1209,12 @@ SDGF_Text::SDGF_Text()
  font=NULL;
 }
 
-SDGF_Text::~SDGF_Text()
+Text::~Text()
 {
  font=NULL;
 }
 
-void SDGF_Text::draw_character(const char target)
+void Text::draw_character(const char target)
 {
  if(target>31)
  {
@@ -1223,20 +1226,20 @@ void SDGF_Text::draw_character(const char target)
 
 }
 
-void SDGF_Text::set_position(const unsigned long int x,const unsigned long int y)
+void Text::set_position(const unsigned long int x,const unsigned long int y)
 {
  current_x=x;
  current_y=y;
 }
 
-void SDGF_Text::load_font(SDGF_Sprite *target)
+void Text::load_font(Sprite *target)
 {
  font=target;
  font->set_frames(128);
- font->set_kind(SDGF_HORIZONTAL_STRIP);
+ font->set_kind(HORIZONTAL_STRIP);
 }
 
-void SDGF_Text::draw_text(const char *text)
+void Text::draw_text(const char *text)
 {
  size_t index,length;
  length=strlen(text);
@@ -1248,7 +1251,7 @@ void SDGF_Text::draw_text(const char *text)
 
 }
 
-bool SDGF_Collision::check_horizontal_collision(const SDGF_Box &first,const SDGF_Box &second)
+bool Collision::check_horizontal_collision(const Box_Collision &first,const Box_Collision &second)
 {
  bool result;
  result=false;
@@ -1259,7 +1262,7 @@ bool SDGF_Collision::check_horizontal_collision(const SDGF_Box &first,const SDGF
  return result;
 }
 
-bool SDGF_Collision::check_vertical_collision(const SDGF_Box &first,const SDGF_Box &second)
+bool Collision::check_vertical_collision(const Box_Collision &first,const Box_Collision &second)
 {
  bool result;
  result=false;
@@ -1270,7 +1273,9 @@ bool SDGF_Collision::check_vertical_collision(const SDGF_Box &first,const SDGF_B
  return result;
 }
 
-bool SDGF_Collision::check_collision(const SDGF_Box &first,const SDGF_Box &second)
+bool Collision::check_collision(const Box_Collision &first,const Box_Collision &second)
 {
  return this->check_horizontal_collision(first,second) || this->check_vertical_collision(first,second);
+}
+
 }

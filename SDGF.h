@@ -37,37 +37,37 @@ SVGALib homepage: http://www.svgalib.org/
 #include <linux/input.h>
 #include <linux/fb.h>
 
-#define SDGF_KEY_NONE 0
-#define SDGF_KEY_UP KEY_UP
-#define SDGF_KEY_DOWN KEY_DOWN
-#define SDGF_KEY_LEFT KEY_LEFT
-#define SDGF_KEY_RIGHT KEY_RIGHT
-#define SDGF_KEY_A KEY_LEFTCTRL
-#define SDGF_KEY_B KEY_LEFTALT
-#define SDGF_KEY_X KEY_SPACE
-#define SDGF_KEY_Y KEY_LEFTSHIFT
-#define SDGF_KEY_L KEY_TAB
-#define SDGF_KEY_R KEY_BACKSPACE
-#define SDGF_KEY_START KEY_ENTER
-#define SDGF_KEY_SELECT KEY_ESC
-#define SDGF_KEY_POWER KEY_POWER
-#define SDGF_KEY_HOLD KEY_HOLD
-#define SDGF_GAMEPAD_HOLDING 2
-#define SDGF_GAMEPAD_PRESS 1
-#define SDGF_GAMEPAD_RELEASE 0
+#define BUTTON_NONE 0
+#define BUTTON_UP KEY_UP
+#define BUTTON_DOWN KEY_DOWN
+#define BUTTON_LEFT KEY_LEFT
+#define BUTTON_RIGHT KEY_RIGHT
+#define BUTTON_A KEY_LEFTCTRL
+#define BUTTON_B KEY_LEFTALT
+#define BUTTON_X KEY_SPACE
+#define BUTTON_Y KEY_LEFTSHIFT
+#define BUTTON_L KEY_TAB
+#define BUTTON_R KEY_BACKSPACE
+#define BUTTON_START KEY_ENTER
+#define BUTTON_SELECT KEY_ESC
+#define BUTTON_POWER KEY_POWER
+#define BUTTON_HOLD KEY_HOLD
+#define GAMEPAD_HOLDING 2
+#define GAMEPAD_PRESS 1
+#define GAMEPAD_RELEASE 0
 
-enum SDGF_MIRROR_TYPE {SDGF_MIRROR_HORIZONTAL=0,SDGF_MIRROR_VERTICAL=1};
-enum SDGF_BACKGROUND_TYPE {SDGF_NORMAL_BACKGROUND=0,SDGF_HORIZONTAL_BACKGROUND=1,SDGF_VERTICAL_BACKGROUND=2};
-enum SDGF_SPRITE_TYPE {SDGF_SINGE_SPRITE=0,SDGF_HORIZONTAL_STRIP=1,SDGF_VERTICAL_STRIP=2};
+enum MIRROR_TYPE {MIRROR_HORIZONTAL=0,MIRROR_VERTICAL=1};
+enum BACKGROUND_TYPE {NORMAL_BACKGROUND=0,HORIZONTAL_BACKGROUND=1,VERTICAL_BACKGROUND=2};
+enum SPRITE_TYPE {SINGLE_SPRITE=0,HORIZONTAL_STRIP=1,VERTICAL_STRIP=2};
 
-struct SDGF_Color
+struct IMG_Pixel
 {
  unsigned char blue:8;
  unsigned char green:8;
  unsigned char red:8;
 };
 
-struct SDGF_Key
+struct Key_State
 {
  unsigned short int button;
  unsigned char state;
@@ -120,7 +120,7 @@ struct PCX_head
  unsigned char filled[54];
 };
 
-struct SDGF_Box
+struct Box_Collision
 {
  unsigned long int x:32;
  unsigned long int y:32;
@@ -128,9 +128,12 @@ struct SDGF_Box
  unsigned long int height:32;
 };
 
-void SDGF_Show_Error(const char *message);
+void Show_Error(const char *message);
 
-class SDGF_Frame
+namespace SDGF
+{
+
+class Frame
 {
  private:
  size_t pixels;
@@ -148,8 +151,8 @@ class SDGF_Frame
  unsigned short int *get_buffer();
  size_t get_length();
  public:
- SDGF_Frame();
- ~SDGF_Frame();
+ Frame();
+ ~Frame();
  void draw_pixel(const unsigned long int x,const unsigned long int y,const unsigned char red,const unsigned char green,const unsigned char blue);
  void clear_screen();
  void save();
@@ -158,7 +161,7 @@ class SDGF_Frame
  unsigned long int get_height();
 };
 
-class SDGF_FPS
+class FPS
 {
  private:
  time_t start;
@@ -167,12 +170,12 @@ class SDGF_FPS
  protected:
  void update_counter();
  public:
- SDGF_FPS();
- ~SDGF_FPS();
+ FPS();
+ ~FPS();
  unsigned long int get_fps();
 };
 
-class SDGF_Render:public SDGF_Frame
+class Render:public Frame
 {
  private:
  int device;
@@ -184,30 +187,30 @@ class SDGF_Render:public SDGF_Frame
  protected:
  void refresh();
  public:
- SDGF_Render();
- ~SDGF_Render();
+ Render();
+ ~Render();
  void initialize();
 };
 
-class SDGF_Screen:public SDGF_Render,public SDGF_FPS
+class Screen:public Render,public FPS
 {
  public:
- SDGF_Screen();
- ~SDGF_Screen();
+ Screen();
+ ~Screen();
  void update();
- SDGF_Screen* get_handle();
+ Screen* get_handle();
 };
 
-class SDGF_Gamepad
+class Gamepad
 {
  private:
  int device;
  size_t length;
  input_event input;
- SDGF_Key key;
+ Key_State key;
  public:
- SDGF_Gamepad();
- ~SDGF_Gamepad();
+ Gamepad();
+ ~Gamepad();
  void initialize();
  void update();
  unsigned short int get_hold();
@@ -215,18 +218,18 @@ class SDGF_Gamepad
  unsigned short int get_release();
 };
 
-class SDGF_Memory
+class Memory
 {
  public:
  unsigned long int get_total_memory();
  unsigned long int get_free_memory();
 };
 
-class SDGF_System
+class System
 {
  public:
- SDGF_System();
- ~SDGF_System();
+ System();
+ ~System();
  unsigned long int get_random(const unsigned long int number);
  void quit();
  void run(const char *command);
@@ -234,13 +237,13 @@ class SDGF_System
  void enable_logging(const char *name);
 };
 
-class SDGF_File
+class Binary_File
 {
  private:
  FILE *target;
  public:
- SDGF_File();
- ~SDGF_File();
+ Binary_File();
+ ~Binary_File();
  void open(const char *name);
  void close();
  void set_position(const off_t offset);
@@ -251,34 +254,34 @@ class SDGF_File
  bool check_error();
 };
 
-class SDGF_Timer
+class Timer
 {
  private:
  unsigned long int interval;
  time_t start;
  public:
- SDGF_Timer();
- ~SDGF_Timer();
+ Timer();
+ ~Timer();
  void set_timer(const unsigned long int seconds);
  bool check_timer();
 };
 
-class SDGF_Primitive
+class Primitive
 {
  private:
- SDGF_Color color;
- SDGF_Screen *surface;
+ IMG_Pixel color;
+ Screen *surface;
  public:
- SDGF_Primitive();
- ~SDGF_Primitive();
- void initialize(SDGF_Screen *Screen);
+ Primitive();
+ ~Primitive();
+ void initialize(Screen *Screen);
  void set_color(const unsigned char red,const unsigned char green,const unsigned char blue);
  void draw_line(const unsigned long int x1,const unsigned long int y1,const unsigned long int x2,const unsigned long int y2);
  void draw_rectangle(const unsigned long int x,const unsigned long int y,const unsigned long int width,const unsigned long int height);
  void draw_filled_rectangle(const unsigned long int x,const unsigned long int y,const unsigned long int width,const unsigned long int height);
 };
 
-class SDGF_Image
+class Image
 {
  private:
  unsigned long int width;
@@ -289,8 +292,8 @@ class SDGF_Image
  FILE *open_image(const char *name);
  unsigned long int get_file_size(FILE *target);
  public:
- SDGF_Image();
- ~SDGF_Image();
+ Image();
+ ~Image();
  void load_tga(const char *name);
  void load_pcx(const char *name);
  unsigned long int get_width();
@@ -300,39 +303,39 @@ class SDGF_Image
  void destroy_image();
 };
 
-class SDGF_Canvas
+class Canvas
 {
  private:
  unsigned long int width;
  unsigned long int height;
  unsigned long int frames;
- SDGF_Screen *surface;
+ Screen *surface;
  void clear_buffer();
  protected:
- SDGF_Color *image;
+ IMG_Pixel *image;
  void save();
  void restore();
  void set_width(const unsigned long int image_width);
  void set_height(const unsigned long int image_height);
- SDGF_Color *create_buffer(const unsigned long int image_width,const unsigned long int image_height);
+ IMG_Pixel *create_buffer(const unsigned long int image_width,const unsigned long int image_height);
  void draw_image_pixel(const size_t offset,const unsigned long int x,const unsigned long int y);
  size_t get_offset(const unsigned long int start,const unsigned long int x,const unsigned long int y);
  public:
- SDGF_Canvas();
- ~SDGF_Canvas();
- SDGF_Color *get_image();
+ Canvas();
+ ~Canvas();
+ IMG_Pixel *get_image();
  size_t get_length();
  unsigned long int get_image_width();
  unsigned long int get_image_height();
  void set_frames(const unsigned long int amount);
  unsigned long int get_frames();
- void initialize(SDGF_Screen *Screen);
- void load_image(SDGF_Image &buffer);
- void mirror_image(const SDGF_MIRROR_TYPE kind);
+ void initialize(Screen *Screen);
+ void load_image(Image &buffer);
+ void mirror_image(const MIRROR_TYPE kind);
  void resize_image(const unsigned long int new_width,const unsigned long int new_height);
 };
 
-class SDGF_Background:public SDGF_Canvas
+class Background:public Canvas
 {
  private:
  unsigned long int start;
@@ -340,18 +343,18 @@ class SDGF_Background:public SDGF_Canvas
  unsigned long int background_height;
  unsigned long int frame;
  unsigned long int current;
- SDGF_BACKGROUND_TYPE current_kind;
+ BACKGROUND_TYPE current_kind;
  void draw_background_pixel(const unsigned long int x,const unsigned long int y);
  void slow_draw_background();
  public:
- SDGF_Background();
- ~SDGF_Background();
- void set_kind(SDGF_BACKGROUND_TYPE kind);
+ Background();
+ ~Background();
+ void set_kind(BACKGROUND_TYPE kind);
  void set_target(const unsigned long int target);
  void draw_background();
 };
 
-class SDGF_Sprite:public SDGF_Canvas
+class Sprite:public Canvas
 {
  private:
  bool transparent;
@@ -361,12 +364,12 @@ class SDGF_Sprite:public SDGF_Canvas
  unsigned long int sprite_height;
  unsigned long int frame;
  unsigned long int start;
- SDGF_SPRITE_TYPE current_kind;
- bool compare_pixels(const SDGF_Color &first,const SDGF_Color &second);
+ SPRITE_TYPE current_kind;
+ bool compare_pixels(const IMG_Pixel &first,const IMG_Pixel &second);
  void draw_sprite_pixel(const size_t offset,const unsigned long int x,const unsigned long int y);
  public:
- SDGF_Sprite();
- ~SDGF_Sprite();
+ Sprite();
+ ~Sprite();
  void set_transparent(const bool enabled);
  bool get_transparent();
  void set_x(const unsigned long int x);
@@ -375,36 +378,38 @@ class SDGF_Sprite:public SDGF_Canvas
  unsigned long int get_y();
  unsigned long int get_width();
  unsigned long int get_height();
- SDGF_Sprite* get_handle();
- SDGF_Box get_box();
- void set_kind(const SDGF_SPRITE_TYPE kind);
- SDGF_SPRITE_TYPE get_kind();
+ Sprite* get_handle();
+ Box_Collision get_box();
+ void set_kind(const SPRITE_TYPE kind);
+ SPRITE_TYPE get_kind();
  void set_target(const unsigned long int target);
  void set_position(const unsigned long int x,const unsigned long int y);
- void clone(SDGF_Sprite &target);
+ void clone(Sprite &target);
  void draw_sprite();
 };
 
-class SDGF_Text
+class Text
 {
  private:
  unsigned long int current_x;
  unsigned long int current_y;
  unsigned long int step_x;
- SDGF_Sprite *font;
+ Sprite *font;
  void draw_character(const char target);
  public:
- SDGF_Text();
- ~SDGF_Text();
+ Text();
+ ~Text();
  void set_position(const unsigned long int x,const unsigned long int y);
- void load_font(SDGF_Sprite *target);
+ void load_font(Sprite *target);
  void draw_text(const char *text);
 };
 
-class SDGF_Collision
+class Collision
 {
  public:
- bool check_horizontal_collision(const SDGF_Box &first,const SDGF_Box &second);
- bool check_vertical_collision(const SDGF_Box &first,const SDGF_Box &second);
- bool check_collision(const SDGF_Box &first,const SDGF_Box &second);
+ bool check_horizontal_collision(const Box_Collision &first,const Box_Collision &second);
+ bool check_vertical_collision(const Box_Collision &first,const Box_Collision &second);
+ bool check_collision(const Box_Collision &first,const Box_Collision &second);
 };
+
+}
