@@ -1129,9 +1129,9 @@ Sprite* Sprite::get_handle()
  return this;
 }
 
-Box_Collision Sprite::get_box()
+Collision_Box Sprite::get_box()
 {
- Box_Collision target;
+ Collision_Box target;
  target.x=current_x;
  target.y=current_y;
  target.width=sprite_width;
@@ -1338,7 +1338,7 @@ void Text::draw_text(const char *text)
 
 }
 
-bool Collision::check_horizontal_collision(const Box_Collision &first,const Box_Collision &second)
+bool Collision::check_horizontal_collision(const Collision_Box &first,const Collision_Box &second)
 {
  bool result;
  result=false;
@@ -1349,7 +1349,17 @@ bool Collision::check_horizontal_collision(const Box_Collision &first,const Box_
  return result;
 }
 
-bool Collision::check_vertical_collision(const Box_Collision &first,const Box_Collision &second)
+Collision_Box Collision::generate_box(const unsigned long int x,const unsigned long int y,const unsigned long int width,const unsigned long int height)
+{
+ Collision_Box result;
+ result.x=x;
+ result.y=y;
+ result.width=width;
+ result.height=height;
+ return result;
+}
+
+bool Collision::check_vertical_collision(const Collision_Box &first,const Collision_Box &second)
 {
  bool result;
  result=false;
@@ -1360,7 +1370,7 @@ bool Collision::check_vertical_collision(const Box_Collision &first,const Box_Co
  return result;
 }
 
-bool Collision::check_collision(const Box_Collision &first,const Box_Collision &second)
+bool Collision::check_collision(const Collision_Box &first,const Collision_Box &second)
 {
  return this->check_horizontal_collision(first,second) || this->check_vertical_collision(first,second);
 }

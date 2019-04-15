@@ -120,7 +120,7 @@ struct PCX_head
  unsigned char filled[54];
 };
 
-struct Box_Collision
+struct Collision_Box
 {
  unsigned long int x:32;
  unsigned long int y:32;
@@ -387,7 +387,7 @@ class Sprite:public Canvas
  unsigned long int get_width();
  unsigned long int get_height();
  Sprite* get_handle();
- Box_Collision get_box();
+ Collision_Box get_box();
  void set_kind(const SPRITE_TYPE kind);
  SPRITE_TYPE get_kind();
  void set_target(const unsigned long int target);
@@ -435,9 +435,10 @@ class Text
 class Collision
 {
  public:
- bool check_horizontal_collision(const Box_Collision &first,const Box_Collision &second);
- bool check_vertical_collision(const Box_Collision &first,const Box_Collision &second);
- bool check_collision(const Box_Collision &first,const Box_Collision &second);
+ Collision_Box generate_box(const unsigned long int x,const unsigned long int y,const unsigned long int width,const unsigned long int height);
+ bool check_horizontal_collision(const Collision_Box &first,const Collision_Box &second);
+ bool check_vertical_collision(const Collision_Box &first,const Collision_Box &second);
+ bool check_collision(const Collision_Box &first,const Collision_Box &second);
 };
 
 }
