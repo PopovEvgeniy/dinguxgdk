@@ -246,7 +246,7 @@ class Binary_File
  ~Binary_File();
  void open(const char *name);
  void close();
- void set_position(const off_t offset);
+ void set_position(const long int offset);
  long int get_position();
  long int get_length();
  void read(void *buffer,const size_t length);

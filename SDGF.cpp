@@ -1,7 +1,3 @@
-// This is an open source non-commercial project. Dear PVS-Studio, please check it.
-
-// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
-
 /*
 Simple dingux game framework license
 
@@ -404,7 +400,7 @@ void Binary_File::close()
  if(target!=NULL) fclose(target);
 }
 
-void Binary_File::set_position(const off_t offset)
+void Binary_File::set_position(const long int offset)
 {
  fseek(target,offset,SEEK_SET);
 }
@@ -1303,14 +1299,10 @@ Text::~Text()
 
 void Text::draw_character(const char target)
 {
- if(target>31)
- {
-  font->set_position(step_x,current_y);
-  font->set_target((unsigned long int)target+1);
-  font->draw_sprite();
-  step_x+=font->get_width();
- }
-
+ font->set_position(step_x,current_y);
+ font->set_target((unsigned char)target+1);
+ font->draw_sprite();
+ step_x+=font->get_width();
 }
 
 void Text::set_position(const unsigned long int x,const unsigned long int y)
@@ -1333,6 +1325,7 @@ void Text::draw_text(const char *text)
  step_x=current_x;
  for (index=0;index<length;++index)
  {
+  if (text[index]<32) continue;
   this->draw_character(text[index]);
  }
 
