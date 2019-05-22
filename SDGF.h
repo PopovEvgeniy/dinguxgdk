@@ -244,7 +244,8 @@ class Binary_File
  public:
  Binary_File();
  ~Binary_File();
- void open(const char *name);
+ void open_read(const char *name);
+ void open_write(const char *name);
  void close();
  void set_position(const long int offset);
  long int get_position();

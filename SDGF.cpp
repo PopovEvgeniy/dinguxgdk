@@ -385,7 +385,17 @@ Binary_File::~Binary_File()
  if(target!=NULL) fclose(target);
 }
 
-void Binary_File::open(const char *name)
+void Binary_File::open_read(const char *name)
+{
+ target=fopen(name,"rb");
+ if(target==NULL)
+ {
+  Show_Error("Can't open the binary file");
+ }
+
+}
+
+void Binary_File::open_write(const char *name)
 {
  target=fopen(name,"w+b");
  if(target==NULL)
@@ -421,12 +431,12 @@ long int Binary_File::get_length()
 
 void Binary_File::read(void *buffer,const size_t length)
 {
- fread(buffer,length,1,target);
+ fread(buffer,sizeof(char),length,target);
 }
 
 void Binary_File::write(void *buffer,const size_t length)
 {
- fwrite(buffer,length,1,target);
+ fwrite(buffer,sizeof(char),length,target);
 }
 
 bool Binary_File::check_error()
