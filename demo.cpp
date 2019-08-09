@@ -3,7 +3,6 @@
 int main(void)
 {
  long int x,y,screen_width,screen_height;
- unsigned long int frame;
  char perfomance[8];
  SDGF::Screen screen;
  SDGF::Gamepad gamepad;
@@ -31,7 +30,6 @@ int main(void)
  space.resize_image(screen_width,screen_height);
  space.set_kind(NORMAL_BACKGROUND);
  screen.clear_screen();
- frame=1;
  ship.set_frames(2);
  ship.set_kind(HORIZONTAL_STRIP);
  text.set_position(font.get_width(),font.get_height());
@@ -53,13 +51,11 @@ int main(void)
   sprintf(perfomance,"%ld",screen.get_fps());
   space.draw_background();
   text.draw_text(perfomance);
-  ship.set_target(frame);
   ship.set_position(x,y);
   ship.draw_sprite();
   if (timer.check_timer()==true)
   {
-   frame++;
-   if (frame>2) frame=1;
+   ship.step();
   }
 
  }

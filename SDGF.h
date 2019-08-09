@@ -334,6 +334,7 @@ class Canvas:public Surface
  protected:
  unsigned long int start;
  void set_frame(const unsigned long int target);
+ void increase_frame();
  public:
  Canvas();
  ~Canvas();
@@ -363,6 +364,7 @@ class Background:public Canvas
  unsigned long int get_background_height();
  void set_kind(const BACKGROUND_TYPE kind);
  void set_target(const unsigned long int target);
+ void step();
  void draw_background();
 };
 
@@ -395,6 +397,7 @@ class Sprite:public Canvas
  void set_kind(const SPRITE_TYPE kind);
  SPRITE_TYPE get_kind();
  void set_target(const unsigned long int target);
+ void step();
  void set_position(const unsigned long int x,const unsigned long int y);
  void clone(Sprite &target);
  void draw_sprite();

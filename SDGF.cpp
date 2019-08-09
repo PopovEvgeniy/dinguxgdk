@@ -868,6 +868,16 @@ void Canvas::set_frame(const unsigned long int target)
 
 }
 
+void Canvas::increase_frame()
+{
+ ++frame;
+ if (frame>frames)
+ {
+  frame=1;
+ }
+
+}
+
 unsigned long int Canvas::get_image_width()
 {
  return width;
@@ -1028,6 +1038,18 @@ void Background::set_kind(const BACKGROUND_TYPE kind)
  current_kind=kind;
 }
 
+void Background::set_target(const unsigned long int target)
+{
+ this->set_frame(target);
+ this->set_kind(current_kind);
+}
+
+void Background::step()
+{
+ this->increase_frame();
+ this->set_kind(current_kind);
+}
+
 void Background::draw_background()
 {
  if (current!=this->get_frame())
@@ -1041,12 +1063,6 @@ void Background::draw_background()
   this->restore();
  }
 
-}
-
-void Background::set_target(const unsigned long int target)
-{
- this->set_frame(target);
- this->set_kind(current_kind);
 }
 
 Sprite::Sprite()
@@ -1188,6 +1204,12 @@ SPRITE_TYPE Sprite::get_kind()
 void Sprite::set_target(const unsigned long int target)
 {
  this->set_frame(target);
+ this->set_kind(current_kind);
+}
+
+void Sprite::step()
+{
+ this->increase_frame();
  this->set_kind(current_kind);
 }
 
