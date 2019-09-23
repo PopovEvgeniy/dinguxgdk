@@ -128,10 +128,10 @@ struct Collision_Box
  unsigned long int height:32;
 };
 
-void Show_Error(const char *message);
-
 namespace SDGF
 {
+
+void Halt(const char *message);
 
 class Frame
 {

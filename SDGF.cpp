@@ -27,14 +27,14 @@ SVGALib homepage: http://www.svgalib.org/
 
 #include "SDGF.h"
 
-void Show_Error(const char *message)
+namespace SDGF
+{
+
+void Halt(const char *message)
 {
  puts(message);
  exit(EXIT_FAILURE);
 }
-
-namespace SDGF
-{
 
 Frame::Frame()
 {
@@ -85,7 +85,7 @@ unsigned short int *Frame::create_buffer(const char *error)
  length=pixels*sizeof(unsigned short int);
  if(target==NULL)
  {
-  Show_Error(error);
+  Halt(error);
  }
  return target;
 }
@@ -191,7 +191,7 @@ Render::Render()
  device=open("/dev/fb0",O_RDWR);
  if(device==-1)
  {
-  Show_Error("Can't get access to frame buffer");
+  Halt("Can't get access to frame buffer");
  }
  memset(&setting,0,sizeof(FBIOGET_VSCREENINFO));
  memset(&configuration,0,sizeof(FBIOGET_FSCREENINFO));
@@ -206,11 +206,11 @@ void Render::read_configuration()
 {
  if(ioctl(device,FBIOGET_VSCREENINFO,&setting)==-1)
  {
-  Show_Error("Can't read framebuffer setting");
+  Halt("Can't read framebuffer setting");
  }
  if(ioctl(device,FBIOGET_FSCREENINFO,&configuration)==-1)
  {
-  Show_Error("Can't read framebuffer setting");
+  Halt("Can't read framebuffer setting");
  }
 
 }
@@ -271,7 +271,7 @@ void Gamepad::initialize()
  device=open("/dev/event0",O_RDONLY|O_NONBLOCK|O_NOCTTY);
  if (device==-1)
  {
-  Show_Error("Can't get access to gamepad");
+  Halt("Can't get access to gamepad");
  }
  key.button=0;
  key.state=GAMEPAD_RELEASE;
@@ -370,7 +370,7 @@ void System::enable_logging(const char *name)
 {
  if(freopen(name,"wt",stdout)==NULL)
  {
-  Show_Error("Can't create log file");
+  Halt("Can't create log file");
  }
 
 }
@@ -395,7 +395,7 @@ void Binary_File::open(const char *name,const char *mode)
  target=fopen(name,mode);
  if(target==NULL)
  {
-  Show_Error("Can't open the binary file");
+  Halt("Can't open the binary file");
  }
 
 }
@@ -596,7 +596,7 @@ unsigned char *Image::create_buffer(const size_t length)
  result=(unsigned char*)calloc(length,sizeof(unsigned char));
  if(result==NULL)
  {
-  Show_Error("Can't allocate memory for image buffer");
+  Halt("Can't allocate memory for image buffer");
  }
  return result;
 }
@@ -628,13 +628,13 @@ void Image::load_tga(const char *name)
  target.read(&image,10);
  if((head.color_map!=0)||(image.color!=24))
  {
-  Show_Error("Invalid image format");
+  Halt("Invalid image format");
  }
  if(head.type!=2)
  {
   if(head.type!=10)
   {
-   Show_Error("Invalid image format");
+   Halt("Invalid image format");
   }
 
  }
@@ -694,7 +694,7 @@ void Image::load_pcx(const char *name)
  target.read(&head,128);
  if((head.color*head.planes!=24)&&(head.compress!=1))
  {
-  Show_Error("Incorrect image format");
+  Halt("Incorrect image format");
  }
  width=head.max_x-head.min_x+1;
  height=head.max_y-head.min_y+1;
@@ -793,7 +793,7 @@ IMG_Pixel *Surface::create_buffer(const unsigned long int image_width,const unsi
  result=(IMG_Pixel*)calloc(length,3);
  if(result==NULL)
  {
-  Show_Error("Can't allocate memory for image buffer");
+  Halt("Can't allocate memory for image buffer");
  }
  return result;
 }
