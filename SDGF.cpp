@@ -848,6 +848,11 @@ void Surface::set_height(const unsigned long int image_height)
  height=image_height;
 }
 
+void Surface::set_buffer(IMG_Pixel *buffer)
+{
+ image=buffer;
+}
+
 size_t Surface::get_offset(const unsigned long int start,const unsigned long int x,const unsigned long int y)
 {
  return (size_t)start+(size_t)x+(size_t)y*(size_t)width;
@@ -856,6 +861,21 @@ size_t Surface::get_offset(const unsigned long int start,const unsigned long int
 void Surface::draw_image_pixel(const size_t offset,const unsigned long int x,const unsigned long int y)
 {
  surface->draw_pixel(x,y,image[offset].red,image[offset].green,image[offset].blue);
+}
+
+bool Surface::compare_pixels(const size_t first,const size_t second)
+{
+ bool result;
+ result=false;
+ if ((image[first].red!=image[second].red)||(image[first].green!=image[second].green))
+ {
+  result=true;
+ }
+ else
+ {
+  if(image[first].blue!=image[second].blue) result=true;
+ }
+ return result;
 }
 
 void Surface::initialize(Screen *screen)
@@ -1106,26 +1126,11 @@ Sprite::~Sprite()
 
 }
 
-bool Sprite::compare_pixels(const IMG_Pixel &first,const IMG_Pixel &second)
-{
- bool result;
- result=false;
- if ((first.red!=second.red)||(first.green!=second.green))
- {
-  result=true;
- }
- else
- {
-  if(first.blue!=second.blue) result=true;
- }
- return result;
-}
-
 void Sprite::draw_sprite_pixel(const size_t offset,const unsigned long int x,const unsigned long int y)
 {
  if (transparent==true)
  {
-  if(this->compare_pixels(image[0],image[offset])==true) this->draw_image_pixel(offset,x,y);
+  if(this->compare_pixels(0,offset)==true) this->draw_image_pixel(offset,x,y);
  }
  else
  {
@@ -1242,7 +1247,7 @@ void Sprite::clone(Sprite &target)
  this->set_frames(target.get_frames());
  this->set_kind(target.get_kind());
  this->set_transparent(target.get_transparent());
- image=this->create_buffer(target.get_image_width(),target.get_image_width());
+ this->set_buffer(this->create_buffer(target.get_image_width(),target.get_image_width()));
  memmove(this->get_image(),target.get_image(),target.get_length());
 }
 
@@ -1393,6 +1398,16 @@ void Text::draw_text(const char *text)
  font->set_position(current_x,current_y);
 }
 
+Collision_Box Collision::generate_box(const unsigned long int x,const unsigned long int y,const unsigned long int width,const unsigned long int height)
+{
+ Collision_Box result;
+ result.x=x;
+ result.y=y;
+ result.width=width;
+ result.height=height;
+ return result;
+}
+
 bool Collision::check_horizontal_collision(const Collision_Box &first,const Collision_Box &second)
 {
  bool result;
@@ -1401,16 +1416,6 @@ bool Collision::check_horizontal_collision(const Collision_Box &first,const Coll
  {
   if(first.x<=(second.x+second.width)) result=true;
  }
- return result;
-}
-
-Collision_Box Collision::generate_box(const unsigned long int x,const unsigned long int y,const unsigned long int width,const unsigned long int height)
-{
- Collision_Box result;
- result.x=x;
- result.y=y;
- result.width=width;
- result.height=height;
  return result;
 }
 
