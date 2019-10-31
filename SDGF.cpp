@@ -202,12 +202,17 @@ Render::~Render()
  if(device!=-1) close(device);
 }
 
-void Render::read_configuration()
+void Render::read_base_configuration()
 {
  if(ioctl(device,FBIOGET_VSCREENINFO,&setting)==-1)
  {
   Halt("Can't read framebuffer setting");
  }
+
+}
+
+void Render::read_advanced_configuration()
+{
  if(ioctl(device,FBIOGET_FSCREENINFO,&configuration)==-1)
  {
   Halt("Can't read framebuffer setting");
@@ -215,9 +220,15 @@ void Render::read_configuration()
 
 }
 
-unsigned long int Render::get_start_offset()
+void Render::read_configuration()
 {
- return setting.xoffset*(setting.bits_per_pixel/8)+setting.yoffset*configuration.line_length;
+ this->read_base_configuration();
+ this->read_advanced_configuration();
+}
+
+void Render::get_start_offset()
+{
+ start=setting.xoffset*(setting.bits_per_pixel/CHAR_BIT)+setting.yoffset*configuration.line_length;
 }
 
 void Render::refresh()
@@ -231,7 +242,7 @@ void Render::initialize()
  this->read_configuration();
  this->set_size(setting.xres,setting.yres);
  this->create_buffers();
- start=this->get_start_offset();
+ this->get_start_offset();
 }
 
 Screen::Screen()
