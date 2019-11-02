@@ -183,9 +183,9 @@ class Render:public Frame
  unsigned long int start;
  fb_fix_screeninfo configuration;
  fb_var_screeninfo setting;
- void read_configuration();
  void read_base_configuration();
  void read_advanced_configuration();
+ void read_configuration();
  void get_start_offset();
  protected:
  void refresh();
@@ -237,6 +237,7 @@ class System
  void quit();
  void run(const char *command);
  char* read_environment(const char *variable);
+ bool file_exist(const char *name);
  bool delete_file(const char *name);
  void enable_logging(const char *name);
 };
