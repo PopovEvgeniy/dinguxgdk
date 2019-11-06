@@ -188,6 +188,7 @@ unsigned long int FPS::get_fps()
 
 Render::Render()
 {
+ primary=(unsigned char*)MAP_FAILED;
  device=open("/dev/fb0",O_RDWR);
  if(device==-1)
  {
@@ -199,7 +200,18 @@ Render::Render()
 
 Render::~Render()
 {
+ if(primary!=MAP_FAILED) munmap(primary,(size_t)configuration.smem_len);
  if(device!=-1) close(device);
+}
+
+void Render::create_primary_buffer()
+{
+ primary=(unsigned char*)mmap(NULL,(size_t)configuration.smem_len,PROT_READ|PROT_WRITE,MAP_SHARED,device,0);
+ if(primary==MAP_FAILED)
+ {
+  Halt("Can't allocate memory for primary buffer");
+ }
+
 }
 
 void Render::read_base_configuration()
@@ -228,13 +240,12 @@ void Render::read_configuration()
 
 void Render::get_start_offset()
 {
- start=setting.xoffset*(setting.bits_per_pixel/CHAR_BIT)+setting.yoffset*configuration.line_length;
+ start=(size_t)setting.xoffset*(size_t)(setting.bits_per_pixel/CHAR_BIT)+(size_t)setting.yoffset*(size_t)configuration.line_length;
 }
 
 void Render::refresh()
 {
- lseek(device,start,SEEK_SET);
- write(device,this->get_buffer(),this->get_length());
+ memcpy(primary+start,this->get_buffer(),this->get_length());
 }
 
 void Render::initialize()
@@ -242,6 +253,7 @@ void Render::initialize()
  this->read_configuration();
  this->set_size(setting.xres,setting.yres);
  this->create_buffers();
+ this->create_primary_buffer();
  this->get_start_offset();
 }
 

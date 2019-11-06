@@ -36,6 +36,7 @@ SVGALib homepage: http://www.svgalib.org/
 #include <sys/sysinfo.h>
 #include <sys/ioctl.h>
 #include <linux/input.h>
+#include <sys/mman.h>
 #include <linux/fb.h>
 
 #define BUTTON_NONE 0
@@ -180,9 +181,11 @@ class Render:public Frame
 {
  private:
  int device;
- unsigned long int start;
+ size_t start;
+ unsigned char *primary;
  fb_fix_screeninfo configuration;
  fb_var_screeninfo setting;
+ void create_primary_buffer();
  void read_base_configuration();
  void read_advanced_configuration();
  void read_configuration();
