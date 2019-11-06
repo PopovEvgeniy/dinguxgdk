@@ -25,6 +25,7 @@ Pixel packing algorithm bases on code from SVGALib. SVGALib is public domain.
 SVGALib homepage: http://www.svgalib.org/
 */
 
+#include <limits.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -35,7 +36,6 @@ SVGALib homepage: http://www.svgalib.org/
 #include <sys/sysinfo.h>
 #include <sys/ioctl.h>
 #include <linux/input.h>
-#include <sys/mman.h>
 #include <linux/fb.h>
 
 #define BUTTON_NONE 0
@@ -180,11 +180,9 @@ class Render:public Frame
 {
  private:
  int device;
- size_t start;
- unsigned char *primary;
+ unsigned long int start;
  fb_fix_screeninfo configuration;
  fb_var_screeninfo setting;
- void create_primary_buffer();
  void read_base_configuration();
  void read_advanced_configuration();
  void read_configuration();
@@ -195,6 +193,7 @@ class Render:public Frame
  Render();
  ~Render();
  void initialize();
+ unsigned long int get_color();
 };
 
 class Screen:public Render,public FPS
