@@ -240,7 +240,7 @@ void Render::read_configuration()
 
 void Render::get_start_offset()
 {
- start=(size_t)setting.xoffset*(size_t)(setting.bits_per_pixel/CHAR_BIT)+(size_t)setting.yoffset*(size_t)configuration.line_length;
+ start=(size_t)configuration.smem_start;
 }
 
 void Render::refresh()

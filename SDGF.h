@@ -25,7 +25,6 @@ Pixel packing algorithm bases on code from SVGALib. SVGALib is public domain.
 SVGALib homepage: http://www.svgalib.org/
 */
 
-#include <limits.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
