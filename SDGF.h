@@ -143,11 +143,11 @@ class Frame
  unsigned long int frame_height;
  unsigned short int *buffer;
  unsigned short int *shadow;
+ unsigned short int *create_buffer(const char *error);
  unsigned short int get_bgr565(const unsigned char red,const unsigned char green,const unsigned char blue);
  size_t get_offset(const unsigned long int x,const unsigned long int y);
  protected:
  void set_size(const unsigned long int surface_width,const unsigned long int surface_height);
- unsigned short int *create_buffer(const char *error);
  void create_buffers();
  unsigned short int *get_buffer();
  size_t get_length();
@@ -158,8 +158,6 @@ class Frame
  void clear_screen();
  void save();
  void restore();
- unsigned long int get_width();
- unsigned long int get_height();
 };
 
 class FPS
@@ -188,11 +186,13 @@ class Render:public Frame
  void read_configuration();
  void get_start_offset();
  protected:
+ void prepare_render();
  void refresh();
  public:
  Render();
  ~Render();
- void initialize();
+ unsigned long int get_width();
+ unsigned long int get_height();
  unsigned long int get_color();
 };
 
@@ -201,6 +201,7 @@ class Screen:public Render,public FPS
  public:
  Screen();
  ~Screen();
+ void initialize();
  void update();
  Screen* get_handle();
 };

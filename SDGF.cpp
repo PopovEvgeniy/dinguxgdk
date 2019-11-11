@@ -61,6 +61,19 @@ Frame::~Frame()
 
 }
 
+unsigned short int *Frame::create_buffer(const char *error)
+{
+ unsigned short int *target;
+ pixels=(size_t)frame_width*(size_t)frame_height;
+ target=(unsigned short int*)calloc(pixels,sizeof(unsigned short int));
+ length=pixels*sizeof(unsigned short int);
+ if(target==NULL)
+ {
+  Halt(error);
+ }
+ return target;
+}
+
 unsigned short int Frame::get_bgr565(const unsigned char red,const unsigned char green,const unsigned char blue)
 {
  return (blue >> 3) +((green >> 2) << 5)+((red >> 3) << 11); // This code bases on code from SVGALib
@@ -75,19 +88,6 @@ void Frame::set_size(const unsigned long int surface_width,const unsigned long i
 {
  frame_width=surface_width;
  frame_height=surface_height;
-}
-
-unsigned short int *Frame::create_buffer(const char *error)
-{
- unsigned short int *target;
- pixels=(size_t)frame_width*(size_t)frame_height;
- target=(unsigned short int*)calloc(pixels,sizeof(unsigned short int));
- length=pixels*sizeof(unsigned short int);
- if(target==NULL)
- {
-  Halt(error);
- }
- return target;
 }
 
 void Frame::create_buffers()
@@ -143,16 +143,6 @@ void Frame::restore()
   buffer[index]=shadow[index];
  }
 
-}
-
-unsigned long int Frame::get_width()
-{
- return frame_width;
-}
-
-unsigned long int Frame::get_height()
-{
- return frame_height;
 }
 
 FPS::FPS()
@@ -232,18 +222,26 @@ void Render::get_start_offset()
  start=setting.xoffset*(setting.bits_per_pixel/CHAR_BIT)+setting.yoffset*configuration.line_length;
 }
 
+void Render::prepare_render()
+{
+ this->read_configuration();
+ this->get_start_offset();
+}
+
 void Render::refresh()
 {
  lseek(device,start,SEEK_SET);
  write(device,this->get_buffer(),this->get_length());
 }
 
-void Render::initialize()
+unsigned long int Render::get_width()
 {
- this->read_configuration();
- this->set_size(setting.xres,setting.yres);
- this->create_buffers();
- this->get_start_offset();
+ return setting.xres;
+}
+
+unsigned long int Render::get_height()
+{
+ return setting.yres;
 }
 
 unsigned long int Render::get_color()
@@ -259,6 +257,13 @@ Screen::Screen()
 Screen::~Screen()
 {
 
+}
+
+void Screen::initialize()
+{
+ this->prepare_render();
+ this->set_size(this->get_width(),this->get_height());
+ this->create_buffers();
 }
 
 void Screen::update()
