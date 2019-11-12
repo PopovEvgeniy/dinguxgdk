@@ -279,6 +279,7 @@ Screen* Screen::get_handle()
 
 Gamepad::Gamepad()
 {
+ device=-1;
  length=sizeof(input_event);
  memset(&input,0,length);
 }
