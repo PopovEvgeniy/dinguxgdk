@@ -1,16 +1,16 @@
-#include "SDGF.h"
+#include "dinguxgdk.h"
 
 int main(void)
 {
  long int x,y,screen_width,screen_height;
  char perfomance[8];
- SDGF::Screen screen;
- SDGF::Gamepad gamepad;
- SDGF::Timer timer;
- SDGF::Image image;
- SDGF::Background space;
- SDGF::Sprite ship,font;
- SDGF::Text text;
+ DINGUXGDK::Screen screen;
+ DINGUXGDK::Gamepad gamepad;
+ DINGUXGDK::Timer timer;
+ DINGUXGDK::Image image;
+ DINGUXGDK::Background space;
+ DINGUXGDK::Sprite ship,font;
+ DINGUXGDK::Text text;
  screen.initialize();
  screen_width=screen.get_width();
  screen_height=screen.get_height();
@@ -39,13 +39,13 @@ int main(void)
  {
   screen.update();
   gamepad.update();
-  if(gamepad.get_press()==BUTTON_X) break;
-  if(gamepad.get_press()==BUTTON_A) ship.mirror_image(MIRROR_HORIZONTAL);
-  if(gamepad.get_press()==BUTTON_B) ship.mirror_image(MIRROR_VERTICAL);
-  if(gamepad.get_hold()==BUTTON_UP) y-=4;
-  if(gamepad.get_hold()==BUTTON_DOWN) y+=4;
-  if(gamepad.get_hold()==BUTTON_LEFT) x-=4;
-  if(gamepad.get_hold()==BUTTON_RIGHT) x+=4;
+  if(gamepad.check_press(BUTTON_X)==true) break;
+  if(gamepad.check_press(BUTTON_A)==true) ship.mirror_image(MIRROR_HORIZONTAL);
+  if(gamepad.check_press(BUTTON_B)==true) ship.mirror_image(MIRROR_VERTICAL);
+  if(gamepad.check_hold(BUTTON_UP)==true) y-=4;
+  if(gamepad.check_hold(BUTTON_DOWN)==true) y+=4;
+  if(gamepad.check_hold(BUTTON_LEFT)==true) x-=4;
+  if(gamepad.check_hold(BUTTON_RIGHT)==true) x+=4;
   if((x<=0)||(x>=screen_width)) x=screen_width/2;
   if((y<=0)||(y>=screen_height)) y=screen_height/2;
   sprintf(perfomance,"%ld",screen.get_fps());

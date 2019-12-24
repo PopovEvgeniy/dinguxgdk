@@ -1,5 +1,5 @@
 /*
-Simple dingux game framework license
+Dingux game development kit license
 
 Copyright (C) 2015-2019 Popov Evgeniy Alekseyevich
 
@@ -38,25 +38,11 @@ SVGALib homepage: http://www.svgalib.org/
 #include <linux/input.h>
 #include <linux/fb.h>
 
-#define BUTTON_NONE 0
-#define BUTTON_UP KEY_UP
-#define BUTTON_DOWN KEY_DOWN
-#define BUTTON_LEFT KEY_LEFT
-#define BUTTON_RIGHT KEY_RIGHT
-#define BUTTON_A KEY_LEFTCTRL
-#define BUTTON_B KEY_LEFTALT
-#define BUTTON_X KEY_SPACE
-#define BUTTON_Y KEY_LEFTSHIFT
-#define BUTTON_L KEY_TAB
-#define BUTTON_R KEY_BACKSPACE
-#define BUTTON_START KEY_ENTER
-#define BUTTON_SELECT KEY_ESC
-#define BUTTON_POWER KEY_POWER
-#define BUTTON_HOLD KEY_HOLD
 #define GAMEPAD_HOLDING 2
 #define GAMEPAD_PRESS 1
 #define GAMEPAD_RELEASE 0
 
+enum GAMEPAD_BUTTONS {BUTTON_UP=KEY_UP,BUTTON_DOWN=KEY_DOWN,BUTTON_LEFT=KEY_LEFT,BUTTON_RIGHT=KEY_RIGHT,BUTTON_A=KEY_LEFTCTRL,BUTTON_B=KEY_LEFTALT,BUTTON_X=KEY_SPACE,BUTTON_Y=KEY_LEFTSHIFT,BUTTON_L=KEY_TAB,BUTTON_R=KEY_BACKSPACE,BUTTON_START=KEY_ENTER,BUTTON_SELECT=KEY_ESC,BUTTON_POWER=KEY_POWER,BUTTON_HOLD=KEY_PAUSE};
 enum MIRROR_TYPE {MIRROR_HORIZONTAL=0,MIRROR_VERTICAL=1};
 enum BACKGROUND_TYPE {NORMAL_BACKGROUND=0,HORIZONTAL_BACKGROUND=1,VERTICAL_BACKGROUND=2};
 enum SPRITE_TYPE {SINGLE_SPRITE=0,HORIZONTAL_STRIP=1,VERTICAL_STRIP=2};
@@ -129,7 +115,7 @@ struct Collision_Box
  unsigned long int height:32;
 };
 
-namespace SDGF
+namespace DINGUXGDK
 {
 
 void Halt(const char *message);
@@ -218,9 +204,9 @@ class Gamepad
  ~Gamepad();
  void initialize();
  void update();
- unsigned short int get_hold();
- unsigned short int get_press();
- unsigned short int get_release();
+ bool check_hold(const GAMEPAD_BUTTONS button);
+ bool check_press(const GAMEPAD_BUTTONS button);
+ bool check_release(const GAMEPAD_BUTTONS button);
 };
 
 class Memory

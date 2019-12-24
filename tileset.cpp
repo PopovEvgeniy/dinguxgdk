@@ -1,4 +1,4 @@
-#include "SDGF.h"
+#include "dinguxgdk.h"
 
 #define MAP_WIDTH 16
 #define MAP_HEIGHT 16
@@ -6,7 +6,7 @@
 unsigned char MAP_ROWS[MAP_WIDTH]={1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
 unsigned char MAP_COLUMNS[MAP_HEIGHT]={2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2};
 
-SDGF::Tileset tilemap;
+DINGUXGDK::Tileset tilemap;
 
 void draw_map()
 {
@@ -30,11 +30,11 @@ void draw_map()
 
 int main(void)
 {
- SDGF::Screen screen;
- SDGF::Sprite font;
- SDGF::Text text;
- SDGF::Image image;
- SDGF::Gamepad gamepad;
+ DINGUXGDK::Screen screen;
+ DINGUXGDK::Sprite font;
+ DINGUXGDK::Text text;
+ DINGUXGDK::Image image;
+ DINGUXGDK::Gamepad gamepad;
  font.initialize(screen.get_handle());
  tilemap.initialize(screen.get_handle());
  gamepad.initialize();
@@ -50,7 +50,7 @@ int main(void)
  while (true)
  {
   gamepad.update();
-  if (gamepad.get_hold()==BUTTON_A) break;
+  if (gamepad.check_hold(BUTTON_A)==true) break;
   screen.restore();
   text.draw_text("Press A to exit");
   screen.update();

@@ -1,5 +1,5 @@
 /*
-Simple dingux game framework license
+Dingux game development kit license
 
 Copyright (C) 2015-2019 Popov Evgeniy Alekseyevich
 
@@ -25,9 +25,9 @@ Pixel packing algorithm bases on code from SVGALib. SVGALib is public domain.
 SVGALib homepage: http://www.svgalib.org/
 */
 
-#include "SDGF.h"
+#include "dinguxgdk.h"
 
-namespace SDGF
+namespace DINGUXGDK
 {
 
 void Halt(const char *message)
@@ -317,27 +317,36 @@ void Gamepad::update()
 
 }
 
-unsigned short int Gamepad::get_hold()
+bool Gamepad::check_hold(const GAMEPAD_BUTTONS button)
 {
- unsigned short int result;
- result=BUTTON_NONE;
- if(key.state!=GAMEPAD_RELEASE) result=key.button;
+ bool result;
+ result=false;
+ if (key.state!=GAMEPAD_RELEASE)
+ {
+  if (key.button==button) result=true;
+ }
  return result;
 }
 
-unsigned short int Gamepad::get_press()
+bool Gamepad::check_press(const GAMEPAD_BUTTONS button)
 {
- unsigned short int result;
- result=BUTTON_NONE;
- if(key.state==GAMEPAD_PRESS) result=key.button;
+ bool result;
+ result=false;
+ if (key.state==GAMEPAD_PRESS)
+ {
+  if (key.button==button) result=true;
+ }
  return result;
 }
 
-unsigned short int Gamepad::get_release()
+bool Gamepad::check_release(const GAMEPAD_BUTTONS button)
 {
- unsigned short int result;
- result=BUTTON_NONE;
- if(key.state==GAMEPAD_RELEASE) result=key.button;
+ bool result;
+ result=false;
+ if (key.state==GAMEPAD_RELEASE)
+ {
+  if (key.button==button) result=true;
+ }
  return result;
 }
 
