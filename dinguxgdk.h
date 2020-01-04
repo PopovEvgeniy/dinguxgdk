@@ -1,7 +1,7 @@
 /*
 Dingux game development kit license
 
-Copyright (C) 2015-2019 Popov Evgeniy Alekseyevich
+Copyright (C) 2015-2020 Popov Evgeniy Alekseyevich
 
 This software is provided 'as-is', without any express or implied
 warranty.  In no event will the authors be held liable for any damages
@@ -144,6 +144,7 @@ class Frame
  void clear_screen();
  void save();
  void restore();
+ void restore(const unsigned long int x,const unsigned long int y,const unsigned long int width,const unsigned long int height);
 };
 
 class FPS
