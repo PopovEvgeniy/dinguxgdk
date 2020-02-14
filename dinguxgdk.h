@@ -200,6 +200,7 @@ class Gamepad
  size_t length;
  input_event input;
  Key_State key;
+ bool check_state(const GAMEPAD_BUTTONS button,const unsigned short int state);
  public:
  Gamepad();
  ~Gamepad();

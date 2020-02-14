@@ -305,6 +305,8 @@ Screen* Screen::get_handle()
 
 Gamepad::Gamepad()
 {
+ key.button=0;
+ key.state=GAMEPAD_RELEASE;
  device=-1;
  length=sizeof(input_event);
  memset(&input,0,length);
@@ -315,6 +317,17 @@ Gamepad::~Gamepad()
  if(device!=-1) close(device);
 }
 
+bool Gamepad::check_state(const GAMEPAD_BUTTONS button,const unsigned short int state)
+{
+ bool result;
+ result=false;
+ if (key.state==state)
+ {
+  if (key.button==button) result=true;
+ }
+ return result;
+}
+
 void Gamepad::initialize()
 {
  device=open("/dev/event0",O_RDONLY|O_NONBLOCK|O_NOCTTY);
@@ -322,8 +335,7 @@ void Gamepad::initialize()
  {
   Halt("Can't get access to gamepad");
  }
- key.button=0;
- key.state=GAMEPAD_RELEASE;
+
 }
 
 void Gamepad::update()
@@ -356,24 +368,12 @@ bool Gamepad::check_hold(const GAMEPAD_BUTTONS button)
 
 bool Gamepad::check_press(const GAMEPAD_BUTTONS button)
 {
- bool result;
- result=false;
- if (key.state==GAMEPAD_PRESS)
- {
-  if (key.button==button) result=true;
- }
- return result;
+ return this->check_state(button,GAMEPAD_PRESS);
 }
 
 bool Gamepad::check_release(const GAMEPAD_BUTTONS button)
 {
- bool result;
- result=false;
- if (key.state==GAMEPAD_RELEASE)
- {
-  if (key.button==button) result=true;
- }
- return result;
+ return this->check_state(button,GAMEPAD_RELEASE);
 }
 
 unsigned long int Memory::get_total_memory()
