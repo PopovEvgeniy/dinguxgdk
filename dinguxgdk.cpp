@@ -317,6 +317,27 @@ Gamepad::~Gamepad()
  if(device!=-1) close(device);
 }
 
+void Gamepad::read_input()
+{
+ while (read(device,&input,length)>0)
+ {
+  if (input.type==EV_KEY)
+  {
+   key.button=input.code;
+   key.state=input.value;
+   if(key.state!=GAMEPAD_HOLDING) break;
+  }
+
+ }
+
+}
+
+void Gamepad::clear_state()
+{
+ key.button=0;
+ key.state=GAMEPAD_RELEASE;
+}
+
 bool Gamepad::check_state(const GAMEPAD_BUTTONS button,const unsigned short int state)
 {
  bool result;
@@ -340,30 +361,13 @@ void Gamepad::initialize()
 
 void Gamepad::update()
 {
- key.button=0;
- key.state=GAMEPAD_RELEASE;
- while (read(device,&input,length)>0)
- {
-  if (input.type==EV_KEY)
-  {
-   key.button=input.code;
-   key.state=input.value;
-   if(key.state!=GAMEPAD_HOLDING) break;
-  }
-
- }
-
+ this->clear_state();
+ this->read_input();
 }
 
 bool Gamepad::check_hold(const GAMEPAD_BUTTONS button)
 {
- bool result;
- result=false;
- if (key.state!=GAMEPAD_RELEASE)
- {
-  if (key.button==button) result=true;
- }
- return result;
+ return this->check_state(button,GAMEPAD_HOLDING) || this->check_state(button,GAMEPAD_PRESS);
 }
 
 bool Gamepad::check_press(const GAMEPAD_BUTTONS button)

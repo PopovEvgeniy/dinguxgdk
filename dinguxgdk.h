@@ -57,7 +57,7 @@ struct IMG_Pixel
 struct Key_State
 {
  unsigned short int button;
- unsigned char state;
+ unsigned int state;
 };
 
 struct TGA_head
@@ -200,6 +200,8 @@ class Gamepad
  size_t length;
  input_event input;
  Key_State key;
+ void read_input();
+ void clear_state();
  bool check_state(const GAMEPAD_BUTTONS button,const unsigned short int state);
  public:
  Gamepad();
