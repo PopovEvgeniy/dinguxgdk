@@ -305,8 +305,8 @@ Screen* Screen::get_handle()
 
 Gamepad::Gamepad()
 {
- key.button=0;
- key.state=GAMEPAD_RELEASE;
+ current=NULL;
+ preversion=NULL;
  device=-1;
  length=sizeof(input_event);
  memset(&input,0,length);
@@ -315,41 +315,27 @@ Gamepad::Gamepad()
 Gamepad::~Gamepad()
 {
  if(device!=-1) close(device);
+ if(current!=NULL) free(current);
+ if(preversion!=NULL) free(preversion);
 }
 
-void Gamepad::read_input()
+unsigned char *Gamepad::create_buffer()
 {
- while (read(device,&input,length)>0)
+ unsigned char *buffer;
+ buffer=(unsigned char*)calloc(BUTTON_AMOUNT,sizeof(unsigned char));
+ if (buffer==NULL)
  {
-  if (input.type==EV_KEY)
-  {
-   key.button=input.code;
-   key.state=input.value;
-   if(key.state!=GAMEPAD_HOLDING) break;
-  }
-
+  Halt("Can't allocate memory for input buffer");
  }
-
+ return buffer;
 }
-
-void Gamepad::clear_state()
+void Gamepad::create_buffers()
 {
- key.button=0;
- key.state=GAMEPAD_RELEASE;
+ current=this->create_buffer();
+ preversion=this->create_buffer();
 }
 
-bool Gamepad::check_state(const GAMEPAD_BUTTONS button,const unsigned short int state)
-{
- bool result;
- result=false;
- if (key.state==state)
- {
-  if (key.button==button) result=true;
- }
- return result;
-}
-
-void Gamepad::initialize()
+void Gamepad::open_device()
 {
  device=open("/dev/event0",O_RDONLY|O_NONBLOCK|O_NOCTTY);
  if (device==-1)
@@ -359,23 +345,126 @@ void Gamepad::initialize()
 
 }
 
+unsigned char Gamepad::get_state(const unsigned int state)
+{
+ unsigned char result;
+ result=GAMEPAD_RELEASE;
+ if (state!=GAMEPAD_RELEASE)
+ {
+  result=GAMEPAD_PRESS;
+ }
+ return result;
+}
+
+size_t Gamepad::get_button(const unsigned short int code)
+{
+ size_t button;
+ button=BUTTON_UP;
+ switch (code)
+ {
+  case KEY_UP:
+  button=BUTTON_UP;
+  break;
+  case KEY_DOWN:
+  button=BUTTON_DOWN;
+  break;
+  case KEY_LEFT:
+  button=BUTTON_LEFT;
+  break;
+  case KEY_RIGHT:
+  button=BUTTON_RIGHT;
+  break;
+  case KEY_LEFTCTRL:
+  button=BUTTON_A;
+  break;
+  case KEY_LEFTALT:
+  button=BUTTON_B;
+  break;
+  case KEY_SPACE:
+  button=BUTTON_X;
+  break;
+  case KEY_LEFTSHIFT:
+  button=BUTTON_Y;
+  break;
+  case KEY_BACKSPACE:
+  button=BUTTON_R;
+  break;
+  case KEY_TAB:
+  button=BUTTON_L;
+  break;
+  case KEY_ENTER:
+  button=BUTTON_START;
+  break;
+  case KEY_ESC:
+  button=BUTTON_SELECT;
+  break;
+  case KEY_POWER:
+  button=BUTTON_POWER;
+  break;
+  case KEY_PAUSE:
+  button=BUTTON_HOLD;
+  break;
+  default:
+  button=BUTTON_UP;
+  break;
+ }
+
+ return button;
+}
+
+bool Gamepad::check_state(const size_t button,const unsigned char state)
+{
+ bool result;
+ result=false;
+ if (button<BUTTON_AMOUNT)
+ {
+  if (current[button]==state)
+  {
+   if(preversion[button]!=state) result=true;
+  }
+
+ }
+ preversion[button]=current[button];
+ return result;
+}
+
+void Gamepad::initialize()
+{
+ this->open_device();
+ this->create_buffers();
+}
+
 void Gamepad::update()
 {
- this->clear_state();
- this->read_input();
+ while (read(device,&input,length)>0)
+ {
+  if (input.type==EV_KEY)
+  {
+   current[this->get_button(input.code)]=this->get_state(input.value);
+  }
+
+ }
+
 }
 
-bool Gamepad::check_hold(const GAMEPAD_BUTTONS button)
+bool Gamepad::check_hold(const size_t button)
 {
- return this->check_state(button,GAMEPAD_HOLDING) || this->check_state(button,GAMEPAD_PRESS);
+ bool result;
+ result=false;
+ if (button<BUTTON_AMOUNT)
+ {
+  if(current[button]!=GAMEPAD_RELEASE) result=true;
+ }
+ preversion[button]=current[button];
+ return result;
 }
 
-bool Gamepad::check_press(const GAMEPAD_BUTTONS button)
+bool Gamepad::check_press(const size_t button)
 {
  return this->check_state(button,GAMEPAD_PRESS);
 }
 
-bool Gamepad::check_release(const GAMEPAD_BUTTONS button)
+bool Gamepad::check_release(const size_t button)
 {
  return this->check_state(button,GAMEPAD_RELEASE);
 }

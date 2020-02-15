@@ -38,11 +38,25 @@ SVGALib homepage: http://www.svgalib.org/
 #include <linux/input.h>
 #include <linux/fb.h>
 
-#define GAMEPAD_HOLDING 2
 #define GAMEPAD_PRESS 1
 #define GAMEPAD_RELEASE 0
 
-enum GAMEPAD_BUTTONS {BUTTON_UP=KEY_UP,BUTTON_DOWN=KEY_DOWN,BUTTON_LEFT=KEY_LEFT,BUTTON_RIGHT=KEY_RIGHT,BUTTON_A=KEY_LEFTCTRL,BUTTON_B=KEY_LEFTALT,BUTTON_X=KEY_SPACE,BUTTON_Y=KEY_LEFTSHIFT,BUTTON_L=KEY_TAB,BUTTON_R=KEY_BACKSPACE,BUTTON_START=KEY_ENTER,BUTTON_SELECT=KEY_ESC,BUTTON_POWER=KEY_POWER,BUTTON_HOLD=KEY_PAUSE};
+#define BUTTON_AMOUNT 14
+#define BUTTON_UP 0
+#define BUTTON_DOWN 1
+#define BUTTON_LEFT 2
+#define BUTTON_RIGHT 3
+#define BUTTON_A 4
+#define BUTTON_B 5
+#define BUTTON_X 6
+#define BUTTON_Y 7
+#define BUTTON_R 8
+#define BUTTON_L 9
+#define BUTTON_START 10
+#define BUTTON_SELECT 11
+#define BUTTON_POWER 12
+#define BUTTON_HOLD 13
+
 enum MIRROR_TYPE {MIRROR_HORIZONTAL=0,MIRROR_VERTICAL=1};
 enum BACKGROUND_TYPE {NORMAL_BACKGROUND=0,HORIZONTAL_BACKGROUND=1,VERTICAL_BACKGROUND=2};
 enum SPRITE_TYPE {SINGLE_SPRITE=0,HORIZONTAL_STRIP=1,VERTICAL_STRIP=2};
@@ -52,12 +66,6 @@ struct IMG_Pixel
  unsigned char blue:8;
  unsigned char green:8;
  unsigned char red:8;
-};
-
-struct Key_State
-{
- unsigned short int button;
- unsigned int state;
 };
 
 struct TGA_head
@@ -196,21 +204,25 @@ class Screen:public Render,public FPS
 class Gamepad
 {
  private:
+ unsigned char *current;
+ unsigned char *preversion;
  int device;
  size_t length;
  input_event input;
- Key_State key;
- void read_input();
- void clear_state();
- bool check_state(const GAMEPAD_BUTTONS button,const unsigned short int state);
+ unsigned char *create_buffer();
+ void create_buffers();
+ void open_device();
+ unsigned char get_state(const unsigned int state);
+ size_t get_button(const unsigned short int code);
+ bool check_state(const size_t button,const unsigned char state);
  public:
  Gamepad();
  ~Gamepad();
  void initialize();
  void update();
- bool check_hold(const GAMEPAD_BUTTONS button);
- bool check_press(const GAMEPAD_BUTTONS button);
- bool check_release(const GAMEPAD_BUTTONS button);
+ bool check_hold(const size_t button);
+ bool check_press(const size_t button);
+ bool check_release(const size_t button);
 };
 
 class Memory
