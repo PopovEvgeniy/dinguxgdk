@@ -329,6 +329,7 @@ unsigned char *Gamepad::create_buffer()
  }
  return buffer;
 }
+
 void Gamepad::create_buffers()
 {
  current=this->create_buffer();
@@ -345,22 +346,22 @@ void Gamepad::open_device()
 
 }
 
-unsigned char Gamepad::get_state(const unsigned int state)
+unsigned char Gamepad::get_state()
 {
- unsigned char result;
- result=GAMEPAD_RELEASE;
- if (state!=GAMEPAD_RELEASE)
+ unsigned char state;
+ state=GAMEPAD_RELEASE;
+ if (input.value!=GAMEPAD_RELEASE)
  {
-  result=GAMEPAD_PRESS;
+  state=GAMEPAD_PRESS;
  }
- return result;
+ return state;
 }
 
-size_t Gamepad::get_button(const unsigned short int code)
+size_t Gamepad::get_button()
 {
  size_t button;
  button=BUTTON_UP;
- switch (code)
+ switch (input.code)
  {
   case KEY_UP:
   button=BUTTON_UP;
@@ -408,7 +409,6 @@ size_t Gamepad::get_button(const unsigned short int code)
   button=BUTTON_UP;
   break;
  }
-
  return button;
 }
 
@@ -440,7 +440,7 @@ void Gamepad::update()
  {
   if (input.type==EV_KEY)
   {
-   current[this->get_button(input.code)]=this->get_state(input.value);
+   current[this->get_button()]=this->get_state();
   }
 
  }

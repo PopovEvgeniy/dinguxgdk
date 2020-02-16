@@ -212,8 +212,8 @@ class Gamepad
  unsigned char *create_buffer();
  void create_buffers();
  void open_device();
- unsigned char get_state(const unsigned int state);
- size_t get_button(const unsigned short int code);
+ unsigned char get_state();
+ size_t get_button();
  bool check_state(const size_t button,const unsigned char state);
  public:
  Gamepad();
