@@ -40,23 +40,9 @@ SVGALib homepage: http://www.svgalib.org/
 
 #define GAMEPAD_PRESS 1
 #define GAMEPAD_RELEASE 0
-
 #define BUTTON_AMOUNT 14
-#define BUTTON_UP 0
-#define BUTTON_DOWN 1
-#define BUTTON_LEFT 2
-#define BUTTON_RIGHT 3
-#define BUTTON_A 4
-#define BUTTON_B 5
-#define BUTTON_X 6
-#define BUTTON_Y 7
-#define BUTTON_R 8
-#define BUTTON_L 9
-#define BUTTON_START 10
-#define BUTTON_SELECT 11
-#define BUTTON_POWER 12
-#define BUTTON_HOLD 13
 
+enum GAMEPAD_BUTTONS {BUTTON_UP=0,BUTTON_DOWN=1,BUTTON_LEFT=2,BUTTON_RIGHT=3,BUTTON_A=4,BUTTON_B=5,BUTTON_X=6,BUTTON_Y=7,BUTTON_R=8,BUTTON_L=9,BUTTON_START=10,BUTTON_SELECT=11,BUTTON_POWER=12,BUTTON_HOLD=13};
 enum MIRROR_TYPE {MIRROR_HORIZONTAL=0,MIRROR_VERTICAL=1};
 enum BACKGROUND_TYPE {NORMAL_BACKGROUND=0,HORIZONTAL_BACKGROUND=1,VERTICAL_BACKGROUND=2};
 enum SPRITE_TYPE {SINGLE_SPRITE=0,HORIZONTAL_STRIP=1,VERTICAL_STRIP=2};
@@ -213,16 +199,16 @@ class Gamepad
  void create_buffers();
  void open_device();
  unsigned char get_state();
- size_t get_button();
- bool check_state(const size_t button,const unsigned char state);
+ GAMEPAD_BUTTONS get_button();
+ bool check_state(const GAMEPAD_BUTTONS button,const unsigned char state);
  public:
  Gamepad();
  ~Gamepad();
  void initialize();
  void update();
- bool check_hold(const size_t button);
- bool check_press(const size_t button);
- bool check_release(const size_t button);
+ bool check_hold(const GAMEPAD_BUTTONS button);
+ bool check_press(const GAMEPAD_BUTTONS button);
+ bool check_release(const GAMEPAD_BUTTONS button);
 };
 
 class Memory

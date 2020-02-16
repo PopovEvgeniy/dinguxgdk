@@ -357,9 +357,9 @@ unsigned char Gamepad::get_state()
  return state;
 }
 
-size_t Gamepad::get_button()
+GAMEPAD_BUTTONS Gamepad::get_button()
 {
- size_t button;
+ GAMEPAD_BUTTONS button;
  button=BUTTON_UP;
  switch (input.code)
  {
@@ -412,17 +412,13 @@ size_t Gamepad::get_button()
  return button;
 }
 
-bool Gamepad::check_state(const size_t button,const unsigned char state)
+bool Gamepad::check_state(const GAMEPAD_BUTTONS button,const unsigned char state)
 {
  bool result;
  result=false;
- if (button<BUTTON_AMOUNT)
+ if (current[button]==state)
  {
-  if (current[button]==state)
-  {
-   if(preversion[button]!=state) result=true;
-  }
-
+  if (preversion[button]!=state) result=true;
  }
  preversion[button]=current[button];
  return result;
@@ -447,24 +443,24 @@ void Gamepad::update()
 
 }
 
-bool Gamepad::check_hold(const size_t button)
+bool Gamepad::check_hold(const GAMEPAD_BUTTONS button)
 {
  bool result;
  result=false;
- if (button<BUTTON_AMOUNT)
+ if(current[button]!=GAMEPAD_RELEASE)
  {
-  if(current[button]!=GAMEPAD_RELEASE) result=true;
+  result=true;
  }
  preversion[button]=current[button];
  return result;
 }
 
-bool Gamepad::check_press(const size_t button)
+bool Gamepad::check_press(const GAMEPAD_BUTTONS button)
 {
  return this->check_state(button,GAMEPAD_PRESS);
 }
 
-bool Gamepad::check_release(const size_t button)
+bool Gamepad::check_release(const GAMEPAD_BUTTONS button)
 {
  return this->check_state(button,GAMEPAD_RELEASE);
 }
