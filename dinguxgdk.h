@@ -195,7 +195,7 @@ class Gamepad
  int device;
  size_t length;
  input_event input;
- unsigned char *create_buffer();
+ unsigned char *create_buffer(const char *message);
  void create_buffers();
  void open_device();
  unsigned char get_state();

@@ -319,21 +319,21 @@ Gamepad::~Gamepad()
  if(preversion!=NULL) free(preversion);
 }
 
-unsigned char *Gamepad::create_buffer()
+unsigned char *Gamepad::create_buffer(const char *message)
 {
  unsigned char *buffer;
  buffer=(unsigned char*)calloc(BUTTON_AMOUNT,sizeof(unsigned char));
  if (buffer==NULL)
  {
-  Halt("Can't allocate memory for input buffer");
+  Halt(message);
  }
  return buffer;
 }
 
 void Gamepad::create_buffers()
 {
- current=this->create_buffer();
- preversion=this->create_buffer();
+ current=this->create_buffer("Can't allocate memory for primary input buffer");
+ preversion=this->create_buffer("Can't allocate memory for secondary input buffer");
 }
 
 void Gamepad::open_device()
