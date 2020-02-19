@@ -19,7 +19,7 @@ int main(void)
  image.load_tga("space.tga");
  space.load_image(image);
  image.load_tga("ship.tga");
- ship.load_image(image);
+ ship.load_sprite(image,HORIZONTAL_STRIP,2);
  image.load_tga("font.tga");
  font.load_image(image);
  text.load_font(font.get_handle());
@@ -30,8 +30,6 @@ int main(void)
  space.resize_image(screen_width,screen_height);
  space.set_kind(NORMAL_BACKGROUND);
  screen.clear_screen();
- ship.set_frames(2);
- ship.set_kind(HORIZONTAL_STRIP);
  text.set_position(font.get_width(),font.get_height());
  timer.set_timer(1);
  memset(perfomance,0,8);
