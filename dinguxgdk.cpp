@@ -465,6 +465,74 @@ bool Gamepad::check_release(const GAMEPAD_BUTTONS button)
  return this->check_state(button,GAMEPAD_RELEASE);
 }
 
+Battery::Battery()
+{
+ device=NULL;
+ minimum=700;
+ maximum=1700;
+ memset(buffer,0,5);
+}
+
+Battery::~Battery()
+{
+
+}
+
+void Battery::open_device()
+{
+ device=fopen("/proc/jz/battery","rt");
+ if(device==NULL)
+ {
+  Halt("Can't get access to battery");
+ }
+
+}
+
+void Battery::close_device()
+{
+ if (device!=NULL) fclose(device);
+}
+
+unsigned short int Battery::read_battery_level()
+{
+ fgets(buffer,5,device);
+ return atoi(buffer);
+}
+
+unsigned short int Battery::calculate_level(const unsigned short int current)
+{
+ unsigned short int level;
+ level=current;
+ if (level>maximum) level=maximum;
+ if (level<minimum) level=minimum;
+ return (level-minimum)/10;
+}
+
+void Battery::initialize(const CONSOLE_KIND kind)
+{
+ switch (kind)
+ {
+  case A320:
+  minimum=700;
+  maximum=1700;
+  break;
+  case A380:
+  minimum=800;
+  maximum=1800;
+  break;
+ }
+
+}
+
+unsigned short int Battery::get_level()
+{
+ unsigned short int level;
+ this->open_device();
+ level=this->calculate_level(this->read_battery_level());
+ this->close_device();
+ return level;
+}
+
 unsigned long int Memory::get_total_memory()
 {
  unsigned long int memory;

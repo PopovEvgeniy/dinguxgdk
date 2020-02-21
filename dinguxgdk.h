@@ -43,6 +43,7 @@ SVGALib homepage: http://www.svgalib.org/
 #define BUTTON_AMOUNT 14
 
 enum GAMEPAD_BUTTONS {BUTTON_UP=0,BUTTON_DOWN=1,BUTTON_LEFT=2,BUTTON_RIGHT=3,BUTTON_A=4,BUTTON_B=5,BUTTON_X=6,BUTTON_Y=7,BUTTON_R=8,BUTTON_L=9,BUTTON_START=10,BUTTON_SELECT=11,BUTTON_POWER=12,BUTTON_HOLD=13};
+enum CONSOLE_KIND {A320=0,A380=1};
 enum MIRROR_TYPE {MIRROR_HORIZONTAL=0,MIRROR_VERTICAL=1};
 enum BACKGROUND_TYPE {NORMAL_BACKGROUND=0,HORIZONTAL_BACKGROUND=1,VERTICAL_BACKGROUND=2};
 enum SPRITE_TYPE {SINGLE_SPRITE=0,HORIZONTAL_STRIP=1,VERTICAL_STRIP=2};
@@ -209,6 +210,24 @@ class Gamepad
  bool check_hold(const GAMEPAD_BUTTONS button);
  bool check_press(const GAMEPAD_BUTTONS button);
  bool check_release(const GAMEPAD_BUTTONS button);
+};
+
+class Battery
+{
+ private:
+ FILE *device;
+ unsigned short int minimum;
+ unsigned short int maximum;
+ char buffer[5];
+ void open_device();
+ void close_device();
+ unsigned short int read_battery_level();
+ unsigned short int calculate_level(const unsigned short int current);
+ public:
+ Battery();
+ ~Battery();
+ void initialize(const CONSOLE_KIND kind);
+ unsigned short int get_level();
 };
 
 class Memory
