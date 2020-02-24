@@ -8,5 +8,3 @@ demo:
 	@mipsel-linux-uclibc-g++ demo.cpp dinguxgdk.a $(flags) -o demo_a320.dge
 tileset:
 	@mipsel-linux-uclibc-g++ tileset.cpp dinguxgdk.a $(flags) -o tileset_a320.dge
-battery:
-	@mipsel-linux-uclibc-g++ battery_level.cpp dinguxgdk.a $(flags) -o battery_a320.dge
