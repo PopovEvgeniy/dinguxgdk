@@ -135,6 +135,8 @@ class Frame
  ~Frame();
  unsigned short int *get_buffer();
  size_t get_pixels();
+ unsigned long int get_frame_width();
+ unsigned long int get_frame_height();
  void draw_pixel(const unsigned long int x,const unsigned long int y,const unsigned char red,const unsigned char green,const unsigned char blue);
  void clear_screen();
  void save();

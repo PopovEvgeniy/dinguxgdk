@@ -111,6 +111,16 @@ size_t Frame::get_pixels()
  return pixels;
 }
 
+unsigned long int Frame::get_frame_width()
+{
+ return frame_width;
+}
+
+unsigned long int Frame::get_frame_height()
+{
+ return frame_height;
+}
+
 void Frame::draw_pixel(const unsigned long int x,const unsigned long int y,const unsigned char red,const unsigned char green,const unsigned char blue)
 {
  if((x<frame_width)&&(y<frame_height))
