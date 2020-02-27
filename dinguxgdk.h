@@ -144,6 +144,20 @@ class Frame
  void restore(const unsigned long int x,const unsigned long int y,const unsigned long int width,const unsigned long int height);
 };
 
+class Plane: public Frame
+{
+ private:
+ unsigned short int *plane;
+ unsigned short int *target;
+ size_t amount;
+ float Ratio;
+ public:
+ Plane();
+ ~Plane();
+ void create_plane(const unsigned long int width,const unsigned long int height,unsigned short int *surface_buffer,const size_t surface_pixels);
+ void transfer();
+};
+
 class FPS
 {
  private:
