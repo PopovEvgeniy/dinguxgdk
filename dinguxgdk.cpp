@@ -84,6 +84,15 @@ size_t Frame::get_offset(const unsigned long int x,const unsigned long int y)
  return (size_t)x+(size_t)y*(size_t)frame_width;
 }
 
+void Frame::put_pixel(const size_t offset,const unsigned char red,const unsigned char green,const unsigned char blue)
+{
+ if (offset<pixels)
+ {
+  buffer[offset]=this->get_bgr565(red,green,blue);
+ }
+
+}
+
 void Frame::set_size(const unsigned long int surface_width,const unsigned long int surface_height)
 {
  frame_width=surface_width;
@@ -123,11 +132,7 @@ unsigned long int Frame::get_frame_height()
 
 void Frame::draw_pixel(const unsigned long int x,const unsigned long int y,const unsigned char red,const unsigned char green,const unsigned char blue)
 {
- if((x<frame_width)&&(y<frame_height))
- {
-  buffer[this->get_offset(x,y)]=this->get_bgr565(red,green,blue);
- }
-
+ this->put_pixel(this->get_offset(x,y),red,green,blue);
 }
 
 void Frame::clear_screen()
