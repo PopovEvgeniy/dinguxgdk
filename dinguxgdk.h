@@ -124,7 +124,7 @@ class Frame
  unsigned short int *buffer;
  unsigned short int *shadow;
  unsigned short int *create_buffer(const char *error);
- unsigned short int get_bgr565(const unsigned char red,const unsigned char green,const unsigned char blue);
+ unsigned short int get_bgr565(const unsigned short int red,const unsigned short int green,const unsigned short int blue);
  size_t get_offset(const unsigned long int x,const unsigned long int y);
  void put_pixel(const size_t offset,const unsigned char red,const unsigned char green,const unsigned char blue);
  protected:

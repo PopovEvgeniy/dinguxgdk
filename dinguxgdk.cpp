@@ -74,7 +74,7 @@ unsigned short int *Frame::create_buffer(const char *error)
  return target;
 }
 
-unsigned short int Frame::get_bgr565(const unsigned char red,const unsigned char green,const unsigned char blue)
+unsigned short int Frame::get_bgr565(const unsigned short int red,const unsigned short int green,const unsigned short int blue)
 {
  return (blue >> 3) +((green >> 2) << 5)+((red >> 3) << 11); // This code bases on code from SVGALib
 }
