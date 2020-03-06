@@ -157,6 +157,7 @@ class Plane: public Frame
  ~Plane();
  void create_plane(const unsigned long int width,const unsigned long int height,unsigned short int *surface_buffer,const size_t surface_pixels);
  void transfer();
+ Plane* get_handle();
 };
 
 class FPS
