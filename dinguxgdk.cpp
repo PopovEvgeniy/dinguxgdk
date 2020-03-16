@@ -540,6 +540,113 @@ unsigned long int Memory::get_free_memory()
  return memory;
 }
 
+Backlight::Backlight()
+{
+ device=NULL;
+ minimum=10;
+ maximum=100;
+ memset(buffer,0,4);
+}
+
+Backlight::~Backlight()
+{
+
+}
+
+void Backlight::open_device(const char *mode)
+{
+ device=fopen("/proc/jz/lcd_backlight",mode);
+ if (device==NULL)
+ {
+  Halt("Can't get access to display backlight");
+ }
+
+}
+
+void Backlight::open_read()
+{
+ this->open_device("rt");
+}
+
+void Backlight::open_write()
+{
+ this->open_device("wt");
+}
+
+void Backlight::close_device()
+{
+ if (device!=NULL) fclose(device);
+}
+
+unsigned char Backlight::read_value()
+{
+ memset(buffer,0,4);
+ fgets(buffer,4,device);
+ return atoi(buffer);
+}
+
+void Backlight::write_value(const unsigned char value)
+{
+ unsigned char level;
+ level=value;
+ if (level>maximum) level=maximum;
+ if (level<minimum) level=minimum;
+ memset(buffer,0,4);
+ sprintf(buffer,"%hhu",level);
+ rewind(device);
+ fputs(buffer,device);
+}
+
+unsigned char Backlight::get_minimum()
+{
+ return minimum;
+}
+
+unsigned char Backlight::get_maximum()
+{
+ return maximum;
+}
+
+unsigned char Backlight::get_level()
+{
+ unsigned char level;
+ this->open_read();
+ level=this->read_value();
+ this->close_device();
+ return level;
+}
+
+void Backlight::set_level(const unsigned char level)
+{
+ this->open_write();
+ this->write_value(level);
+ this->close_device();
+}
+
+void Backlight::increase_level()
+{
+ unsigned char level;
+ level=this->get_level();
+ if (level<maximum)
+ {
+  ++level;
+  this->set_level(level);
+ }
+
+}
+
+void Backlight::decrease_level()
+{
+ unsigned char level;
+ level=this->get_level();
+ if (level>minimum)
+ {
+  --level;
+  this->set_level(level);
+ }
+
+}
+
 System::System()
 {
  srand(time(NULL));

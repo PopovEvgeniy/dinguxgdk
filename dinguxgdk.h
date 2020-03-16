@@ -237,6 +237,30 @@ class Memory
  unsigned long int get_free_memory();
 };
 
+class Backlight
+{
+ private:
+ FILE *device;
+ unsigned char minimum;
+ unsigned char maximum;
+ char buffer[4];
+ void open_device(const char *mode);
+ void open_read();
+ void open_write();
+ void close_device();
+ unsigned char read_value();
+ void write_value(const unsigned char value);
+ public:
+ Backlight();
+ ~Backlight();
+ unsigned char get_minimum();
+ unsigned char get_maximum();
+ unsigned char get_level();
+ void set_level(const unsigned char level);
+ void increase_level();
+ void decrease_level();
+};
+
 class System
 {
  public:
