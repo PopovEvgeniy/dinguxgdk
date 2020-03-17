@@ -243,22 +243,27 @@ class Backlight
  FILE *device;
  unsigned char minimum;
  unsigned char maximum;
+ unsigned char current;
  char buffer[4];
  void open_device(const char *mode);
  void open_read();
  void open_write();
  void close_device();
- unsigned char read_value();
+ void read_value();
  void write_value(const unsigned char value);
+ void set_level(const unsigned char level);
+ unsigned char correct_level(const unsigned char level);
  public:
  Backlight();
  ~Backlight();
  unsigned char get_minimum();
  unsigned char get_maximum();
  unsigned char get_level();
- void set_level(const unsigned char level);
  void increase_level();
  void decrease_level();
+ void turn_off();
+ void turn_on();
+ void set_light(const unsigned char level);
 };
 
 class System

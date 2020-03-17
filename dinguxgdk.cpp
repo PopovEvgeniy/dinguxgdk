@@ -545,6 +545,7 @@ Backlight::Backlight()
  device=NULL;
  minimum=10;
  maximum=100;
+ current=minimum;
  memset(buffer,0,4);
 }
 
@@ -578,23 +579,35 @@ void Backlight::close_device()
  if (device!=NULL) fclose(device);
 }
 
-unsigned char Backlight::read_value()
+void Backlight::read_value()
 {
  memset(buffer,0,4);
  fgets(buffer,4,device);
- return atoi(buffer);
+ current=atoi(buffer);
 }
 
 void Backlight::write_value(const unsigned char value)
 {
- unsigned char level;
- level=value;
- if (level>maximum) level=maximum;
- if (level<minimum) level=minimum;
  memset(buffer,0,4);
- sprintf(buffer,"%hhu",level);
+ sprintf(buffer,"%hhu",value);
  rewind(device);
  fputs(buffer,device);
+}
+
+void Backlight::set_level(const unsigned char level)
+{
+ this->open_write();
+ this->write_value(level);
+ this->close_device();
+}
+
+unsigned char Backlight::correct_level(const unsigned char level)
+{
+ unsigned char value;
+ value=level;
+ if (value>maximum) value=maximum;
+ if (value<minimum) value=minimum;
+ return value;
 }
 
 unsigned char Backlight::get_minimum()
@@ -609,42 +622,48 @@ unsigned char Backlight::get_maximum()
 
 unsigned char Backlight::get_level()
 {
- unsigned char level;
  this->open_read();
- level=this->read_value();
+ this->read_value();
  this->close_device();
- return level;
-}
-
-void Backlight::set_level(const unsigned char level)
-{
- this->open_write();
- this->write_value(level);
- this->close_device();
+ return current;
 }
 
 void Backlight::increase_level()
 {
- unsigned char level;
- level=this->get_level();
- if (level<maximum)
+ this->get_level();
+ if (current<maximum)
  {
-  ++level;
-  this->set_level(level);
+  current+=minimum;
+  this->set_level(current);
  }
 
 }
 
 void Backlight::decrease_level()
 {
- unsigned char level;
- level=this->get_level();
- if (level>minimum)
+ this->get_level();
+ if (current>minimum)
  {
-  --level;
-  this->set_level(level);
+  current-=minimum;
+  this->set_level(current);
  }
 
+}
+
+void Backlight::turn_off()
+{
+ this->get_level();
+ this->set_level(0);
+}
+
+void Backlight::turn_on()
+{
+ this->set_level(current);
+}
+
+void Backlight::set_light(const unsigned char level)
+{
+ this->set_level(this->correct_level(level));
 }
 
 System::System()

@@ -33,8 +33,8 @@ int main(void)
  screen.clear_screen();
  text.set_position(font.get_width(),font.get_height());
  timer.set_timer(1);
+ light.set_light(light.get_minimum());
  memset(perfomance,0,8);
- light.set_level(light.get_minimum());
  while(1)
  {
   screen.update();
@@ -42,8 +42,10 @@ int main(void)
   if (gamepad.check_press(BUTTON_START)==true) break;
   if (gamepad.check_press(BUTTON_A)==true) ship.mirror_image(MIRROR_HORIZONTAL);
   if (gamepad.check_press(BUTTON_B)==true) ship.mirror_image(MIRROR_VERTICAL);
-  if (gamepad.check_hold(BUTTON_X)==true) light.increase_level();
-  if (gamepad.check_hold(BUTTON_Y)==true) light.decrease_level();
+  if (gamepad.check_press(BUTTON_R)==true) light.turn_off();
+  if (gamepad.check_press(BUTTON_L)==true) light.turn_on();
+  if (gamepad.check_press(BUTTON_X)==true) light.increase_level();
+  if (gamepad.check_press(BUTTON_Y)==true) light.decrease_level();
   if (gamepad.check_hold(BUTTON_UP)==true) y-=4;
   if (gamepad.check_hold(BUTTON_DOWN)==true) y+=4;
   if (gamepad.check_hold(BUTTON_LEFT)==true) x-=4;
