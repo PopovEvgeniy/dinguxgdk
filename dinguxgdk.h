@@ -35,8 +35,12 @@ SVGALib homepage: http://www.svgalib.org/
 #include <unistd.h>
 #include <sys/sysinfo.h>
 #include <sys/ioctl.h>
+#include <sys/soundcard.h>
 #include <linux/input.h>
 #include <linux/fb.h>
+
+#define SOUND_RATE 44100
+#define SOUND_CHANNELS 2
 
 #define GAMEPAD_PRESS 1
 #define GAMEPAD_RELEASE 0
@@ -46,6 +50,23 @@ enum GAMEPAD_BUTTONS {BUTTON_UP=0,BUTTON_DOWN=1,BUTTON_LEFT=2,BUTTON_RIGHT=3,BUT
 enum MIRROR_TYPE {MIRROR_HORIZONTAL=0,MIRROR_VERTICAL=1};
 enum BACKGROUND_TYPE {NORMAL_BACKGROUND=0,HORIZONTAL_BACKGROUND=1,VERTICAL_BACKGROUND=2};
 enum SPRITE_TYPE {SINGLE_SPRITE=0,HORIZONTAL_STRIP=1,VERTICAL_STRIP=2};
+
+struct WAVE_head
+{
+ char riff_signature[4];
+ unsigned long int riff_length:32;
+ char wave_signature[4];
+ char format[4];
+ unsigned long int description_length:32;
+ unsigned short int type:16;
+ unsigned short int channels:16;
+ unsigned long int rate:32;
+ unsigned long int block_length:32;
+ unsigned short int align:16;
+ unsigned short int bits:16;
+ char date_signature[4];
+ unsigned long int date_length:32;
+};
 
 struct IMG_Pixel
 {
@@ -112,6 +133,7 @@ struct Collision_Box
 namespace DINGUXGDK
 {
 
+void* oss_play_sound(void *buffer);
 void Halt(const char *message);
 
 class Frame
@@ -237,6 +259,30 @@ class Memory
  unsigned long int get_free_memory();
 };
 
+class Sound
+{
+ private:
+ char *internal;
+ size_t buffer_length;
+ pthread_t stream;
+ void open_device();
+ void set_format();
+ void set_channels();
+ void set_rate();
+ void get_buffer_length();
+ void configure_sound_card();
+ void start_stream();
+ void create_buffer();
+ public:
+ Sound();
+ ~Sound();
+ void initialize();
+ bool check_busy();
+ size_t get_length();
+ size_t send(char *buffer,const size_t length);
+ Sound* get_handle();
+};
+
 class Backlight
 {
  private:
@@ -298,6 +344,54 @@ class Binary_File
  void read(void *buffer,const size_t length);
  void write(void *buffer,const size_t length);
  bool check_error();
+};
+
+class Audio
+{
+ private:
+ Binary_File target;
+ WAVE_head head;
+ void read_head();
+ void check_riff_signature();
+ void check_wave_signature();
+ void check_type();
+ void check_bits();
+ void check_channels();
+ void check_wave();
+ public:
+ Audio();
+ ~Audio();
+ Audio* get_handle();
+ size_t get_total();
+ size_t get_block();
+ unsigned long int get_rate();
+ unsigned short int get_channels();
+ unsigned short int get_bits();
+ void load_wave(const char *name);
+ void read_data(void *buffer,const size_t length);
+ void go_start();
+};
+
+class Player
+{
+ private:
+ Sound *sound;
+ Audio *target;
+ char *buffer;
+ size_t index;
+ size_t length;
+ void configure_player(Audio *audio);
+ void clear_buffer();
+ void create_buffer();
+ public:
+ Player();
+ ~Player();
+ void rewind_audio();
+ bool is_end();
+ void load(Audio *audio);
+ void initialize(Sound *target);
+ void play();
+ void loop();
 };
 
 class Timer

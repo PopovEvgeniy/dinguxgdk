@@ -27,8 +27,32 @@ SVGALib homepage: http://www.svgalib.org/
 
 #include "dinguxgdk.h"
 
+namespace OSS_BACKEND
+{
+ volatile int sound_device=-1;
+ volatile size_t sound_buffer_length=0;
+ volatile bool run_stream=true;
+ volatile bool do_play=false;
+}
+
 namespace DINGUXGDK
 {
+
+void* oss_play_sound(void *buffer)
+{
+ while (OSS_BACKEND::run_stream)
+ {
+  if (OSS_BACKEND::do_play)
+  {
+   write(OSS_BACKEND::sound_device,buffer,OSS_BACKEND::sound_buffer_length);
+   OSS_BACKEND::do_play=false;
+  }
+
+ }
+ if (buffer!=NULL) free(buffer);
+ if (OSS_BACKEND::sound_device!=-1) close(OSS_BACKEND::sound_device);
+ return NULL;
+}
 
 void Halt(const char *message)
 {
@@ -540,6 +564,140 @@ unsigned long int Memory::get_free_memory()
  return memory;
 }
 
+Sound::Sound()
+{
+ internal=NULL;
+ buffer_length=0;
+ stream=0;
+}
+
+Sound::~Sound()
+{
+ OSS_BACKEND::run_stream=false;
+}
+
+void Sound::open_device()
+{
+ OSS_BACKEND::sound_device=open("/dev/dsp",O_WRONLY,S_IRWXU|S_IRWXG|S_IRWXO);
+ if (OSS_BACKEND::sound_device==-1)
+ {
+  Halt("Can't get access to sound card");
+ }
+
+}
+
+void Sound::set_format()
+{
+ int format;
+ format=AFMT_S16_LE;
+ if(ioctl(OSS_BACKEND::sound_device,SNDCTL_DSP_SETFMT,&format)==-1)
+ {
+  Halt("Can't set sound format");
+ }
+
+}
+
+void Sound::set_channels()
+{
+ int channels;
+ channels=SOUND_CHANNELS;
+ if(ioctl(OSS_BACKEND::sound_device,SNDCTL_DSP_CHANNELS,&channels)==-1)
+ {
+  Halt("Can't set number of audio channels");
+ }
+
+}
+
+void Sound::set_rate()
+{
+ int rate;
+ rate=SOUND_RATE;
+ if(ioctl(OSS_BACKEND::sound_device,SNDCTL_DSP_SPEED,&rate)==-1)
+ {
+  Halt("Can't set sample rate");
+ }
+
+}
+
+void Sound::get_buffer_length()
+{
+ audio_buf_info configuration;
+ memset(&configuration,0,sizeof(audio_buf_info));
+ if (ioctl(OSS_BACKEND::sound_device,SNDCTL_DSP_GETOSPACE,&configuration)==-1)
+ {
+  Halt("Can't read configuration of sound buffer");
+ }
+ buffer_length=(size_t)configuration.fragstotal*(size_t)configuration.fragsize;
+}
+
+void Sound::configure_sound_card()
+{
+ this->open_device();
+ this->set_format();
+ this->set_rate();
+ this->set_channels();
+ this->get_buffer_length();
+}
+
+void Sound::start_stream()
+{
+ if (pthread_create(&stream,NULL,oss_play_sound,internal)!=0)
+ {
+  Halt("Can't start sound stream");
+ }
+
+}
+
+void Sound::create_buffer()
+{
+ internal=(char*)calloc(buffer_length,sizeof(char));
+ if (internal==NULL)
+ {
+  Halt("Can't allocate memory for sound buffer");
+ }
+
+}
+
+void Sound::initialize()
+{
+ this->configure_sound_card();
+ this->create_buffer();
+ this->start_stream();
+}
+
+bool Sound::check_busy()
+{
+ return OSS_BACKEND::do_play;
+}
+
+size_t Sound::get_length()
+{
+ return buffer_length;
+}
+
+size_t Sound::send(char *buffer,const size_t length)
+{
+ size_t amount;
+ if (OSS_BACKEND::do_play)
+ {
+  amount=0;
+ }
+ else
+ {
+  amount=buffer_length;
+  if (length<buffer_length) amount=length;
+  memmove(internal,buffer,amount);
+  OSS_BACKEND::sound_buffer_length=length;
+  OSS_BACKEND::do_play=true;
+ }
+ return amount;
+}
+
+Sound* Sound::get_handle()
+{
+ return this;
+}
+
 Backlight::Backlight()
 {
  device=NULL;
@@ -820,6 +978,225 @@ bool Binary_File::check_error()
  result=false;
  if(ferror(target)!=0) result=true;
  return result;
+}
+
+Audio::Audio()
+{
+ memset(&head,0,44);
+}
+
+Audio::~Audio()
+{
+
+}
+
+void Audio::read_head()
+{
+ target.read(&head,44);
+}
+
+void Audio::check_riff_signature()
+{
+ if (strncmp(head.riff_signature,"RIFF",4)!=0)
+ {
+  Halt("Incorrect riff signature");
+ }
+
+}
+
+void Audio::check_wave_signature()
+{
+ if (strncmp(head.wave_signature,"WAVE",4)!=0)
+ {
+  Halt("Incorrect wave signature");
+ }
+
+}
+
+void Audio::check_type()
+{
+ if (head.type!=1)
+ {
+  Halt("Incorrect type of wave file");
+ }
+
+}
+
+void Audio::check_bits()
+{
+ if (head.bits!=16)
+ {
+  Halt("Incorrect amount of sound bits");
+ }
+
+}
+
+void Audio::check_channels()
+{
+ if ((head.channels==0)||(head.channels>2))
+ {
+  Halt("Incorrect number of audio channels");
+ }
+
+}
+
+void Audio::check_wave()
+{
+ this->check_riff_signature();
+ this->check_wave_signature();
+ this->check_type();
+ this->check_bits();
+ this->check_channels();
+}
+
+Audio* Audio::get_handle()
+{
+ return this;
+}
+
+size_t Audio::get_total()
+{
+ return (size_t)head.date_length;
+}
+
+size_t Audio::get_block()
+{
+ return (size_t)head.block_length;
+}
+
+unsigned long int Audio::get_rate()
+{
+ return head.rate;
+}
+
+unsigned short int Audio::get_channels()
+{
+ return head.channels;
+}
+
+unsigned short int Audio::get_bits()
+{
+ return head.bits;
+}
+
+void Audio::load_wave(const char *name)
+{
+ target.close();
+ target.open_read(name);
+ this->read_head();
+ this->check_wave();
+}
+
+void Audio::read_data(void *buffer,const size_t length)
+{
+ target.read(buffer,length);
+}
+
+void Audio::go_start()
+{
+ target.set_position(44);
+}
+
+Player::Player()
+{
+ sound=NULL;
+ target=NULL;
+ buffer=NULL;
+ index=0;
+ length=0;
+}
+
+Player::~Player()
+{
+ if (buffer!=NULL) free(buffer);
+}
+
+void Player::configure_player(Audio *audio)
+{
+ index=0;
+ target=audio;
+ length=target->get_total();
+}
+
+void Player::clear_buffer()
+{
+ if (buffer!=NULL)
+ {
+  free(buffer);
+  buffer=NULL;
+ }
+
+}
+
+void Player::create_buffer()
+{
+ buffer=(char*)calloc(sound->get_length(),sizeof(char));
+ if (buffer==NULL)
+ {
+  Halt("Can't allocate memory for audio buffer");
+ }
+
+}
+
+void Player::rewind_audio()
+{
+ index=0;
+ target->go_start();
+}
+
+bool Player::is_end()
+{
+ bool end_audio;
+ end_audio=false;
+ if (index==length)
+ {
+  end_audio=true;
+ }
+ return end_audio;
+}
+
+void Player::load(Audio *audio)
+{
+ this->configure_player(audio);
+ this->clear_buffer();
+ this->create_buffer();
+}
+
+void Player::initialize(Sound *target)
+{
+ sound=target;
+}
+
+void Player::play()
+{
+ size_t block;
+ size_t elapsed;
+ block=sound->get_length();
+ if(index<length)
+ {
+  if (sound->check_busy()==false)
+  {
+   elapsed=length-index;
+   if (block>elapsed) block=elapsed;
+   target->read_data(buffer,block);
+   index+=sound->send(buffer,block);
+  }
+
+ }
+
+}
+
+void Player::loop()
+{
+ if (this->is_end())
+ {
+  this->rewind_audio();
+ }
+ else
+ {
+  this->play();
+ }
+
 }
 
 Timer::Timer()

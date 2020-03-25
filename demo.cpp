@@ -7,6 +7,9 @@ int main(void)
  DINGUXGDK::Backlight light;
  DINGUXGDK::Screen screen;
  DINGUXGDK::Gamepad gamepad;
+ DINGUXGDK::Sound sound;
+ DINGUXGDK::Audio audio;
+ DINGUXGDK::Player player;
  DINGUXGDK::Timer timer;
  DINGUXGDK::Image image;
  DINGUXGDK::Background space;
@@ -33,12 +36,17 @@ int main(void)
  screen.clear_screen();
  text.set_position(font.get_width(),font.get_height());
  timer.set_timer(1);
+ sound.initialize();
+ player.initialize(sound.get_handle());
+ audio.load_wave("space.wav");
+ player.load(audio.get_handle());
  light.set_light(light.get_minimum());
  memset(perfomance,0,8);
  while(1)
  {
   screen.update();
   gamepad.update();
+  player.loop();
   if (gamepad.check_press(BUTTON_START)==true) break;
   if (gamepad.check_press(BUTTON_A)==true) ship.mirror_image(MIRROR_HORIZONTAL);
   if (gamepad.check_press(BUTTON_B)==true) ship.mirror_image(MIRROR_VERTICAL);
