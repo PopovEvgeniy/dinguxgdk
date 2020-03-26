@@ -546,22 +546,35 @@ bool Gamepad::check_release(const GAMEPAD_BUTTONS button)
  return this->check_state(button,GAMEPAD_RELEASE);
 }
 
+Memory::Memory()
+{
+ memset(&information,0,sizeof(struct sysinfo));
+}
+
+Memory::~Memory()
+{
+
+}
+
+void Memory::read_system_information()
+{
+ if (sysinfo(&information)==-1)
+ {
+  Halt("Can't read system information");
+ }
+
+}
+
 unsigned long int Memory::get_total_memory()
 {
- unsigned long int memory;
- struct sysinfo information;
- memory=0;
- if (sysinfo(&information)==0) memory=information.totalram*information.mem_unit;
- return memory;
+ this->read_system_information();
+ return information.totalram*information.mem_unit;
 }
 
 unsigned long int Memory::get_free_memory()
 {
- unsigned long int memory;
- struct sysinfo information;
- memory=0;
- if (sysinfo(&information)==0) memory=information.freeram*information.mem_unit;
- return memory;
+ this->read_system_information();
+ return information.freeram*information.mem_unit;
 }
 
 Sound::Sound()
@@ -786,13 +799,18 @@ unsigned char Backlight::get_level()
  return current;
 }
 
+void Backlight::set_light(const unsigned char level)
+{
+ this->set_level(this->correct_level(level));
+}
+
 void Backlight::increase_level()
 {
  this->get_level();
  if (current<maximum)
  {
   current+=minimum;
-  this->set_level(current);
+  this->set_light(current);
  }
 
 }
@@ -803,7 +821,7 @@ void Backlight::decrease_level()
  if (current>minimum)
  {
   current-=minimum;
-  this->set_level(current);
+  this->set_light(current);
  }
 
 }
@@ -816,12 +834,7 @@ void Backlight::turn_off()
 
 void Backlight::turn_on()
 {
- this->set_level(current);
-}
-
-void Backlight::set_light(const unsigned char level)
-{
- this->set_level(this->correct_level(level));
+ this->set_light(current);
 }
 
 System::System()
