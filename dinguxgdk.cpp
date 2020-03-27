@@ -700,7 +700,7 @@ size_t Sound::send(char *buffer,const size_t length)
   amount=buffer_length;
   if (length<buffer_length) amount=length;
   memmove(internal,buffer,amount);
-  OSS_BACKEND::sound_buffer_length=length;
+  OSS_BACKEND::sound_buffer_length=amount;
   OSS_BACKEND::do_play=true;
  }
  return amount;
@@ -806,24 +806,20 @@ void Backlight::set_light(const unsigned char level)
 
 void Backlight::increase_level()
 {
- this->get_level();
- if (current<maximum)
+ if (this->get_level()<maximum)
  {
   current+=minimum;
-  this->set_light(current);
  }
-
+ this->set_light(current);
 }
 
 void Backlight::decrease_level()
 {
- this->get_level();
- if (current>minimum)
+ if (this->get_level()>minimum)
  {
   current-=minimum;
-  this->set_light(current);
  }
-
+ this->set_light(current);
 }
 
 void Backlight::turn_off()
