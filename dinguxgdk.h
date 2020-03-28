@@ -288,6 +288,30 @@ class Sound
  Sound* get_handle();
 };
 
+class Mixer
+{
+ private:
+ int device;
+ int maximum;
+ int minimum;
+ int current;
+ void open_device();
+ void set_level(const int level);
+ int correct_level(const int level);
+ public:
+ Mixer();
+ ~Mixer();
+ void set_volume(const int level);
+ void turn_on();
+ void turn_off();
+ void increase_volume();
+ void decrease_volume();
+ void initialize();
+ int get_minimum();
+ int get_maximum();
+ int get_volume();
+};
+
 class Backlight
 {
  private:

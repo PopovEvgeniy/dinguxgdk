@@ -711,6 +711,102 @@ Sound* Sound::get_handle()
  return this;
 }
 
+Mixer::Mixer()
+{
+ device=-1;
+ minimum=5;
+ maximum=255;
+ current=minimum;
+}
+
+Mixer::~Mixer()
+{
+ if (device==-1) close(device);
+}
+
+void Mixer::open_device()
+{
+ device=open("/dev/mixer",O_RDWR);
+ if (device==-1)
+ {
+  Halt("Can't get access to mixer");
+ }
+
+}
+
+void Mixer::set_level(const int level)
+{
+ if (ioctl(device,SOUND_MIXER_WRITE_VOLUME,&level)==-1)
+ {
+  Halt("Can't set volume");
+ }
+
+}
+
+int Mixer::correct_level(const int level)
+{
+ int value;
+ value=level;
+ if (value<minimum) value=minimum;
+ if (value>maximum) value=maximum;
+ return value;
+}
+
+void Mixer::set_volume(const int level)
+{
+ current=(this->correct_level(level)<<8)+this->correct_level(level);
+ this->set_level(current);
+}
+
+void Mixer::turn_on()
+{
+ this->set_volume(current);
+}
+
+void Mixer::turn_off()
+{
+ this->set_level(0);
+}
+
+void Mixer::increase_volume()
+{
+ if (current<maximum)
+ {
+  current+=minimum;
+ }
+ this->set_volume(current);
+}
+
+void Mixer::decrease_volume()
+{
+ if (current>minimum)
+ {
+  current-=minimum;
+ }
+ this->set_volume(current);
+}
+
+void Mixer::initialize()
+{
+ this->open_device();
+ this->set_level(current);
+}
+
+int Mixer::get_minimum()
+{
+ return minimum;
+}
+
+int Mixer::get_maximum()
+{
+ return maximum;
+}
+
+int Mixer::get_volume()
+{
+ return current;
+}
+
 Backlight::Backlight()
 {
  device=NULL;
