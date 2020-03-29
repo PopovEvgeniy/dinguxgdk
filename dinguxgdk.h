@@ -304,8 +304,6 @@ class Mixer
  void set_volume(const int level);
  void turn_on();
  void turn_off();
- void increase_volume();
- void decrease_volume();
  void initialize();
  int get_minimum();
  int get_maximum();

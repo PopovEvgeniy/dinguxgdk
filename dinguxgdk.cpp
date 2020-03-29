@@ -714,7 +714,7 @@ Sound* Sound::get_handle()
 Mixer::Mixer()
 {
  device=-1;
- minimum=5;
+ minimum=15;
  maximum=255;
  current=minimum;
 }
@@ -768,24 +768,6 @@ void Mixer::turn_off()
  this->set_level(0);
 }
 
-void Mixer::increase_volume()
-{
- if (current<maximum)
- {
-  current+=minimum;
- }
- this->set_volume(current);
-}
-
-void Mixer::decrease_volume()
-{
- if (current>minimum)
- {
-  current-=minimum;
- }
- this->set_volume(current);
-}
-
 void Mixer::initialize()
 {
  this->open_device();
@@ -811,7 +793,7 @@ Backlight::Backlight()
 {
  device=NULL;
  minimum=10;
- maximum=100;
+ maximum=90;
  current=minimum;
  memset(buffer,0,4);
 }
@@ -905,8 +887,9 @@ void Backlight::increase_level()
  if (this->get_level()<maximum)
  {
   current+=minimum;
+  this->set_light(current);
  }
- this->set_light(current);
+
 }
 
 void Backlight::decrease_level()
@@ -914,8 +897,9 @@ void Backlight::decrease_level()
  if (this->get_level()>minimum)
  {
   current-=minimum;
+  this->set_light(current);
  }
- this->set_light(current);
+
 }
 
 void Backlight::turn_off()
