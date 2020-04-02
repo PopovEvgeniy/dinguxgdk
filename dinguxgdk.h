@@ -39,7 +39,6 @@ SVGALib homepage: http://www.svgalib.org/
 #include <linux/input.h>
 #include <linux/fb.h>
 
-#define SOUND_RATE 44100
 #define SOUND_CHANNELS 2
 
 #define GAMEPAD_PRESS 1
@@ -273,15 +272,15 @@ class Sound
  void open_device();
  void set_format();
  void set_channels();
- void set_rate();
+ void set_rate(const int rate);
  void get_buffer_length();
- void configure_sound_card();
+ void configure_sound_card(const int rate);
  void start_stream();
  void create_buffer();
  public:
  Sound();
  ~Sound();
- void initialize();
+ void initialize(const int rate);
  bool check_busy();
  size_t get_length();
  size_t send(char *buffer,const size_t length);

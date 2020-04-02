@@ -621,10 +621,8 @@ void Sound::set_channels()
 
 }
 
-void Sound::set_rate()
+void Sound::set_rate(const int rate)
 {
- int rate;
- rate=SOUND_RATE;
  if(ioctl(OSS_BACKEND::sound_device,SNDCTL_DSP_SPEED,&rate)==-1)
  {
   Halt("Can't set sample rate");
@@ -643,11 +641,11 @@ void Sound::get_buffer_length()
  buffer_length=(size_t)configuration.fragstotal*(size_t)configuration.fragsize;
 }
 
-void Sound::configure_sound_card()
+void Sound::configure_sound_card(const int rate)
 {
  this->open_device();
  this->set_format();
- this->set_rate();
+ this->set_rate(rate);
  this->set_channels();
  this->get_buffer_length();
 }
@@ -671,9 +669,9 @@ void Sound::create_buffer()
 
 }
 
-void Sound::initialize()
+void Sound::initialize(const int rate)
 {
- this->configure_sound_card();
+ this->configure_sound_card(rate);
  this->create_buffer();
  this->start_stream();
 }
