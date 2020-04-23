@@ -152,14 +152,14 @@ class Frame
  size_t get_offset(const unsigned long int x,const unsigned long int y);
  void set_size(const unsigned long int surface_width,const unsigned long int surface_height);
  void create_buffers();
- size_t get_length();
+ size_t get_length() const;
  public:
  Frame();
  ~Frame();
  unsigned short int *get_buffer();
- size_t get_pixels();
- unsigned long int get_frame_width();
- unsigned long int get_frame_height();
+ size_t get_pixels() const;
+ unsigned long int get_frame_width() const;
+ unsigned long int get_frame_height() const;
  void draw_pixel(const unsigned long int x,const unsigned long int y,const unsigned char red,const unsigned char green,const unsigned char blue);
  void clear_screen();
  void save();
@@ -195,7 +195,7 @@ class FPS
  public:
  FPS();
  ~FPS();
- unsigned long int get_fps();
+ unsigned long int get_fps() const;
 };
 
 class Render:public Frame
@@ -215,9 +215,9 @@ class Render:public Frame
  public:
  Render();
  ~Render();
- unsigned long int get_width();
- unsigned long int get_height();
- unsigned long int get_color();
+ unsigned long int get_width() const;
+ unsigned long int get_height() const;
+ unsigned long int get_color() const;
 };
 
 class Screen:public Render,public FPS
@@ -241,8 +241,8 @@ class Gamepad
  unsigned char *create_buffer(const char *message);
  void create_buffers();
  void open_device();
- unsigned char get_state();
- GAMEPAD_BUTTONS get_button();
+ unsigned char get_state() const;
+ GAMEPAD_BUTTONS get_button() const;
  bool check_state(const GAMEPAD_BUTTONS button,const unsigned char state);
  public:
  Gamepad();
@@ -285,7 +285,7 @@ class Sound
  ~Sound();
  void initialize(const int rate);
  bool check_busy();
- size_t get_length();
+ size_t get_length() const;
  size_t send(char *buffer,const size_t length);
  Sound* get_handle();
 };
@@ -299,7 +299,7 @@ class Mixer
  int current;
  void open_device();
  void set_level(const int level);
- int correct_level(const int level);
+ int correct_level(const int level) const;
  public:
  Mixer();
  ~Mixer();
@@ -307,9 +307,9 @@ class Mixer
  void turn_on();
  void turn_off();
  void initialize();
- int get_minimum();
- int get_maximum();
- int get_volume();
+ int get_minimum() const;
+ int get_maximum() const;
+ int get_volume() const;
 };
 
 class Backlight
@@ -327,12 +327,12 @@ class Backlight
  void read_value();
  void write_value(const unsigned char value);
  void set_level(const unsigned char level);
- unsigned char correct_level(const unsigned char level);
+ unsigned char correct_level(const unsigned char level) const;
  public:
  Backlight();
  ~Backlight();
- unsigned char get_minimum();
- unsigned char get_maximum();
+ unsigned char get_minimum() const;
+ unsigned char get_maximum() const;
  unsigned char get_level();
  void set_light(const unsigned char level);
  void increase_level();
@@ -383,19 +383,19 @@ class Audio
  void read_head();
  void check_riff_signature();
  void check_wave_signature();
- void check_type();
- void check_bits();
- void check_channels();
+ void check_type() const;
+ void check_bits() const;
+ void check_channels() const;
  void check_wave();
  public:
  Audio();
  ~Audio();
  Audio* get_handle();
- size_t get_total();
- size_t get_block();
- unsigned long int get_rate();
- unsigned short int get_channels();
- unsigned short int get_bits();
+ size_t get_total() const;
+ size_t get_block() const;
+ unsigned long int get_rate() const;
+ unsigned short int get_channels() const;
+ unsigned short int get_bits() const;
  void load_wave(const char *name);
  void read_data(void *buffer,const size_t length);
  void go_start();
@@ -416,7 +416,7 @@ class Player
  Player();
  ~Player();
  void rewind_audio();
- bool is_end();
+ bool is_end() const;
  void load(Audio *audio);
  void initialize(Sound *target);
  void play();
@@ -463,9 +463,9 @@ class Image
  ~Image();
  void load_tga(const char *name);
  void load_pcx(const char *name);
- unsigned long int get_width();
- unsigned long int get_height();
- size_t get_data_length();
+ unsigned long int get_width() const;
+ unsigned long int get_height() const;
+ size_t get_data_length() const;
  unsigned char *get_data();
  void destroy_image();
 };
@@ -489,15 +489,15 @@ class Surface
  size_t get_offset(const unsigned long int start,const unsigned long int x,const unsigned long int y,const unsigned long int target_width);
  size_t get_offset(const unsigned long int start,const unsigned long int x,const unsigned long int y);
  void draw_image_pixel(const size_t offset,const unsigned long int x,const unsigned long int y);
- bool compare_pixels(const size_t first,const size_t second);
+ bool compare_pixels(const size_t first,const size_t second) const;
  public:
  Surface();
  ~Surface();
  void initialize(Screen *screen);
- size_t get_length();
+ size_t get_length() const;
  IMG_Pixel *get_image();
- unsigned long int get_image_width();
- unsigned long int get_image_height();
+ unsigned long int get_image_width() const;
+ unsigned long int get_image_height() const;
  void mirror_image(const MIRROR_TYPE kind);
  void resize_image(const unsigned long int new_width,const unsigned long int new_height);
 };
@@ -515,8 +515,8 @@ class Canvas:public Surface
  Canvas();
  ~Canvas();
  void set_frames(const unsigned long int amount);
- unsigned long int get_frames();
- unsigned long int get_frame();
+ unsigned long int get_frames() const;
+ unsigned long int get_frame() const;
  void load_image(Image &buffer);
 };
 
@@ -532,8 +532,8 @@ class Background:public Canvas
  public:
  Background();
  ~Background();
- unsigned long int get_background_width();
- unsigned long int get_background_height();
+ unsigned long int get_background_width() const;
+ unsigned long int get_background_height() const;
  void set_kind(const BACKGROUND_TYPE kind);
  void set_target(const unsigned long int target);
  void step();
@@ -555,17 +555,17 @@ class Sprite:public Canvas
  ~Sprite();
  void load_sprite(Image &buffer,const SPRITE_TYPE kind,const unsigned long int frames);
  void set_transparent(const bool enabled);
- bool get_transparent();
+ bool get_transparent() const;
  void set_x(const unsigned long int x);
  void set_y(const unsigned long int y);
- unsigned long int get_x();
- unsigned long int get_y();
- unsigned long int get_width();
- unsigned long int get_height();
+ unsigned long int get_x() const;
+ unsigned long int get_y() const;
+ unsigned long int get_width() const;
+ unsigned long int get_height() const;
  Sprite* get_handle();
- Collision_Box get_box();
+ Collision_Box get_box() const;
  void set_kind(const SPRITE_TYPE kind);
- SPRITE_TYPE get_kind();
+ SPRITE_TYPE get_kind() const;
  void set_target(const unsigned long int target);
  void step();
  void set_position(const unsigned long int x,const unsigned long int y);
@@ -585,10 +585,10 @@ class Tileset:public Surface
  public:
  Tileset();
  ~Tileset();
- unsigned long int get_tile_width();
- unsigned long int get_tile_height();
- unsigned long int get_rows();
- unsigned long int get_columns();
+ unsigned long int get_tile_width() const;
+ unsigned long int get_tile_height() const;
+ unsigned long int get_rows() const;
+ unsigned long int get_columns() const;
  void select_tile(const unsigned long int row,const unsigned long int column);
  void draw_tile(const unsigned long int x,const unsigned long int y);
  void load_tileset(Image &buffer,const unsigned long int row_amount,const unsigned long int column_amount);
@@ -613,10 +613,10 @@ class Text
 class Collision
 {
  public:
- Collision_Box generate_box(const unsigned long int x,const unsigned long int y,const unsigned long int width,const unsigned long int height);
- bool check_horizontal_collision(const Collision_Box &first,const Collision_Box &second);
- bool check_vertical_collision(const Collision_Box &first,const Collision_Box &second);
- bool check_collision(const Collision_Box &first,const Collision_Box &second);
+ Collision_Box generate_box(const unsigned long int x,const unsigned long int y,const unsigned long int width,const unsigned long int height) const;
+ bool check_horizontal_collision(const Collision_Box &first,const Collision_Box &second) const;
+ bool check_vertical_collision(const Collision_Box &first,const Collision_Box &second) const;
+ bool check_collision(const Collision_Box &first,const Collision_Box &second) const;
 };
 
 }

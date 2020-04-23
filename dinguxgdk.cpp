@@ -134,7 +134,7 @@ void Frame::create_buffers()
  shadow=this->create_buffer("Can't allocate memory for shadow buffer");
 }
 
-size_t Frame::get_length()
+size_t Frame::get_length() const
 {
  return length;
 }
@@ -144,17 +144,17 @@ unsigned short int *Frame::get_buffer()
  return buffer;
 }
 
-size_t Frame::get_pixels()
+size_t Frame::get_pixels() const
 {
  return pixels;
 }
 
-unsigned long int Frame::get_frame_width()
+unsigned long int Frame::get_frame_width() const
 {
  return frame_width;
 }
 
-unsigned long int Frame::get_frame_height()
+unsigned long int Frame::get_frame_height() const
 {
  return frame_height;
 }
@@ -294,7 +294,7 @@ void FPS::update_counter()
 
 }
 
-unsigned long int FPS::get_fps()
+unsigned long int FPS::get_fps() const
 {
  return fps;
 }
@@ -357,17 +357,17 @@ void Render::refresh()
  write(device,this->get_buffer(),this->get_length());
 }
 
-unsigned long int Render::get_width()
+unsigned long int Render::get_width() const
 {
  return setting.xres;
 }
 
-unsigned long int Render::get_height()
+unsigned long int Render::get_height() const
 {
  return setting.yres;
 }
 
-unsigned long int Render::get_color()
+unsigned long int Render::get_color() const
 {
  return setting.bits_per_pixel;
 }
@@ -443,7 +443,7 @@ void Gamepad::open_device()
 
 }
 
-unsigned char Gamepad::get_state()
+unsigned char Gamepad::get_state() const
 {
  unsigned char state;
  state=GAMEPAD_RELEASE;
@@ -454,7 +454,7 @@ unsigned char Gamepad::get_state()
  return state;
 }
 
-GAMEPAD_BUTTONS Gamepad::get_button()
+GAMEPAD_BUTTONS Gamepad::get_button() const
 {
  GAMEPAD_BUTTONS button;
  button=BUTTON_UP;
@@ -697,7 +697,7 @@ bool Sound::check_busy()
  return OSS_BACKEND::do_play;
 }
 
-size_t Sound::get_length()
+size_t Sound::get_length() const
 {
  return buffer_length;
 }
@@ -757,7 +757,7 @@ void Mixer::set_level(const int level)
 
 }
 
-int Mixer::correct_level(const int level)
+int Mixer::correct_level(const int level) const
 {
  int value;
  value=level;
@@ -788,17 +788,17 @@ void Mixer::initialize()
  this->set_level(current);
 }
 
-int Mixer::get_minimum()
+int Mixer::get_minimum() const
 {
  return minimum;
 }
 
-int Mixer::get_maximum()
+int Mixer::get_maximum() const
 {
  return maximum;
 }
 
-int Mixer::get_volume()
+int Mixer::get_volume() const
 {
  return current;
 }
@@ -864,7 +864,7 @@ void Backlight::set_level(const unsigned char level)
  this->close_device();
 }
 
-unsigned char Backlight::correct_level(const unsigned char level)
+unsigned char Backlight::correct_level(const unsigned char level) const
 {
  unsigned char value;
  value=level;
@@ -873,12 +873,12 @@ unsigned char Backlight::correct_level(const unsigned char level)
  return value;
 }
 
-unsigned char Backlight::get_minimum()
+unsigned char Backlight::get_minimum() const
 {
  return minimum;
 }
 
-unsigned char Backlight::get_maximum()
+unsigned char Backlight::get_maximum() const
 {
  return maximum;
 }
@@ -1116,7 +1116,7 @@ void Audio::check_wave_signature()
 
 }
 
-void Audio::check_type()
+void Audio::check_type() const
 {
  if (head.type!=1)
  {
@@ -1125,7 +1125,7 @@ void Audio::check_type()
 
 }
 
-void Audio::check_bits()
+void Audio::check_bits() const
 {
  if (head.bits!=16)
  {
@@ -1134,7 +1134,7 @@ void Audio::check_bits()
 
 }
 
-void Audio::check_channels()
+void Audio::check_channels() const
 {
  if ((head.channels==0)||(head.channels>2))
  {
@@ -1157,27 +1157,27 @@ Audio* Audio::get_handle()
  return this;
 }
 
-size_t Audio::get_total()
+size_t Audio::get_total() const
 {
  return (size_t)head.date_length;
 }
 
-size_t Audio::get_block()
+size_t Audio::get_block() const
 {
  return (size_t)head.block_length;
 }
 
-unsigned long int Audio::get_rate()
+unsigned long int Audio::get_rate() const
 {
  return head.rate;
 }
 
-unsigned short int Audio::get_channels()
+unsigned short int Audio::get_channels() const
 {
  return head.channels;
 }
 
-unsigned short int Audio::get_bits()
+unsigned short int Audio::get_bits() const
 {
  return head.bits;
 }
@@ -1247,7 +1247,7 @@ void Player::rewind_audio()
  target->go_start();
 }
 
-bool Player::is_end()
+bool Player::is_end() const
 {
  bool end_audio;
  end_audio=false;
@@ -1587,17 +1587,17 @@ void Image::load_pcx(const char *name)
  data=original;
 }
 
-unsigned long int Image::get_width()
+unsigned long int Image::get_width() const
 {
  return width;
 }
 
-unsigned long int Image::get_height()
+unsigned long int Image::get_height() const
 {
  return height;
 }
 
-size_t Image::get_data_length()
+size_t Image::get_data_length() const
 {
  return (size_t)width*(size_t)height*3;
 }
@@ -1700,7 +1700,7 @@ void Surface::draw_image_pixel(const size_t offset,const unsigned long int x,con
  surface->draw_pixel(x,y,image[offset].red,image[offset].green,image[offset].blue);
 }
 
-bool Surface::compare_pixels(const size_t first,const size_t second)
+bool Surface::compare_pixels(const size_t first,const size_t second) const
 {
  bool result;
  result=false;
@@ -1720,9 +1720,9 @@ void Surface::initialize(Screen *screen)
  surface=screen;
 }
 
-size_t Surface::get_length()
+size_t Surface::get_length() const
 {
- return (size_t)width*(size_t)height;
+ return (size_t)width*(size_t)height*3;
 }
 
 IMG_Pixel *Surface::get_image()
@@ -1730,12 +1730,12 @@ IMG_Pixel *Surface::get_image()
  return image;
 }
 
-unsigned long int Surface::get_image_width()
+unsigned long int Surface::get_image_width() const
 {
  return width;
 }
 
-unsigned long int Surface::get_image_height()
+unsigned long int Surface::get_image_height() const
 {
  return height;
 }
@@ -1839,12 +1839,12 @@ void Canvas::set_frames(const unsigned long int amount)
  if(amount>1) frames=amount;
 }
 
-unsigned long int Canvas::get_frames()
+unsigned long int Canvas::get_frames() const
 {
  return frames;
 }
 
-unsigned long int Canvas::get_frame()
+unsigned long int Canvas::get_frame() const
 {
  return frame;
 }
@@ -1888,12 +1888,12 @@ void Background::slow_draw_background()
 
 }
 
-unsigned long int Background::get_background_width()
+unsigned long int Background::get_background_width() const
 {
  return background_width;
 }
 
-unsigned long int Background::get_background_height()
+unsigned long int Background::get_background_height() const
 {
  return background_height;
 }
@@ -1988,7 +1988,7 @@ void Sprite::set_transparent(const bool enabled)
  transparent=enabled;
 }
 
-bool Sprite::get_transparent()
+bool Sprite::get_transparent() const
 {
  return transparent;
 }
@@ -2003,22 +2003,22 @@ void Sprite::set_y(const unsigned long int y)
  current_y=y;
 }
 
-unsigned long int Sprite::get_x()
+unsigned long int Sprite::get_x() const
 {
  return current_x;
 }
 
-unsigned long int Sprite::get_y()
+unsigned long int Sprite::get_y() const
 {
  return current_y;
 }
 
-unsigned long int Sprite::get_width()
+unsigned long int Sprite::get_width() const
 {
  return sprite_width;
 }
 
-unsigned long int Sprite::get_height()
+unsigned long int Sprite::get_height() const
 {
  return sprite_height;
 }
@@ -2028,7 +2028,7 @@ Sprite* Sprite::get_handle()
  return this;
 }
 
-Collision_Box Sprite::get_box()
+Collision_Box Sprite::get_box() const
 {
  Collision_Box target;
  target.x=current_x;
@@ -2061,7 +2061,7 @@ void Sprite::set_kind(const SPRITE_TYPE kind)
  current_kind=kind;
 }
 
-SPRITE_TYPE Sprite::get_kind()
+SPRITE_TYPE Sprite::get_kind() const
 {
  return current_kind;
 }
@@ -2131,22 +2131,22 @@ Tileset::~Tileset()
 
 }
 
-unsigned long int Tileset::get_tile_width()
+unsigned long int Tileset::get_tile_width() const
 {
  return tile_width;
 }
 
-unsigned long int Tileset::get_tile_height()
+unsigned long int Tileset::get_tile_height() const
 {
  return tile_height;
 }
 
-unsigned long int Tileset::get_rows()
+unsigned long int Tileset::get_rows() const
 {
  return rows;
 }
 
-unsigned long int Tileset::get_columns()
+unsigned long int Tileset::get_columns() const
 {
  return columns;
 }
@@ -2242,7 +2242,7 @@ void Text::draw_text(const char *text)
  font->set_position(current_x,current_y);
 }
 
-Collision_Box Collision::generate_box(const unsigned long int x,const unsigned long int y,const unsigned long int width,const unsigned long int height)
+Collision_Box Collision::generate_box(const unsigned long int x,const unsigned long int y,const unsigned long int width,const unsigned long int height) const
 {
  Collision_Box result;
  result.x=x;
@@ -2252,7 +2252,7 @@ Collision_Box Collision::generate_box(const unsigned long int x,const unsigned l
  return result;
 }
 
-bool Collision::check_horizontal_collision(const Collision_Box &first,const Collision_Box &second)
+bool Collision::check_horizontal_collision(const Collision_Box &first,const Collision_Box &second) const
 {
  bool result;
  result=false;
@@ -2263,7 +2263,7 @@ bool Collision::check_horizontal_collision(const Collision_Box &first,const Coll
  return result;
 }
 
-bool Collision::check_vertical_collision(const Collision_Box &first,const Collision_Box &second)
+bool Collision::check_vertical_collision(const Collision_Box &first,const Collision_Box &second) const
 {
  bool result;
  result=false;
@@ -2274,7 +2274,7 @@ bool Collision::check_vertical_collision(const Collision_Box &first,const Collis
  return result;
 }
 
-bool Collision::check_collision(const Collision_Box &first,const Collision_Box &second)
+bool Collision::check_collision(const Collision_Box &first,const Collision_Box &second) const
 {
  return this->check_horizontal_collision(first,second) || this->check_vertical_collision(first,second);
 }
