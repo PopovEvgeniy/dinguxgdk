@@ -1485,7 +1485,7 @@ void Image::load_tga(const char *name)
  position=0;
  width=image.width;
  height=image.height;
- uncompressed_length=this->get_data_length();
+ uncompressed_length=this->get_length();
  uncompressed=this->create_buffer(uncompressed_length);
  if(head.type==2)
  {
@@ -1597,7 +1597,7 @@ unsigned long int Image::get_height() const
  return height;
 }
 
-size_t Image::get_data_length() const
+size_t Image::get_length() const
 {
  return (size_t)width*(size_t)height*3;
 }
@@ -1667,7 +1667,7 @@ void Surface::load_from_buffer(Image &buffer)
  height=buffer.get_height();
  this->clear_buffer();
  image=this->create_buffer(width,height);
- memmove(image,buffer.get_data(),buffer.get_data_length());
+ memmove(image,buffer.get_data(),buffer.get_length());
 }
 
 void Surface::set_width(const unsigned long int image_width)
@@ -1888,12 +1888,12 @@ void Background::slow_draw_background()
 
 }
 
-unsigned long int Background::get_background_width() const
+unsigned long int Background::get_width() const
 {
  return background_width;
 }
 
-unsigned long int Background::get_background_height() const
+unsigned long int Background::get_height() const
 {
  return background_height;
 }
@@ -2245,7 +2245,7 @@ void Text::draw_text(const char *text)
 Collision::Collision()
 {
  memset(&first,0,sizeof(Collision_Box));
- memset(&first,0,sizeof(Collision_Box));
+ memset(&second,0,sizeof(Collision_Box));
 }
 
 Collision::~Collision()
