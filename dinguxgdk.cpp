@@ -88,8 +88,8 @@ Frame::~Frame()
 unsigned short int *Frame::create_buffer(const char *error)
 {
  unsigned short int *target;
- pixels=(size_t)frame_width*(size_t)frame_height;
- target=(unsigned short int*)calloc(pixels,sizeof(unsigned short int));
+ pixels=static_cast<size_t>(frame_width)*static_cast<size_t>(frame_height);
+ target=static_cast<unsigned short int*>(calloc(pixels,sizeof(unsigned short int)));
  length=pixels*sizeof(unsigned short int);
  if(target==NULL)
  {
@@ -114,7 +114,7 @@ void Frame::put_pixel(const size_t offset,const unsigned char red,const unsigned
 
 size_t Frame::get_offset(const unsigned long int x,const unsigned long int y,const unsigned long int target_width)
 {
- return (size_t)x+(size_t)y*(size_t)target_width;
+ return static_cast<size_t>(x)+static_cast<size_t>(y)*static_cast<size_t>(target_width);
 }
 
 size_t Frame::get_offset(const unsigned long int x,const unsigned long int y)
@@ -243,8 +243,8 @@ void Plane::create_plane(const unsigned long int width,const unsigned long int h
  target=surface_buffer;
  target_width=surface_width;
  target_height=surface_height;
- x_ratio=(float)width/(float)surface_width;
- y_ratio=(float)height/(float)surface_height;
+ x_ratio=static_cast<float>(width)/static_cast<float>(surface_width);
+ y_ratio=static_cast<float>(height)/static_cast<float>(surface_height);
 }
 
 void Plane::transfer()
@@ -257,7 +257,7 @@ void Plane::transfer()
   for (y=0;y<target_height;++y)
   {
    index=this->get_offset(x,y,target_width);
-   position=this->get_offset((x_ratio*(float)x),(y_ratio*(float)y),width);
+   position=this->get_offset((x_ratio*static_cast<float>(x)),(y_ratio*static_cast<float>(y)),width);
    target[index]=plane[position];
   }
 
@@ -419,7 +419,7 @@ Gamepad::~Gamepad()
 unsigned char *Gamepad::create_buffer(const char *message)
 {
  unsigned char *buffer;
- buffer=(unsigned char*)calloc(BUTTON_AMOUNT,sizeof(unsigned char));
+ buffer=static_cast<unsigned char*>(calloc(BUTTON_AMOUNT,sizeof(unsigned char)));
  if (buffer==NULL)
  {
   Halt(message);
@@ -501,9 +501,6 @@ GAMEPAD_BUTTONS Gamepad::get_button() const
   break;
   case KEY_PAUSE:
   button=BUTTON_HOLD;
-  break;
-  default:
-  button=BUTTON_UP;
   break;
  }
  return button;
@@ -654,7 +651,7 @@ void Sound::get_buffer_length()
  {
   Halt("Can't read configuration of sound buffer");
  }
- buffer_length=(size_t)configuration.fragstotal*(size_t)configuration.fragsize;
+ buffer_length=static_cast<size_t>(configuration.fragstotal)*static_cast<size_t>(configuration.fragsize);
 }
 
 void Sound::configure_sound_card(const int rate)
@@ -677,7 +674,7 @@ void Sound::start_stream()
 
 void Sound::create_buffer()
 {
- internal=(char*)calloc(buffer_length,sizeof(char));
+ internal=static_cast<char*>(calloc(buffer_length,sizeof(char)));
  if (internal==NULL)
  {
   Halt("Can't allocate memory for sound buffer");
@@ -1159,12 +1156,12 @@ Audio* Audio::get_handle()
 
 size_t Audio::get_total() const
 {
- return (size_t)head.date_length;
+ return static_cast<size_t>(head.date_length);
 }
 
 size_t Audio::get_block() const
 {
- return (size_t)head.block_length;
+ return static_cast<size_t>(head.block_length);
 }
 
 unsigned long int Audio::get_rate() const
@@ -1233,7 +1230,7 @@ void Player::clear_buffer()
 
 void Player::create_buffer()
 {
- buffer=(char*)calloc(sound->get_length(),sizeof(char));
+ buffer=static_cast<char*>(calloc(sound->get_length(),sizeof(char)));
  if (buffer==NULL)
  {
   Halt("Can't allocate memory for audio buffer");
@@ -1383,8 +1380,8 @@ void Primitive::draw_line(const unsigned long int x1,const unsigned long int y1,
  if (steps<delta_y) steps=delta_y;
  x=x1;
  y=y1;
- shift_x=(float)delta_x/(float)steps;
- shift_y=(float)delta_y/(float)steps;
+ shift_x=static_cast<float>(delta_x)/static_cast<float>(steps);
+ shift_y=static_cast<float>(delta_y)/static_cast<float>(steps);
  for (index=steps;index>0;--index)
  {
   x+=shift_x;
@@ -1436,7 +1433,7 @@ Image::~Image()
 unsigned char *Image::create_buffer(const size_t length)
 {
  unsigned char *result;
- result=(unsigned char*)calloc(length,sizeof(unsigned char));
+ result=static_cast<unsigned char*>(calloc(length,sizeof(unsigned char)));
  if(result==NULL)
  {
   Halt("Can't allocate memory for image buffer");
@@ -1465,7 +1462,7 @@ void Image::load_tga(const char *name)
  TGA_image image;
  this->clear_buffer();
  target.open_read(name);
- compressed_length=(size_t)target.get_length()-18;
+ compressed_length=static_cast<size_t>(target.get_length()-18);
  target.read(&head,3);
  target.read(&color_map,5);
  target.read(&image,10);
@@ -1533,7 +1530,7 @@ void Image::load_pcx(const char *name)
  PCX_head head;
  this->clear_buffer();
  target.open_read(name);
- length=(size_t)target.get_length()-128;
+ length=static_cast<size_t>(target.get_length()-128);
  target.read(&head,128);
  if((head.color*head.planes!=24)&&(head.compress!=1))
  {
@@ -1541,8 +1538,8 @@ void Image::load_pcx(const char *name)
  }
  width=head.max_x-head.min_x+1;
  height=head.max_y-head.min_y+1;
- row=3*(size_t)width;
- line=(size_t)head.planes*(size_t)head.plane_length;
+ row=static_cast<size_t>(width)*3;
+ line=static_cast<size_t>(head.planes)*static_cast<size_t>(head.plane_length);
  uncompressed_length=row*height;
  index=0;
  position=0;
@@ -1575,10 +1572,10 @@ void Image::load_pcx(const char *name)
  {
   for(y=0;y<height;++y)
   {
-   index=(size_t)x*3+(size_t)y*row;
-   position=(size_t)x+(size_t)y*line;
-   original[index]=uncompressed[position+2*(size_t)head.plane_length];
-   original[index+1]=uncompressed[position+(size_t)head.plane_length];
+   index=static_cast<size_t>(x)*3+static_cast<size_t>(y)*row;
+   position=static_cast<size_t>(x)+static_cast<size_t>(y)*line;
+   original[index]=uncompressed[position+2*static_cast<size_t>(head.plane_length)];
+   original[index+1]=uncompressed[position+static_cast<size_t>(head.plane_length)];
    original[index+2]=uncompressed[position];
   }
 
@@ -1599,7 +1596,7 @@ unsigned long int Image::get_height() const
 
 size_t Image::get_length() const
 {
- return (size_t)width*(size_t)height*3;
+ return static_cast<size_t>(width)*static_cast<size_t>(height)*3;
 }
 
 unsigned char *Image::get_data()
@@ -1632,8 +1629,8 @@ IMG_Pixel *Surface::create_buffer(const unsigned long int image_width,const unsi
 {
  IMG_Pixel *result;
  size_t length;
- length=(size_t)image_width*(size_t)image_height;
- result=(IMG_Pixel*)calloc(length,3);
+ length=static_cast<size_t>(image_width)*static_cast<size_t>(image_height);
+ result=reinterpret_cast<IMG_Pixel*>(calloc(length,3));
  if(result==NULL)
  {
   Halt("Can't allocate memory for image buffer");
@@ -1687,7 +1684,7 @@ void Surface::set_buffer(IMG_Pixel *buffer)
 
 size_t Surface::get_offset(const unsigned long int start,const unsigned long int x,const unsigned long int y,const unsigned long int target_width)
 {
- return (size_t)start+(size_t)x+(size_t)y*(size_t)target_width;
+ return static_cast<size_t>(start)+static_cast<size_t>(x)+static_cast<size_t>(y)*static_cast<size_t>(target_width);
 }
 
 size_t Surface::get_offset(const unsigned long int start,const unsigned long int x,const unsigned long int y)
@@ -1722,7 +1719,7 @@ void Surface::initialize(Screen *screen)
 
 size_t Surface::get_length() const
 {
- return (size_t)width*(size_t)height*3;
+ return static_cast<size_t>(width)*static_cast<size_t>(height)*3;
 }
 
 IMG_Pixel *Surface::get_image()
@@ -1785,14 +1782,14 @@ void Surface::resize_image(const unsigned long int new_width,const unsigned long
  size_t index,position;
  IMG_Pixel *scaled_image;
  scaled_image=this->create_buffer(new_width,new_height);
- x_ratio=(float)width/(float)new_width;
- y_ratio=(float)height/(float)new_height;
+ x_ratio=static_cast<float>(width)/static_cast<float>(new_width);
+ y_ratio=static_cast<float>(height)/static_cast<float>(new_height);
  for (x=0;x<new_width;++x)
  {
   for (y=0;y<new_height;++y)
   {
    index=this->get_offset(0,x,y,new_width);
-   position=this->get_offset(0,(x_ratio*(float)x),(y_ratio*(float)y),width);
+   position=this->get_offset(0,(x_ratio*static_cast<float>(x)),(y_ratio*static_cast<float>(y)),width);
    scaled_image[index]=image[position];
   }
 
@@ -2224,7 +2221,7 @@ void Text::load_font(Sprite *target)
 
 void Text::draw_character(const char target)
 {
- font->set_target((unsigned char)target+1);
+ font->set_target(static_cast<unsigned char>(target)+1);
  font->draw_sprite();
 }
 
@@ -2253,7 +2250,7 @@ Collision::~Collision()
 
 }
 
-void Collision::set_target(const Collision_Box first_target,const Collision_Box second_target)
+void Collision::set_target(const Collision_Box &first_target,const Collision_Box &second_target)
 {
  first=first_target;
  second=second_target;
