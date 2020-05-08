@@ -926,7 +926,7 @@ void Backlight::turn_on()
 
 System::System()
 {
- srand(time(NULL));
+ srand(UINT_MAX);
 }
 
 System::~System()
