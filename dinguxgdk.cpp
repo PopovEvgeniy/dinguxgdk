@@ -1814,9 +1814,9 @@ Canvas::~Canvas()
 
 void Canvas::set_frame(const unsigned long int target)
 {
- if (target<=frames)
+ if (target>0)
  {
-  frame=target;
+  if (target<=frames) frame=target;
  }
 
 }
