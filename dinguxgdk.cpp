@@ -98,16 +98,11 @@ unsigned short int *Frame::create_buffer(const char *error)
  return target;
 }
 
-unsigned short int Frame::get_bgr565(const unsigned short int red,const unsigned short int green,const unsigned short int blue)
-{
- return (blue >> 3) +((green >> 2) << 5)+((red >> 3) << 11); // This code bases on code from SVGALib
-}
-
-void Frame::put_pixel(const size_t offset,const unsigned char red,const unsigned char green,const unsigned char blue)
+void Frame::put_pixel(const size_t offset,const unsigned short int red,const unsigned short int green,const unsigned short int blue)
 {
  if (offset<pixels)
  {
-  buffer[offset]=this->get_bgr565(red,green,blue);
+  buffer[offset]=(blue >> 3) +((green >> 2) << 5)+((red >> 3) << 11); // This code bases on code from SVGALib
  }
 
 }
