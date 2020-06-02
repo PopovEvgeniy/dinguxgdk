@@ -183,10 +183,22 @@ class Plane: public Frame
  Plane* get_handle();
 };
 
+class Timer
+{
+ private:
+ unsigned long int interval;
+ time_t start;
+ public:
+ Timer();
+ ~Timer();
+ void set_timer(const unsigned long int seconds);
+ bool check_timer();
+};
+
 class FPS
 {
  private:
- time_t start;
+ Timer timer;
  unsigned long int current;
  unsigned long int fps;
  protected:
@@ -420,18 +432,6 @@ class Player
  void initialize(Sound *target);
  void play();
  void loop();
-};
-
-class Timer
-{
- private:
- unsigned long int interval;
- time_t start;
- public:
- Timer();
- ~Timer();
- void set_timer(const unsigned long int seconds);
- bool check_timer();
 };
 
 class Primitive
