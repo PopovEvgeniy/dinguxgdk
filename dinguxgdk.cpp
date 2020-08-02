@@ -2251,6 +2251,18 @@ void Text::draw_text(const char *text)
  font->set_position(current_x,current_y);
 }
 
+void Text::draw_character(const unsigned long int x,const unsigned long int y,const char target)
+{
+ this->set_position(x,y);
+ this->draw_character(target);
+}
+
+void Text::draw_text(const unsigned long int x,const unsigned long int y,const char *text)
+{
+ this->set_position(x,y);
+ this->draw_text(text);
+}
+
 Collision::Collision()
 {
  memset(&first,0,sizeof(Collision_Box));

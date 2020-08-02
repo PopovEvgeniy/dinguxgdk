@@ -60,7 +60,7 @@ int main(void)
   if (gamepad.check_hold(BUTTON_RIGHT)==true) x+=4;
   if ((x<=0)||(x>=screen_width)) x=screen_width/2;
   if ((y<=0)||(y>=screen_height)) y=screen_height/2;
-  sprintf(perfomance,"%ld",screen.get_fps());
+  sprintf(perfomance,"%lu",screen.get_fps());
   space.draw_background();
   text.draw_text(perfomance);
   ship.set_position(x,y);

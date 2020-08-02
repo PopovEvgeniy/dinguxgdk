@@ -608,6 +608,8 @@ class Text
  void load_font(Sprite *target);
  void draw_character(const char target);
  void draw_text(const char *text);
+ void draw_character(const unsigned long int x,const unsigned long int y,const char target);
+ void draw_text(const unsigned long int x,const unsigned long int y,const char *text);
 };
 
 class Collision
