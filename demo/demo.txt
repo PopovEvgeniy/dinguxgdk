@@ -1,0 +1,14 @@
+Quick help
+
+D-pad - Move
+A - Do horizontal mirror the ship
+B - Do vertical mirror the ship
+X - Increase display back-light level.
+Y - Decrease display back-light level.
+R - Turn off display back-light.
+L - Turn on display back-light.
+Start - Exit from demo
+
+Notes
+
+Note for Rimtmix RZX-50 user: Turn off A320 compatibility mode before run this demo.
