@@ -23,7 +23,7 @@ void draw_map()
 
 }
 
-int main(void)
+int main()
 {
  DINGUXGDK::Screen screen;
  DINGUXGDK::Sprite font;

@@ -27,6 +27,11 @@ SVGALib homepage: http://www.svgalib.org/
 
 #include "dinguxgdk.h"
 
+const int SOUND_CHANNELS=2;
+const unsigned char GAMEPAD_PRESS=1;
+const unsigned char GAMEPAD_RELEASE=0;
+const size_t BUTTON_AMOUNT=14;
+
 namespace OSS_BACKEND
 {
  volatile int sound_device=-1;
