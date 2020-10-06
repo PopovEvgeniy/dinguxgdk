@@ -1,1755 +1,1711 @@
-<html><head>
-  <meta content="text/html; charset=windows-1251" http-equiv="content-type">
-  <title>Programmer reference</title>
-</head><body>
-<big><br>
-</big>
-<div style="text-align: center;"><big>Dingux game development kit:
-Programmer reference</big><br>
-</div>
-<big><br>
-<br>
-Table of content<br>
-<br>
-</big>
-<ul id="mozToc">
-<!--mozToc h1 1 h2 2 h3 3 h4 4 h5 5 h6 6-->
-  <li><a href="#mozTocId817184">Part 1. Welcome to Dingux game
-development kit</a>
-    <ul>
-      <li><a href="#mozTocId387531">Chapter 1. Introduction</a></li>
-      <li><a href="#mozTocId558083">Chapter 2. A special thanks</a></li>
-      <li><a href="#mozTocId419893">Chapter 3. SDK</a></li>
-      <li><a href="#mozTocId647026">Chapter 4. Compilation</a></li>
-      <li><a href="#mozTocId59157">Chapter 5. Library name-space</a></li>
-      <li><a href="#mozTocId239028">Chapter 6. License</a></li>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1251">
+    <title>Programmer reference</title>
+  </head>
+  <body>
+    <big><br>
+    </big>
+    <div style="text-align: center;"><big>Dingux game development kit:
+        Programmer reference</big><br>
+    </div>
+    <big><br>
+      <br>
+      Table of content<br>
+      <br>
+    </big>
+    <ul id="mozToc">
+      <!--mozToc h1 1 h2 2 h3 3 h4 4 h5 5 h6 6-->
+      <li><a href="#mozTocId817184">Part 1. Welcome to Dingux game
+          development kit</a>
+        <ul>
+          <li><a href="#mozTocId387531">Chapter 1. Introduction</a></li>
+          <li><a href="#mozTocId558083">Chapter 2. A special thanks</a></li>
+          <li><a href="#mozTocId419893">Chapter 3. SDK</a></li>
+          <li><a href="#mozTocId647026">Chapter 4. Compilation</a></li>
+          <li><a href="#mozTocId59157">Chapter 5. Library name-space</a></li>
+          <li><a href="#mozTocId239028">Chapter 6. License</a></li>
+        </ul>
+      </li>
+      <li><a href="#mozTocId489599">Part 2. Base things</a>
+        <ul>
+          <li><a href="#mozTocId927227">Chapter 1. Coordinate system</a></li>
+          <li><a href="#mozTocId705363">Chapter 2. A game cycle</a></li>
+        </ul>
+      </li>
+      <li><a href="#mozTocId13479">Part 3. Graphics</a>
+        <ul>
+          <li><a href="#mozTocId981471">Chapter 1. Virtual surface</a></li>
+          <li><a href="#mozTocId636407">Chapter 2. Plane</a></li>
+          <li><a href="#mozTocId436473">Chapter 3. Base graphics subsystem</a></li>
+          <li><a href="#mozTocId857731">Chapter 4. Graphic primitives</a></li>
+          <li><a href="#mozTocId881761">Chapter 5. Base image subsystem</a></li>
+          <li><a href="#mozTocId889327">Chapter 6. Advanced image subsystem</a></li>
+          <li><a href="#mozTocId678026">Chapter 7. Background</a></li>
+          <li><a href="#mozTocId104290">Chapter 8. Sprites</a></li>
+          <li><a href="#mozTocId443325">Chapter 9. Tile-set</a></li>
+          <li><a href="#mozTocId804597">Chapter 10. Text</a></li>
+          <li><a href="#mozTocId51687">Chapter 11. Loading an images</a></li>
+        </ul>
+      </li>
+      <li><a href="#mozTocId983100">Part 4. Game specific things</a>
+        <ul>
+          <li><a href="#mozTocId1365">Chapter 1. Collision</a></li>
+          <li><a href="#mozTocId414110">Chapter 2. Timer</a></li>
+          <li><a href="#mozTocId446066">Chapter 3. Binary files</a></li>
+        </ul>
+      </li>
+      <li><a href="#mozTocId308337">Part 5. Other important things</a>
+        <ul>
+          <li><a href="#mozTocId702206">Chapter 1. Memory</a></li>
+          <li><a href="#mozTocId776211">Chapter 2. Display back-light</a></li>
+          <li><a href="#mozTocId54966">Chapter 3. Abnormal program
+              termination</a></li>
+          <li><a href="#mozTocId338492">Chapter 4. Interaction with
+              operation system</a></li>
+          <li><a href="#mozTocId73461">Chapter 5. Input</a></li>
+        </ul>
+      </li>
+      <li><a href="#mozTocId412631">Part 6. Sound</a>
+        <ul>
+          <li><a href="#mozTocId251362">Chapter 1. Low-level sound subsystem</a></li>
+          <li><a href="#mozTocId873628">Chapter 2. Loading audio</a></li>
+          <li><a href="#mozTocId657923">Chapter 3. Playing audio</a></li>
+          <li><a href="#mozTocId553480">Chapter 4. Mixer</a></li>
+        </ul>
+      </li>
+      <li><a href="#mozTocId912509">Part 7. Internal details of the library
+          subsystems</a>
+        <ul>
+          <li><a href="#mozTocId596077">Chapter 1. A few words for a
+              curious programmers</a></li>
+          <li><a href="#mozTocId383677">Chapter 2. Internal classes</a></li>
+          <li><a href="#mozTocId445066">Chapter 3. Low-level sound subsystem</a></li>
+          <li><a href="#mozTocId214872">Chapter 4. Base graphics subsystem</a></li>
+          <li><a href="#mozTocId509433">Chapter 5. Input subsystem</a></li>
+          <li><a href="#mozTocId949422">Chapter 6. Base image subsystem</a></li>
+        </ul>
+      </li>
+      <li><a href="#mozTocId152114">Changelog</a></li>
     </ul>
-  </li>
-  <li><a href="#mozTocId489599">Part 2. Base things</a>
+    <big><br>
+      <br>
+    </big>
+    <h1><a class="mozTocH1" name="mozTocId817184"></a><big>Part 1. Welcome
+        to Dingux game development kit</big></h1>
+    <big><br>
+    </big>
+    <h2><a class="mozTocH2" name="mozTocId387531"></a><big>Chapter 1.
+        Introduction</big></h2>
+    <big><br>
+      <span style="text-decoration: underline;">Introduction</span><br>
+      <br>
+      Hello from Russia. My name is Popov Evgeniy Alekseyevich. I am the
+      individual programmer. I enjoy creating a software. I also like
+      old–school video games. Portable game consoles like Dingoo A320 is
+      ideal device for persons like me. Dingoo Linux(DINGUX) is Linux
+      adaptation for Dingoo A320. I like Linux too, but I don’t like <a href="http://www.libsdl.org">SDL</a>
+      library. This library using for
+      programming under Dingoo Linux. I made my own library. I hope that my
+      C++ library will be useful for many programmers.<br>
+      <br>
+      <span style="text-decoration: underline;">Supported devices</span><br>
+      <br>
+      Dingoo Linux also ported to a few another devices. My library can work
+      with it. You can see list of supported devices below.<br>
+      <br>
+    </big>
     <ul>
-      <li><a href="#mozTocId927227">Chapter 1. Coordinate system</a></li>
-      <li><a href="#mozTocId705363">Chapter 2. A game cycle</a></li>
+      <li><big>DINGOO A320</big></li>
+      <li><big>DINGOO A320E</big></li>
+      <li><big>DINGOO A380</big></li>
+      <li><big>RITMIX RZX–50</big></li>
     </ul>
-  </li>
-  <li><a href="#mozTocId13479">Part 3. Graphics</a>
+    <big><br>
+      <span style="text-decoration: underline;">Features</span><br>
+      <br>
+      Let me show the library features. Let’s go.<br>
+      <br>
+    </big>
     <ul>
-      <li><a href="#mozTocId981471">Chapter 1. Virtual surface</a></li>
-      <li><a href="#mozTocId636407">Chapter 2. Plane</a></li>
-      <li><a href="#mozTocId436473">Chapter 3. Base graphics subsystem</a></li>
-      <li><a href="#mozTocId857731">Chapter 4. Graphic primitives</a></li>
-      <li><a href="#mozTocId881761">Chapter 5. Base image subsystem</a></li>
-      <li><a href="#mozTocId889327">Chapter 6. Advanced image subsystem</a></li>
-      <li><a href="#mozTocId678026">Chapter 7. Background</a></li>
-      <li><a href="#mozTocId104290">Chapter 8. Sprites</a></li>
-      <li><a href="#mozTocId443325">Chapter 9. Tile-set</a></li>
-      <li><a href="#mozTocId804597">Chapter 10. Text</a></li>
-      <li><a href="#mozTocId51687">Chapter 11. Loading an images</a></li>
+      <li><big>Open source code.</big></li>
+      <li><big>Easy to use object–orientated design.</big></li>
+      <li><big>Library can be easy ported to another portable Linux devices.</big></li>
+      <li><big>Very fast.</big></li>
+      <li><big>zlib license.</big></li>
+      <li><big>Minimum dependencies: only standard run-time library and <a href="https://en.wikipedia.org/wiki/POSIX_Threads">Posix
+            Thread</a>.</big></li>
     </ul>
-  </li>
-  <li><a href="#mozTocId983100">Part 4. Game specific things</a>
+    <big><br>
+      <span style="text-decoration: underline;">Installation</span><br>
+      <br>
+      Follow these steps:<br>
+      <br>
+    </big>
     <ul>
-      <li><a href="#mozTocId1365">Chapter 1. Collision</a></li>
-      <li><a href="#mozTocId414110">Chapter 2. Timer</a></li>
-      <li><a href="#mozTocId446066">Chapter 3. Binary files</a></li>
+      <li><big>Copy these files to you project directory: dinguxgdk.h,
+          dinguxgdk.cpp, makefile</big></li>
+      <li><big>Add this directive to you source code: #include “dinguxgdk.h”</big></li>
+      <li><big>Edit makefile</big></li>
     </ul>
-  </li>
-  <li><a href="#mozTocId308337">Part 5. Other important things</a>
+    <big><br>
+      <span style="text-decoration: underline;">Feedback</span><br>
+      <br>
+      Send me <a href="mailto:tuzik87@inbox.ru">e-mail</a> if you want
+      contact with me.<br>
+      <br>
+    </big>
+    <h2><a class="mozTocH2" name="mozTocId558083"></a><big>Chapter 2. A
+        special thanks</big></h2>
+    <big><br>
+      What you need when you try to create a big thing? A technical
+      consultation. I need it too. I want to say «Big thanks for technical
+      consultation» to these peoples:<br>
+      <br>
+    </big>
     <ul>
-      <li><a href="#mozTocId702206">Chapter 1. Memory</a></li>
-      <li><a href="#mozTocId776211">Chapter 2. Display back-light</a></li>
-      <li><a href="#mozTocId54966">Chapter 3. Abnormal program
-termination</a></li>
-      <li><a href="#mozTocId338492">Chapter 4. Interaction with
-operation system</a></li>
-      <li><a href="#mozTocId73461">Chapter 5. Input</a></li>
+      <li><a href="https://github.com/dmitrysmagin"><big>Dmitry Smagin</big></a></li>
+      <li><a href="https://bsg.org.ua"><big>Pavel Samko</big></a></li>
+      <li><a href="http://www.almost-university.com"><big>Vladimir
+            Mozhenkov</big></a></li>
+      <li><a href="https://vk.com/strong666"><big>Vitaliy Molochkov</big></a></li>
+      <li><a href="https://vk.com/pereulok"><big>Alexander Pereulok</big></a></li>
+      <li><big>DDMZ<br>
+        </big></li>
     </ul>
-  </li>
-  <li><a href="#mozTocId412631">Part 6. Sound</a>
+    <big><br>
+      Also thanks to PVS-Studio team for <a href="https://www.viva64.com/en/b/0614/">free
+        license</a>.<br>
+      <br>
+    </big>
+    <h2><a class="mozTocH2" name="mozTocId419893"></a><big>Chapter 3. SDK</big></h2>
+    <big><br>
+      This library was successfully tested with follow SDK:<br>
+      <br>
+    </big>
     <ul>
-      <li><a href="#mozTocId251362">Chapter 1. Low-level sound subsystem</a></li>
-      <li><a href="#mozTocId873628">Chapter 2. Loading audio</a></li>
-      <li><a href="#mozTocId657923">Chapter 3. Playing audio</a></li>
-      <li><a href="#mozTocId553480">Chapter 4. Mixer</a></li>
+      <li><a href="https://code.google.com/archive/p/dingoo-linux/downloads"><big>Official
+Dingux
+            toolchain</big></a></li>
+      <li><a href="https://sience.schattenkind.net/dingoo/Dingux_Toolchain_for_Windows.htm"><big>Unofficial
+Dingux
+            toolchain for Windows</big></a></li>
+      <li><a href="http://old.ritmixrussia.ru/products/rzx-50"><big>Official
+            RZX-50 SDK</big></a></li>
     </ul>
-  </li>
-  <li><a href="#mozTocId912509">Part 7. Internal details of the library
-subsystems</a>
-    <ul>
-      <li><a href="#mozTocId596077">Chapter 1. A few words for a
-curious programmers</a></li>
-      <li><a href="#mozTocId383677">Chapter 2. Internal classes</a></li>
-      <li><a href="#mozTocId445066">Chapter 3. Low-level sound subsystem</a></li>
-      <li><a href="#mozTocId214872">Chapter 4. Base graphics subsystem</a></li>
-      <li><a href="#mozTocId509433">Chapter 5. Input subsystem</a></li>
-      <li><a href="#mozTocId949422">Chapter 6. Base image subsystem</a></li>
-    </ul>
-  </li>
-  <li><a href="#mozTocId152114">Changelog</a></li>
-</ul>
-
-<big><br>
-<br>
-</big>
-<h1><a class="mozTocH1" name="mozTocId817184"></a><big>Part 1. Welcome
-to Dingux game development kit</big></h1>
-
-<big><br>
-</big>
-<h2><a class="mozTocH2" name="mozTocId387531"></a><big>Chapter 1.
-Introduction</big></h2>
-
-<big><br>
-<span style="text-decoration: underline;">Introduction</span><br>
-<br>
-Hello from Russia. My name is Popov Evgeniy Alekseyevich. I am the
-individual programmer. I enjoy creating a software. I also like
-old–school video games. Portable game consoles like Dingoo A320 is
-ideal device for persons like me. Dingoo Linux(DINGUX) is Linux
-adaptation for Dingoo A320. I like Linux too, but I don’t like <a href="http://www.libsdl.org">SDL</a> library. It's using for
-programming under Dingoo Linux. I made my own library. I hope that my
-C++ library will be useful for many programmers.<br>
-<br>
-<span style="text-decoration: underline;">Supported devices</span><br>
-<br>
-Dingoo Linux also ported to a few another devices. My library can work
-with it. You can see list of supported devices below.<br>
-<br>
-</big>
-<ul>
-
-  <li><big>DINGOO A320</big></li>
-  <li><big>DINGOO A320E</big></li>
-  <li><big>DINGOO A380</big></li>
-  <li><big>RITMIX RZX–50</big></li>
-</ul>
-
-<big><br>
-<span style="text-decoration: underline;">Features</span><br>
-<br>
-Let me show the library features. Let’s go.<br>
-<br>
-</big>
-<ul>
-
-  <li><big>Open source code.</big></li>
-  <li><big>Easy to use object–orientated design.</big></li>
-  <li><big>Library can be easy ported to another portable Linux devices.</big></li>
-  <li><big>Very fast.</big></li>
-  <li><big>zlib license.</big></li>
-  <li><big>Minimum dependencies: only standard run-time library and <a href="https://en.wikipedia.org/wiki/POSIX_Threads">Posix Thread</a>.</big></li>
-</ul>
-
-<big><br>
-<span style="text-decoration: underline;">Installation</span><br>
-<br>
-Follow these steps:<br>
-<br>
-</big>
-<ul>
-
-  <li><big>Copy these files to you project directory: dinguxgdk.h,
-dinguxgdk.cpp, makefile</big></li>
-  <li><big>Add this directive to you source code: #include “dinguxgdk.h”</big></li>
-  <li><big>Edit makefile</big></li>
-</ul>
-
-<big><br>
-<span style="text-decoration: underline;">Feedback</span><br>
-<br>
-Send me <a href="mailto:tuzik87@inbox.ru">e-mail</a> if you want
-contact with me.<br>
-<br>
-</big>
-<h2><a class="mozTocH2" name="mozTocId558083"></a><big>Chapter 2. A
-special thanks</big></h2>
-
-<big><br>
-What you need when you try to create a big thing? A technical
-consultation. I need it too. I want to say «Big thanks for technical
-consultation» to these peoples:<br>
-<br>
-</big>
-<ul>
-
-  <li><a href="https://github.com/dmitrysmagin"><big>Dmitry Smagin</big></a></li>
-  <li><a href="https://bsg.org.ua/"><big>Pavel Samko</big></a></li>
-  <li><a href="http://www.almost-university.com/"><big>Vladimir
-Mozhenkov</big></a></li>
-  <li><a href="https://vk.com/strong666"><big>Vitaliy Molochkov</big></a></li>
-  <li><a href="https://vk.com/pereulok"><big>Alexander Pereulok</big></a></li>
-  <li><big>DDMZ<br>
-    </big></li>
-</ul>
-
-<big><br>
-Also thanks to PVS-Studio team for <a href="https://www.viva64.com/en/b/0614/">free license</a>.<br>
-<br>
-</big>
-<h2><a class="mozTocH2" name="mozTocId419893"></a><big>Chapter 3. SDK</big></h2>
-
-<big><br>
-This library was successfully tested with follow SDK:<br>
-<br>
-</big>
-<ul>
-
-  <li><a href="https://code.google.com/archive/p/dingoo-linux/downloads"><big>Official
-Dingux toolchain</big></a></li>
-  <li><a href="https://sience.schattenkind.net/dingoo/Dingux_Toolchain_for_Windows.htm"><big>Unofficial
-Dingux toolchain for Windows</big></a></li>
-  <li><a href="http://old.ritmixrussia.ru/products/rzx-50"><big>Official
-RZX-50 SDK</big></a></li>
-</ul>
-
-<big><br>
-</big>
-<h2><a class="mozTocH2" name="mozTocId647026"></a><big>Chapter 4.
-Compilation</big></h2>
-
-<big><br>
-Disable all compiler optimization. It needs for correct work. See GCC
-documentation for more information about compiler optimization.<br>
-<br>
-</big>
-<h2><a class="mozTocH2" name="mozTocId59157"></a><big>Chapter 5.
-Library name-space</big></h2>
-
-<big><br>
-All library classes declared in <span style="font-style: italic;">DINGUXGDK</span>
-name-space.<br>
-<br>
-</big>
-<h2><a class="mozTocH2" name="mozTocId239028"></a><big>Chapter 6.
-License</big></h2>
-
-<big><br>
-<span style="text-decoration: underline;">Dingux game development kit
-license</span><br>
-<br>
-<br>
-Copyright (C) 2015-2020 Popov Evgeniy Alekseyevich<br>
-This software is provided 'as-is', without any express or implied
-warranty. In no event will the authors be held liable for any damages
-arising from the use of this software. Permission is granted to anyone
-to use this software for any purpose, including commercial
-applications, and to alter it and redistribute it freely, subject to
-the following restrictions:<br>
-<br>
-<br>
-1. The origin of this software must not be misrepresented; you must not<br>
-claim that you wrote the original software. If you use this software<br>
-in a product, an acknowledgment in the product documentation would be<br>
-appreciated but is not required.<br>
-<br>
-2. Altered source versions must be plainly marked as such, and must not
-be<br>
-misrepresented as being the original software.<br>
-<br>
-3. This notice may not be removed or altered from any source
-distribution.<br>
-<br>
-<span style="text-decoration: underline;">Third–party code license</span><br>
-<br>
-Pixel packing algorithm bases on code from <a href="http://www.svgalib.org/">SVGALib</a>. SVGALib is public domain.<br>
-<br>
-</big>
-<h1><a class="mozTocH1" name="mozTocId489599"></a><big>Part 2. Base
-things</big></h1>
-
-<big><br>
-</big>
-<h2><a class="mozTocH2" name="mozTocId927227"></a><big>Chapter 1.
-Coordinate system</big></h2>
-
-<big><br>
-Simple windows game framework use standard screen coordinate system.
-Coordinates start at top-left corner of screen. Look to this picture
-for understand it.<br>
-<br>
-<img style="width: 107px; height: 111px;" alt="" src="coordinate_system.png"><br>
-<br>
-</big>
-<h2><a class="mozTocH2" name="mozTocId705363"></a><big>Chapter 2. A
-game cycle</big></h2>
-
-<big><br>
-What is main point in you game? A game cycle. You can see structure of
-typical game cycle below.<br>
-<br>
-<img style="width: 357px; height: 316px;" alt="" src="game_cycle.png"><br>
-<br>
-<br>
-<br>
-</big>
-<h1><a class="mozTocH1" name="mozTocId13479"></a><big>Part 3. Graphics</big></h1>
-
-<big><br>
-</big>
-<h2><a class="mozTocH2" name="mozTocId981471"></a><big>Chapter 1.
-Virtual surface</big></h2>
-
-<big><br>
-<span style="text-decoration: underline;">Introduce to virtual surface</span><br>
-<br>
-Computer graphics is cool. A screen can show you many amazing things.
-But all amazing things contain pixels. Virtual surface let you draw the
-pixels.<br>
-<br>
-<span style="text-decoration: underline;">Frame resolution</span><br>
-<br>
-Frame in virtual surface have a fixed resolution. It equals to screen
-resolution by default.<br>
-<br>
-<span style="text-decoration: underline;">Work with virtual surface</span><br>
-<br>
-<span style="font-style: italic;">Frame</span> class provide simple
-access virtual surface. Don’t use it directly. Let’s look to public
-methods.<br>
-<br>
-<span style="font-style: italic;">unsigned short int*
-Frame::get_buffer();</span> – Return handle to surface buffer.<br>
-<span style="font-style: italic;">size_t Frame::get_pixels() const;</span>
-– Return amount of pixels in the buffer.<br>
-<span style="font-style: italic;">void Frame::clear_screen();</span> –
-Clear the surface. Fill it by black color.<br>
-<span style="font-style: italic;">void Frame::draw_pixel(const unsigned
-long int x,const unsigned long int y, const unsigned char red,const
-unsigned char green, const unsigned char blue);</span> – Draw a pixel
-to the surface.<br>
-<span style="font-style: italic;">unsigned long int
-Frame::get_frame_width() const;</span> – Return the frame width in
-pixels.<br>
-<span style="font-style: italic;">unsigned long int
-Frame::get_frame_height() const;</span> – Return the frame height in
-pixels.<br>
-<span style="font-style: italic;">void Frame::save();</span> – Save
-surface content to shadow buffer.<br>
-<span style="font-style: italic;">void Frame::restore();</span> –
-Restore surface content from shadow buffer.<br>
-<span style="font-style: italic;">void Frame::restore(const unsigned
-long int x,const unsigned long int y,const unsigned long int
-width,const unsigned long int height);</span> – Copy piece of shadow
-buffer to surface.<br>
-<br>
-</big>
-<h2><a class="mozTocH2" name="mozTocId636407"></a><big>Chapter 2. Plane</big></h2>
-
-<big><br>
-<span style="text-decoration: underline;">A few words about planes</span><br>
-<br>
-Plane is surface with custom defined size. Image from plane will scale
-when transfer to virtual surface.<br>
-<br>
-<span style="text-decoration: underline;">Work with planes</span><br>
-<br>
-<span style="font-style: italic;">Plane</span> class provide access to
-the plane subsystem. It is derived from Frame class. Let’s look on
-public methods.<br>
-<br>
-<span style="font-style: italic;">void Plane::create_plane(const
-unsigned long int width,const unsigned long int height,const unsigned
-long int surface_width,const unsigned long int surface_height, unsigned
-short int *surface_buffer);</span> – Create the plane.<br>
-<span style="font-style: italic;">void Plane::transfer();</span> –
-Transfer image from plane to virtual surface.<br>
-<span style="font-style: italic;">Plane* Plane::get_handle();</span> –
-Return the handle to the plane.<br>
-<br>
-</big>
-<h2><a class="mozTocH2" name="mozTocId436473"></a><big>Chapter 3. Base
-graphics subsystem</big></h2>
-
-<big><br>
-<span style="text-decoration: underline;">Introduce to base graphics
-subsystem</span><br>
-<br>
-Base graphics subsystem rendering game scene. It works together with
-virtual surface.<br>
-<br>
-<span style="text-decoration: underline;">Work with base graphics
-subsystem</span><br>
-<br>
-<span style="font-style: italic;">Screen</span> class provide access to
-the base graphic subsystem. It is derived from Frame class. Let’s look
-on public methods.<br>
-<br>
-<span style="font-style: italic;">void Screen::initialize();</span> –
-Initialize the subsystem.<br>
-<span style="font-style: italic;">void Screen::update();</span> – Show
-current back buffer content on screen.<br>
-<span style="font-style: italic;">const unsigned long int
-Screen::get_width() const;</span> – Return the screen width in pixels.<br>
-<span style="font-style: italic;">const unsigned long int
-Screen::get_height() const;</span> – Return the screen height in pixels.<br>
-<span style="font-style: italic;">Screen* Screen::get_handle();</span>
-– Return the handle to base graphics subsystem object.<br>
-<span style="font-style: italic;">unsigned long int Screen::get_fps()
-const;</span> – Return current fps value.<br>
-<span style="font-style: italic;">unsigned long int Screen::get_color()
-const;</span> – Return current color in bits per pixel.<br>
-<br>
-</big>
-<h2><a class="mozTocH2" name="mozTocId857731"></a><big>Chapter 4.
-Graphic primitives</big></h2>
-
-<big><br>
-Drawing a pixel is funny action. But you need more. What about graphic
-primitives?<br>
-<span style="font-style: italic;">Primitive</span> class can draw it.
-It is simple class with a few methods.<br>
-<br>
-<span style="font-style: italic;">void Primitive::initialize(Screen
-*Screen);</span> – Initialize the graphic primitive subsystem.<br>
-<span style="font-style: italic;">void Primitive::set_color(const
-unsigned char red, const unsigned char green, const unsigned char blue);</span>
-– Set the current color. It is black by default.<br>
-<span style="font-style: italic;">void Primitive::draw_line(const
-unsigned long int x1,const unsigned long int y1,const unsigned long int
-x2,const unsigned long int y2);</span> – Just draw a line.<br>
-<span style="font-style: italic;">void Primitive::draw_rectangle(const
-unsigned long int x,const unsigned long int y,const unsigned long int
-width,const unsigned long int height);</span> – Draw a simple rectangle.<br>
-<span style="font-style: italic;">void
-Primitive::draw_filled_rectangle(const unsigned long int x,const
-unsigned long int y,const unsigned long int width);</span> – Draw a
-filled rectangle.<br>
-<br>
-</big>
-<h2><a class="mozTocH2" name="mozTocId881761"></a><big>Chapter 5. Base
-image subsystem</big></h2>
-
-<big><br>
-<span style="text-decoration: underline;">Very important subsystems</span><br>
-<br>
-Base image subsystem is very important. All another image subsystem
-working over base image subsystem.<br>
-<br>
-<span style="text-decoration: underline;">Mirror type</span><br>
-<br>
-Mirror type codes look as predefined constants. You can see it bellow.<br>
-<br>
-</big>
-<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
-
-  <tbody>
-    <tr>
-      <td style="vertical-align: top;"><big>Mirror type code<br>
-      </big></td>
-      <td style="vertical-align: top;"><big>Description<br>
-      </big></td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;"><big>MIRROR_HORIZONTAL<br>
-      </big></td>
-      <td style="vertical-align: top;"><big>Horizontal mirror<br>
-      </big></td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;"><big>MIRROR_VERTICAL<br>
-      </big></td>
-      <td style="vertical-align: top;"><big>Vertical mirror<br>
-      </big></td>
-    </tr>
-  </tbody>
-</table>
-
-<big><br>
-<span style="text-decoration: underline;">Work with advanced graphics</span><br>
-<br>
-<span style="font-style: italic;">Surface</span> class provide simple
-access to base image subsystem. Don’t use it directly. Let’s look to
-public methods.<br>
-<br>
-<span style="font-style: italic;">void Surface::initialize(Screen
-*Screen);</span> – Initialize the subsystem.<br>
-<span style="font-style: italic;">IMG_Pixel *Surface::get_image();</span>
-– Return handle to image buffer.<br>
-<span style="font-style: italic;">size_t Surface::get_length() const;</span>
-– Return length of image buffer in bytes.<br>
-<span style="font-style: italic;">unsigned long int
-Surface::get_image_width() const;</span> – Return image width in pixels.<br>
-<span style="font-style: italic;">unsigned long int
-Surface::get_image_height() const;</span> – Return image height in
-pixels.<br>
-<span style="font-style: italic;">void Surface::resize_image(const
-unsigned long int new_width, const unsigned long int new_height);</span>
-– Resize current image.<br>
-<span style="font-style: italic;">void Surface::mirror_image(const
-MIRROR_TYPE kind);</span> – Do mirror the current image.<br>
-<br>
-</big>
-<h2><a class="mozTocH2" name="mozTocId889327"></a><big>Chapter 6.
-Advanced image subsystem</big></h2>
-
-<big><br>
-<span style="text-decoration: underline;">Very important subsystems</span><br>
-<br>
-Advanced image subsystem is extended version of base image subsystem.
-Background and sprite subsystems working over advanced image subsystem.<br>
-<br>
-<span style="text-decoration: underline;">Work with advanced graphics</span><br>
-<br>
-<span style="font-style: italic;">Canvas</span> class provide simple
-access to advanced image subsystem. It is derived from Surface class.
-Don’t use it directly. Let’s look to public methods.<br>
-<br>
-<span style="font-style: italic;">void Canvas::set_frames(const
-unsigned long int amount);</span> – Set amounts of frames in scrolling
-background or animated sprite.<br>
-<span style="font-style: italic;">unsigned long int
-Canvas::get_frames() const;</span> – Return amount of frames in
-scrolling background or animated sprite.<br>
-<span style="font-style: italic;">unsigned long int Canvas::get_frame()
-const;</span> – Return current frame in scrolling background or
-animated sprite.<br>
-<span style="font-style: italic;">void Canvas::load_image(Image
-&amp;buffer);</span> – Load an image from memory buffer. Replace
-current image if exist.<br>
-<br>
-</big>
-<h2><a class="mozTocH2" name="mozTocId678026"></a><big>Chapter 7.
-Background</big></h2>
-
-<big><br>
-<span style="text-decoration: underline;">Level decoration</span><br>
-<br>
-Background is a big image. It like decoration in theater stage. Any
-game has a background. There are two kind of background: normal
-background and scrolling background. The scrolling background is a big
-image with few frames. Horizontal orientated scrolling background like
-horizontal orientated photo ribbon. Vertical orientated scrolling
-background like vertical orientated photo ribbon.<br>
-<br>
-<span style="text-decoration: underline;">Background types</span><br>
-<br>
-Background types codes look as predefined constants. You can see it
-bellow.<br>
-<br>
-</big>
-<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
-
-  <tbody>
-    <tr>
-      <td style="vertical-align: top;"><big>Background type<br>
-      </big></td>
-      <td style="vertical-align: top;"><big>Description<br>
-      </big></td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;"><big>NORMAL_BACKGROUND<br>
-      </big></td>
-      <td style="vertical-align: top;"><big>Normal background<br>
-      </big></td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;"><big>HORIZONTAL_BACKGROUND<br>
-      </big></td>
-      <td style="vertical-align: top;"><big>Horizontal scrolling
-background<br>
-      </big></td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;"><big>VERTICAL_BACKGROUND<br>
-      </big></td>
-      <td style="vertical-align: top;"><big>Vertical scrolling
-background<br>
-      </big></td>
-    </tr>
-  </tbody>
-</table>
-
-<big><br>
-<span style="text-decoration: underline;">Work with background</span><br>
-<br>
-Just use <span style="font-style: italic;">Background</span> class for
-work with background. It is derived from Canvas. Let’s look to public
-methods.<br>
-<br>
-<span style="font-style: italic;">unsigned long int
-Background::get_width() const;</span> – Return background width in
-pixels.<br>
-<span style="font-style: italic;">unsigned long int
-Background::get_height() const;</span> – Return background height in
-pixels.<br>
-<span style="font-style: italic;">void Background::set_target(const
-unsigned long int target);</span> – Set target frame in scrolling
-background.<br>
-<span style="font-style: italic;">void Background::step();</span> –
-Increase number of target frame in scrolling background. Set it to 1 if
-number of target frame more than amount of frames.<br>
-<span style="font-style: italic;">void Background::set_kind(const
-BACKGROUND_TYPE target);</span> – Set background type.<br>
-<span style="font-style: italic;">void Background::draw_background();</span>
-– Draw a background.<br>
-<br>
-<span style="text-decoration: underline;">Important notes</span><br style="text-decoration: underline;">
-<br>
-Always call <span style="font-style: italic;">set_kind</span> method
-after load background image. Always call <span style="font-style: italic;">set_frames</span> method before call <span style="font-style: italic;">set_kind</span> method if you will use
-scrolling background.<br>
-<br>
-</big>
-<h2><a class="mozTocH2" name="mozTocId104290"></a><big>Chapter 8.
-Sprites</big></h2>
-
-<big><br>
-<span style="text-decoration: underline;">Small important thing</span><br>
-<br>
-A sprite is a small transparent image. It useful for many things:
-enemies, bonuses, etc…<br>
-<br>
-<span style="text-decoration: underline;">Sprite types</span><br>
-<br>
-There are two kinds of sprites: normal sprites and strip. The strip is
-animated sprite. Do you remember analog camera? Strip look like photo
-ribbon. Horizontal strip look like the horizontal orientated photo
-ribbon. Vertical strip look like the vertical orientated photo ribbon.<br>
-<br>
-<span style="text-decoration: underline;">Some words about sprite
-transparency</span><br>
-<br>
-Some pixel will be ignored. Ignored pixels have a transparent color.
-How to determinate it? The transparent color is color of first pixel.
-Transparent mode is enabled by default.<br>
-<br>
-<span style="text-decoration: underline;">Sprite type flags</span><br>
-<br>
-Sprite types codes look as predefined constants. You can see it bellow.<br>
-<br>
-</big>
-<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
-
-  <tbody>
-    <tr>
-      <td style="vertical-align: top;"><big>Sprite type<br>
-      </big></td>
-      <td style="vertical-align: top;"><big>Description<br>
-      </big></td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;"><big>SINGLE_SPRITE<br>
-      </big></td>
-      <td style="vertical-align: top;"><big>Normal sprite<br>
-      </big></td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;"><big>HORIZONTAL_STRIP<br>
-      </big></td>
-      <td style="vertical-align: top;"><big>Horizontal strip<br>
-      </big></td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;"><big>VERTICAL_STRIP<br>
-      </big></td>
-      <td style="vertical-align: top;"><big>Vertical strip<br>
-      </big></td>
-    </tr>
-  </tbody>
-</table>
-
-<big><br>
-<span style="text-decoration: underline;">Work with sprites</span><br>
-<br>
-Just use <span style="font-style: italic;">Sprite</span> class for
-work with a sprite. It is derived from Canvas. Let’s look to public
-methods.<br>
-<br>
-<span style="font-style: italic;">void Sprite::load_sprite(Image
-&amp;buffer,const SPRITE_TYPE kind,const unsigned long int frames);</span>
-– Load a sprite from memory buffer and set sprite setting.<br>
-<span style="font-style: italic;">void Sprite::set_target(const
-unsigned long int target);</span> – Set target frame in animated sprite.<br>
-<span style="font-style: italic;">void Sprite::step();</span> –
-Increase number of target frame in strip. Set it to 1 if number of
-target frame more than amount of frames.<br>
-<span style="font-style: italic;">void Sprite::set_kind(const
-SPRITE_TYPE target);</span> – Set sprite type.<br>
-<span style="font-style: italic;">SPRITE_TYPE Sprite::get_kind() const;</span>
-– Get sprite type.<br>
-<span style="font-style: italic;">void Sprite::set_transparent(const
-bool enabled);</span> – Enable or disable transparent mode.<br>
-<span style="font-style: italic;">bool Sprite::get_transparent() const;</span>
-– Return true if transparent mode is enabled.<br>
-<span style="font-style: italic;">void Sprite::set_x(const unsigned
-long int x);</span> – Set x-coordinate of the sprite position.<br>
-<span style="font-style: italic;">void Sprite::set_y(const unsigned
-long int y);</span> – Set y-coordinate of the sprite position.<br>
-<span style="font-style: italic;">void Sprite::increase_x(const
-unsigned long int increment);</span> – Increase x-coordinate of the
-current sprite position.<br>
-<span style="font-style: italic;">void Sprite::decrease_x(const
-unsigned long int decrement);</span> – Decrease x-coordinate of the
-current sprite position.<br>
-<span style="font-style: italic;">void Sprite::increase_y(const
-unsigned long int increment);</span> – Increase y-coordinate of the
-current sprite position.<br>
-<span style="font-style: italic;">void Sprite::decrease_y(const
-unsigned long int decrement);</span> – Decrease y-coordinate of the
-current sprite position.<br>
-<span style="font-style: italic;">unsigned long int Sprite::get_x()
-const;</span> – Return the x position of the sprite.<br>
-<span style="font-style: italic;">unsigned long int Sprite::get_y()
-const;</span> – Return the y position of the sprite.<br>
-<span style="font-style: italic;">unsigned long int Sprite::get_width()
-const;</span> – Return the width of the sprite.<br>
-<span style="font-style: italic;">unsigned long int
-Sprite::get_height() const;</span> – Return the height of the sprite.<br>
-<span style="font-style: italic;">Sprite* Sprite::get_handle();</span>
-– Return the handle to sprite object.<br>
-<span style="font-style: italic;">Collision_Box Sprite::get_box() const;</span>
-– Return collision related information.<br>
-<span style="font-style: italic;">void Sprite::clone(Sprite *target);</span>
-– Create copy of exist sprite.<br>
-<span style="font-style: italic;">void Sprite::set_position(const
-unsigned long int x, const unsigned long int y);</span> – Set sprite
-position.<br>
-<span style="font-style: italic;">void Sprite::draw_sprite();</span> –
-Draw a sprite.<br>
-<span style="font-style: italic;">void Sprite::draw_sprite(const
-unsigned long int x, const unsigned long int y);</span> – Set sprite
-position and draw it.<br>
-<br>
-<span style="text-decoration: underline;">Important notes</span><br>
-<br>
-Always call <span style="font-style: italic;">set_kind</span> method
-after load sprite image. Always call <span style="font-style: italic;">set_frames</span>
-method before call <span style="font-style: italic;">set_kind</span>
-method if you will use animated sprite. Also you can use <span style="font-style: italic;">load_sprite</span> method instead calling <span style="font-style: italic;">set_kind</span> method.<br>
-<br>
-</big>
-<h2><a class="mozTocH2" name="mozTocId443325"></a><big>Chapter 9.
-Tile-set</big></h2>
-
-<big><br>
-<span style="text-decoration: underline;">Some words about complex
-backgrounds</span><br>
-<br>
-Tile-set is very useful thing for constructing complex background. Tile
-is a small non-transparent image. Each tile have fixed size. Tile-set
-is matrix of tiles. Look to this picture for understand it.<br>
-<br>
-<img style="width: 380px; height: 249px;" alt="" src="tileset.png"><br>
-<br>
-<span style="text-decoration: underline;">Rows and columns</span><br>
-<br>
-First row index is 0. Last row index is row amount-1. First column
-index is 0. Last column index is column amount-1.<br>
-<br>
-<span style="text-decoration: underline;">Work with tile-set subsystem</span><br>
-<br>
-<span style="font-style: italic;">Tileset</span> class provide access
-to the tile-set subsystem. It is derived from <span style="font-style: italic;">Surface</span> class. Let’s look on public
-methods.<br>
-<br>
-<span style="font-style: italic;">unsigned long int
-Tileset::get_tile_width() const;</span> – Return tile width in pixels.<br>
-<span style="font-style: italic;">unsigned long int
-Tileset::get_tile_height() const;</span> – Return tile height in pixels.<br>
-<span style="font-style: italic;">unsigned long int Tileset::get_rows()
-const;</span> – Return amount of rows.<br>
-<span style="font-style: italic;">unsigned long int
-Tileset::get_columns() const;</span> – Return amount of columns.<br>
-<span style="font-style: italic;">void Tileset::select_tile(const
-unsigned long int row,const unsigned long int column);</span> – Select
-target tile.<br>
-<span style="font-style: italic;">void Tileset::draw_tile(const
-unsigned long int x,const unsigned long int y);</span> – Draw selected
-tile.<br>
-<span style="font-style: italic;">void Tileset::load_tileset(Image
-&amp;buffer,const unsigned long int row_amount,const unsigned long int
-column_amount);</span> – Load a tile-set.<br>
-<br>
-</big>
-<h2><a class="mozTocH2" name="mozTocId804597"></a><big>Chapter 10. Text</big></h2>
-
-<big><br>
-<span style="text-decoration: underline;">How draw a text?</span><br>
-<br>
-Just use text subsystem for draw a text. This subsystem need a font for
-text drawing. You must load a font before start draw the text. The font
-is just horizontal strip with 128 frames.<br>
-<br>
-<span style="text-decoration: underline;">Valid characters</span><br>
-<br>
-You can use only standard ASCII characters for draw the text.<br>
-<br>
-<span style="text-decoration: underline;">Work with text</span><br>
-<br>
-<span style="font-style: italic;">Text</span> class provide simple
-interface to text subsystem. Let’s look to public methods.<br>
-<br>
-<span style="font-style: italic;">void Text::set_position(const
-unsigned long int x,const unsigned long int y);</span> – Set output
-position.<br>
-<span style="font-style: italic;">void Text::load_font(Sprite *font);</span>
-– Load a font.<br>
-<span style="font-style: italic;">void Text::draw_character(const char
-target);</span> – Draw single character at current position.<br>
-<span style="font-style: italic;">void Text::draw_text(const char
-*text);</span> – Draw text at current position.<br>
-<span style="font-style: italic;">void Text::draw_character(const
-unsigned long int x,const unsigned long int y,const char target);</span>
-– Draw single character at specific position.<br>
-<span style="font-style: italic;">void Text::draw_text(const unsigned
-long int x,const unsigned long int y,const char *text);</span> – Draw
-text at specific position.<br>
-<br>
-</big>
-<h2><a class="mozTocH2" name="mozTocId51687"></a><big>Chapter 11.
-Loading an images</big></h2>
-
-<big><br>
-<span style="text-decoration: underline;">Load an image from a files</span><br>
-<br>
-Use image loader for load an image from a file. <span style="font-style: italic;">Image</span> class provide simple access
-to image loader. It is very simple class with few methods.<br>
-<br>
-<span style="font-style: italic;">void Image::load_tga(const char
-*name);</span> – Load a Truevision TGA image.<br>
-<span style="font-style: italic;">void Image::load_pcx(const char
-*name);</span> – Load a ZSoft PC Paintbrush image.<br>
-<span style="font-style: italic;">unsigned long int Image::get_width()
-const;</span> – Return width of current image.<br>
-<span style="font-style: italic;">unsigned long int Image::get_height()
-const;</span> – Return height of current image.<br>
-<span style="font-style: italic;">size_t Image::get_length() const;</span>
-– Return length in bytes of image buffer.<br>
-<span style="font-style: italic;">unsigned char *Image::get_data();</span>
-– Return handle to image buffer.<br>
-<span style="font-style: italic;">void Image::destroy_image();</span> –
-Destroy current image and free image buffer.<br>
-<br>
-<span style="text-decoration: underline;">Important remark</span><br>
-<br>
-New image replace current image if current image already exist.<br>
-<br>
-<span style="text-decoration: underline;">Supported format</span><br>
-<br>
-All loading images must have correct specification. You can see list of
-supported format below.<br>
-<br>
-</big>
-<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
-
-  <tbody>
-    <tr>
-      <td style="vertical-align: top;"><big>Format<br>
-      </big></td>
-      <td style="vertical-align: top;"><big>Color<br>
-      </big></td>
-      <td style="vertical-align: top;"><big>Compression<br>
-      </big></td>
-      <td style="vertical-align: top;"><big>Palette<br>
-      </big></td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;"><big>Truevision TGA image<br>
-      </big></td>
-      <td style="vertical-align: top;"><big>24 bit<br>
-      </big></td>
-      <td style="vertical-align: top;"><big>None, RLE<br>
-      </big></td>
-      <td style="vertical-align: top;"><big>Not present<br>
-      </big></td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;"><big>ZSoft PC Paintbrush<br>
-      </big></td>
-      <td style="vertical-align: top;"><big>24 bit<br>
-      </big></td>
-      <td style="vertical-align: top;"><big>RLE<br>
-      </big></td>
-      <td style="vertical-align: top;"><big>Not present<br>
-      </big></td>
-    </tr>
-  </tbody>
-</table>
-
-<big><br>
-<span style="text-decoration: underline;">Recommend software</span><br>
-<br>
-You can use wide range of graphics software for convert you images to
-correct format. I recommend use <a href="https://www.gimp.org/">GIMP</a>
-for do it. It is powerful open source and cross-platform image editor.<br>
-<br>
-</big>
-<h1><a class="mozTocH1" name="mozTocId983100"></a><big>Part 4. Game
-specific things</big></h1>
-
-<big><br>
-</big>
-<h2><a class="mozTocH2" name="mozTocId1365"></a><big>Chapter 1.
-Collision</big></h2>
-
-<big><br>
-<span style="text-decoration: underline;">Very important thing for any
-game</span><br>
-<br>
-What is very important thing for a video games? A collision.<br>
-<br>
-<span style="text-decoration: underline;">Collision detail</span><br>
-<br>
-Collision detector using bounding box collision method for detect
-collision. Collision related information represent by special
-structure. Let me introduce it.<br>
-<br>
-<span style="font-style: italic;">struct Collision_Box</span><br style="font-style: italic;">
-<span style="font-style: italic;">{</span><br style="font-style: italic;">
-<span style="font-style: italic;">unsigned long int x:32;</span><br style="font-style: italic;">
-<span style="font-style: italic;">unsigned long int y:32;</span><br style="font-style: italic;">
-<span style="font-style: italic;">unsigned long int width:32;</span><br style="font-style: italic;">
-<span style="font-style: italic;">unsigned long int height:32;</span><br style="font-style: italic;">
-<span style="font-style: italic;">};</span><br>
-<br style="text-decoration: underline;">
-<span style="text-decoration: underline;">Work with collision detector</span><br>
-<br>
-<span style="font-style: italic;">Collision</span> class provide easy
-access to collision detector. It is very simple class with few methods.
-Let’s look to public methods.<br>
-<br>
-<span style="font-style: italic;">void Collision::set_target(const
-Box_Collision &amp;first_target,const Box_Collision &amp;second_target);</span>
-– Set targets for collision detector.<br>
-<span style="font-style: italic;">bool
-Collision::check_horizontal_collision() const;</span> – Return true if
-horizontal collision between two objects is accepted.<br>
-<span style="font-style: italic;">bool
-Collision::check_vertical_collision() const;</span> – Return true if
-vertical collision between two objects is accepted.<br>
-<span style="font-style: italic;">bool Collision::check_collision()
-const;</span> – Return true if horizontal or vertical collision between
-two objects is accepted.<br>
-<span style="font-style: italic;">Collision_Box
-Collision::generate_box(const unsigned long int x,const unsigned long
-int y,const unsigned long int width,const unsigned long int height)
-const;</span> – Generate collision related information from the object
-properties.<br>
-<br>
-</big>
-<h2><a class="mozTocH2" name="mozTocId414110"></a><big>Chapter 2. Timer</big></h2>
-
-<big><br>
-<span style="font-style: italic;">Timer</span> is very useful thing.
-Just use Timer class for work with the timer. Let’s look to public
-methods.<br>
-<br>
-<span style="font-style: italic;">void Timer::set_timer(const unsigned
-long int seconds);</span> – Set timer interval and initialize start
-point.<br>
-<span style="font-style: italic;">bool Timer::check_timer();</span> –
-Initialize stop point. Return true and reinitialize start point if
-interval between stop and start points large or equal than specific
-seconds.<br>
-<br>
-</big>
-<h2><a class="mozTocH2" name="mozTocId446066"></a><big>Chapter 3.
-Binary files</big></h2>
-
-<big><br>
-<span style="text-decoration: underline;">Work with binary files</span><br>
-<br>
-Just use <span style="font-style: italic;">Binary_File</span> class
-for work with the binary files. Let’s look to public methods.<br>
-<br>
-<span style="font-style: italic;">void Binary_File::create_temp();</span>
-– Create a temporary file. This file will be deleted when it closed.<br>
-<span style="font-style: italic;">void Binary_File::open_read(const
-char *name);</span> – Open a file for read.<br>
-<span style="font-style: italic;">void Binary_File::open_write(const
-char *name);</span> – Open a file for read and write.<br>
-<span style="font-style: italic;">void Binary_File::close();</span> –
-Close the file.<br>
-<span style="font-style: italic;">void Binary_File::set_position(const
-off_t offset);</span> – Set the file position.<br>
-<span style="font-style: italic;">long int Binary_File::get_position();</span>
-– Return current file position.<br>
-<span style="font-style: italic;">long int Binary_File::get_length();</span>
-– Return file length in bytes.<br>
-<span style="font-style: italic;">void Binary_File::read(void
-*buffer,const size_t length);</span> – Read data from the file.<br>
-<span style="font-style: italic;">void Binary_File::write(void
-*buffer,const size_t length);</span> – Write data to the file.<br>
-<span style="font-style: italic;">void Binary_File::check_error();</span>
-– Return true if last file operation failed.<br>
-<br>
-<span style="text-decoration: underline;">Important notice</span><br>
-<br>
-Target file size limit is 2 gigabytes.<br>
-<br>
-</big>
-<h1><a class="mozTocH1" name="mozTocId308337"></a><big>Part 5. Other
-important things</big></h1>
-
-<big><br>
-</big>
-<h2><a class="mozTocH2" name="mozTocId702206"></a><big>Chapter 1. Memory</big></h2>
-
-<big><br>
-RAM is very important resource. Just use <span style="font-style: italic;">Memory</span> class for get total memory
-size and free memory size. Let’s look to public methods.<br>
-<br>
-<span style="font-style: italic;">unsigned long int
-System::get_total_memory();</span> – Return a total memory size in
-bytes.<br>
-<span style="font-style: italic;">unsigned long int
-System::get_free_memory();</span> – Return a free memory size in bytes.<br>
-<br>
-</big>
-<h2><a class="mozTocH2" name="mozTocId776211"></a><big>Chapter 2.
-Display back-light</big></h2>
-
-<big><br>
-<span style="text-decoration: underline;">Control display back-light</span><br>
-<br>
-You can control level of display back-light via back-light subsystem.<br>
-<br>
-<span style="text-decoration: underline;">Back-light level</span><br>
-<br>
-Minimal back-light level is 10. Maximum back-light level is 90.
-Increasing/decreasing step is 10.<br>
-<br>
-<span style="text-decoration: underline;">Working with back-light</span><br>
-<br>
-Just use <span style="font-style: italic;">Backlight</span> class for
-work with the back-light. Let’s look to public methods.<br>
-<br>
-<span style="font-style: italic;">unsigned char
-Backlight::get_minimum() const;</span> – Return minimum level of
-display back-light.<br>
-<span style="font-style: italic;">unsigned char
-Backlight::get_maximum() const;</span> – Return maximum level of
-display back-light.<br>
-<span style="font-style: italic;">unsigned char Backlight::get_level();</span>
-– Return current level of display back-light.<br>
-<span style="font-style: italic;">void Backlight::increase_level();</span>
-– Increase current level of display back-light.<br>
-<span style="font-style: italic;">void Backlight::decrease_level();</span>
-– Decrease current level of display back-light.<br>
-<span style="font-style: italic;">void Backlight::turn_off();</span> –
-Turn off display back-light.<br>
-<span style="font-style: italic;">void Backlight::turn_on();</span> –
-Turn on display back-light.<br>
-<span style="font-style: italic;">void Backlight::set_light(const
-unsigned char level);</span> – Set level of display back-light.<br>
-<br>
-</big>
-<h2><a class="mozTocH2" name="mozTocId54966"></a><big>Chapter 3.
-Abnormal program termination</big></h2>
-
-<big><br>
-You can use <span style="font-style: italic;">Halt</span> function for
-terminate program. This function declared in <span style="font-style: italic;">DINGUXGDK</span> name-space.<br>
-<br>
-<span style="font-style: italic;">void DINGUXGDK::Halt(const char
-*message);</span> – Terminate the program. Write error message to log
-file if logging enabled.<br>
-<br>
-</big>
-<h2><a class="mozTocH2" name="mozTocId338492"></a><big>Chapter 4.
-Interaction with operation system</big></h2>
-
-<big><br>
-You may need interaction with operation system. Just use <span style="font-style: italic;">System</span> class for do it. Let’s look
-to public methods.<br>
-<br>
-<span style="font-style: italic;">const unsigned long int
-System::get_random(const unsigned long int number);</span> – Return a
-random number from zero to argument–1.<br>
-<span style="font-style: italic;">void System::quit();</span> – Exit
-from you program and return user to operation system.<br>
-<span style="font-style: italic;">void System::run(const char *command);</span>
-– Execute shell command or external program.<br>
-<span style="font-style: italic;">char* System::read_environment(const
-char *variable);</span> – Return value of specific system environment
-variable.<br>
-<span style="font-style: italic;">bool System::file_exist(const char
-*name);</span> – Return true if the file is existed.<br>
-<span style="font-style: italic;">bool System::delete_file(const char
-*name);</span> – Delete the target file. Return true if operation was
-successfully complete.<br>
-<span style="font-style: italic;">void System::enable_logging(const
-char *name);</span> – Enable error logging. Error messages will
-redirect to a log file.<br>
-<br>
-</big>
-<h2><a class="mozTocH2" name="mozTocId73461"></a><big>Chapter 5. Input</big></h2>
-
-<big><br>
-<span style="text-decoration: underline;">A few words about built-in
-game-pad</span><br>
-<br>
-A portable game consoles like DINGOO A320 have the built–in game-pad.<br>
-<br>
-<span style="text-decoration: underline;">Working with game-pad</span><br>
-<br>
-Just use <span style="font-style: italic;">Gamepad</span> class for
-work with the built–in game-pad. Let’s look to public methods.<br>
-<br>
-<span style="font-style: italic;">void Gamepad::initialize();</span> –
-Initialize the game-pad subsystem.<br>
-<span style="font-style: italic;">void Gamepad::update();</span> –
-Update buttons state. Always call this method before check the button.<br>
-<span style="font-style: italic;">bool Gamepad::check_hold(const
-GAMEPAD_BUTTONS button);</span> – Return true if target button is
-pressed or holding.<br>
-<span style="font-style: italic;">bool Gamepad::check_press(const
-GAMEPAD_BUTTONS button);</span> – Return true if target button is
-pressed.<br>
-<span style="font-style: italic;">bool Gamepad::check_released(const
-GAMEPAD_BUTTONS button);</span> – Return true if target button is
-released.<br>
-<br>
-<span style="text-decoration: underline;">Key codes</span><br>
-<br>
-The game-pad keys bind to key codes. These codes look as predefined
-constants.<br>
-<br>
-</big>
-<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
-
-  <tbody>
-    <tr>
-      <td style="vertical-align: top;"><big>Key code<br>
-      </big></td>
-      <td style="vertical-align: top;"><big>Game-pad key<br>
-      </big></td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;"><big>BUTTON_UP<br>
-      </big></td>
-      <td style="vertical-align: top;"><big>D–pad up<br>
-      </big></td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;"><big>BUTTON_DOWN</big></td>
-      <td style="vertical-align: top;"><big>D–pad down<br>
-      </big></td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;"><big>BUTTON_LEFT</big></td>
-      <td style="vertical-align: top;"><big>D–pad left<br>
-      </big></td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;"><big>BUTTON_RIGHT</big></td>
-      <td style="vertical-align: top;"><big>D–pad right<br>
-      </big></td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;"><big>BUTTON_A</big></td>
-      <td style="vertical-align: top;"><big>A<br>
-      </big></td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;"><big>BUTTON_B</big></td>
-      <td style="vertical-align: top;"><big>B<br>
-      </big></td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;"><big>BUTTON_X</big></td>
-      <td style="vertical-align: top;"><big>X<br>
-      </big></td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;"><big>BUTTON_Y</big></td>
-      <td style="vertical-align: top;"><big>Y<br>
-      </big></td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;"><big>BUTTON_L</big></td>
-      <td style="vertical-align: top;"><big>L<br>
-      </big></td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;"><big>BUTTON_R</big></td>
-      <td style="vertical-align: top;"><big>R<br>
-      </big></td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;"><big>BUTTON_START</big></td>
-      <td style="vertical-align: top;"><big>Start<br>
-      </big></td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;"><big>BUTTON_SELECT</big></td>
-      <td style="vertical-align: top;"><big>Select<br>
-      </big></td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;"><big>BUTTON_POWER</big></td>
-      <td style="vertical-align: top;"><big>Power<br>
-      </big></td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;"><big>BUTTON_HOLD</big></td>
-      <td style="vertical-align: top;"><big>Hold<br>
-      </big></td>
-    </tr>
-  </tbody>
-</table>
-
-<big><br>
-</big>
-<h1><a class="mozTocH1" name="mozTocId412631"></a><big>Part 6. Sound</big></h1>
-
-<big><br>
-</big>
-<h2><a class="mozTocH2" name="mozTocId251362"></a><big>Chapter 1.
-Low-level sound subsystem</big></h2>
-
-<big><br>
-<span style="text-decoration: underline;">Sound device</span><br>
-<br>
-Low-level sound subsystem provide simple access to sound device.<br>
-<br>
-<span style="text-decoration: underline;">Default sound format</span><br>
-<br>
-You can see specification of default sound format bellow.<br>
-<br>
-</big>
-<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
-
-  <tbody>
-    <tr>
-      <td style="vertical-align: top;"><big>Data format<br>
-      </big></td>
-      <td style="vertical-align: top;"><big>Signed PCM<br>
-      </big></td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;"><big>Bits per sample<br>
-      </big></td>
-      <td style="vertical-align: top;"><big>16<br>
-      </big></td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;"><big>Channels<br>
-      </big></td>
-      <td style="vertical-align: top;"><big>2<br>
-      </big></td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;"><big>Compression<br>
-      </big></td>
-      <td style="vertical-align: top;"><big>None<br>
-      </big></td>
-    </tr>
-  </tbody>
-</table>
-
-<big><br>
-<span style="text-decoration: underline;">Data conversion</span><br>
-<br>
-Low-level sound subsystem don’t support automatic conversion. Your
-software must do source sound data conversion by itself.<br>
-<br>
-<span style="text-decoration: underline;">Work with low-level sound
-subsystem</span><br>
-<br>
-Just use <span style="font-style: italic;">Sound</span> class for work
-with low-level sound subsystem. Let’s look to public methods.<br>
-<br>
-<span style="font-style: italic;">void Sound::initialize(const int
-rate);</span> – Initialize the subsystem.<br>
-<span style="font-style: italic;">bool Sound::check_busy();</span> –
-Return true if sound device is busy.<br>
-<span style="font-style: italic;">size_t Sound::get_length() const;</span>
-– Return sound buffer length in bytes.<br>
-<span style="font-style: italic;">size_t Sound::send(char *buffer,const
-size_t length);</span> – Send audio data to sound device and return
-amount of send data in bytes.<br>
-<span style="font-style: italic;">Sound* Sound::get_handle();</span> –
-Return the handle to low-level sound subsystem object.<br>
-<br>
-</big>
-<h2><a class="mozTocH2" name="mozTocId873628"></a><big>Chapter 2.
-Loading audio</big></h2>
-
-<big><br>
-<span style="text-decoration: underline;">Audio loader</span><br>
-<br>
-Audio loader let you load audio data from <a href="https://en.wikipedia.org/wiki/Wave_Sound">Waveform Audio</a>
-files.<br>
-<br>
-<span style="text-decoration: underline;">Audio blocks</span><br>
-<br>
-Audio data is array of audio blocks. Duration of single audio block is
-1 second. You can calculate length of the block by simple way:
-(rate*channels*bits)/8.<br>
-<br>
-<span style="text-decoration: underline;">Supported format</span><br>
-<br>
-All loading audio files must have correct specification. You can see it
-below.<br>
-<br>
-</big>
-<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
-
-  <tbody>
-    <tr>
-      <td style="vertical-align: top;"><big>Data format<br>
-      </big></td>
-      <td style="vertical-align: top;"><big>Signed PCM<br>
-      </big></td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;"><big>Bits per sample<br>
-      </big></td>
-      <td style="vertical-align: top;"><big>16<br>
-      </big></td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;"><big>Channels<br>
-      </big></td>
-      <td style="vertical-align: top;"><big>1 or 2<br>
-      </big></td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;"><big>Compression<br>
-      </big></td>
-      <td style="vertical-align: top;"><big>None<br>
-      </big></td>
-    </tr>
-  </tbody>
-</table>
-
-<big><br>
-<span style="text-decoration: underline;">Recommend software</span><br>
-<br>
-You can use wide range of sound software for convert you audio to
-correct format. I recommend use <a href="https://www.audacityteam.org/">Audacity</a>
-or <a href="http://www.freac.org/">fre:ac</a> for do it.<br>
-<br style="text-decoration: underline;">
-<span style="text-decoration: underline;">Load audio from files</span><br>
-<br>
-<span style="font-style: italic;">Audio</span> class provide simple
-access to audio loader. Let’s look to public methods.<br>
-<br>
-<span style="font-style: italic;">Audio* Audio::get_handle();</span> –
-Return handle to audio loader subsystem.<br>
-<span style="font-style: italic;">size_t Audio::get_total() const;</span>
-– Return total length of audio data in bytes.<br>
-<span style="font-style: italic;">size_t Audio::get_block() const;</span>
-– Return length of audio block in bytes.<br>
-<span style="font-style: italic;">unsigned long int Audio::get_rate()
-const;</span> – Return sound rate.<br>
-<span style="font-style: italic;">unsigned short int
-Audio::get_channels() const;</span> – Return number of audio channels.<br>
-<span style="font-style: italic;">unsigned short int Audio::get_bits()
-const;</span> – Return amount of bits per sample.<br>
-<span style="font-style: italic;">void Audio::go_start();</span> – Go
-to start of audio data.<br>
-<span style="font-style: italic;">void Audio::read_data(char
-*buffer,const size_t length);</span> – Read audio data.<br>
-<span style="font-style: italic;">void Audio::load_wave(const char
-*name);</span> – Load audio from Waveform Audio file.<br>
-<br>
-</big>
-<h2><a class="mozTocH2" name="mozTocId657923"></a><big>Chapter 3.
-Playing audio</big></h2>
-
-<big><br>
-<span style="text-decoration: underline;">Audio player</span><br>
-<br>
-How play audio? Just audio player for do it.<br>
-<br style="text-decoration: underline;">
-<span style="text-decoration: underline;">Work with audio player</span><br>
-<br>
-Just use <span style="font-style: italic;">Player</span> class for
-work with audio player. Let’s look to public methods.<br>
-<br>
-<span style="font-style: italic;">void Player::initialize(Sound
-*target);</span> – Initialize the subsystem.<br>
-<span style="font-style: italic;">void Player::load(Audio *audio);</span>
-– Load audio.<br>
-<span style="font-style: italic;">void Player::play();</span> – Play
-current audio block and increase playing position.<br>
-<span style="font-style: italic;">void Player::loop();</span> – Play
-current audio block and increase playing position. Jump to start if
-don't have available audio block anymore.<br>
-<span style="font-style: italic;">bool Player::is_end() const;</span> –
-Return true if don't have available audio block anymore.<br>
-<span style="font-style: italic;">void Player::rewind_audio();</span> –
-Set playing position to start.<br>
-<br>
-</big>
-<h2><a class="mozTocH2" name="mozTocId553480"></a><big>Chapter 4. Mixer</big></h2>
-
-<big><br>
-<span style="text-decoration: underline;">Mixer</span><br>
-<br>
-Mixer let you control level of sound volume.<br>
-<br>
-<span style="text-decoration: underline;">Volume level</span><br>
-<br>
-Minimal sound volume level is 15. Maximum sound volume level is 255.<br>
-<br>
-<span style="text-decoration: underline;">Work with mixer</span><br>
-<br>
-Just use <span style="font-style: italic;">Mixer</span> class for work
-with mixer subsystem. Let’s look to public methods.<br>
-<br>
-<span style="font-style: italic;">void Mixer::initialize();</span> –
-Initialize the subsystem.<br>
-<span style="font-style: italic;">void Mixer::set_volume(const int
-volume);</span> – Set level of sound volume.<br>
-<span style="font-style: italic;">void Mixer::turn_on();</span> – Turn
-on sound.<br>
-<span style="font-style: italic;">void Mixer::turn_off();</span> – Turn
-off sound.<br>
-<span style="font-style: italic;">int Mixer::get_maximum() const;</span>
-– Return maximum level of sound volume.<br>
-<span style="font-style: italic;">int Mixer::get_minimum() const;</span>
-– Return minimum level of sound volume.<br>
-<span style="font-style: italic;">int Mixer::get_volume() const;</span>
-– Return current level of sound volume.<br>
-<br>
-</big>
-<h1><a class="mozTocH1" name="mozTocId912509"></a><big>Part 7. Internal
-details of the library subsystems</big></h1>
-
-<big><br>
-</big>
-<h2><a class="mozTocH2" name="mozTocId596077"></a><big>Chapter 1. A few
-words for a curious programmers</big></h2>
-
-<big><br>
-The library subsystems have a different internal structure. It hidden
-from you and you don’t have access to it. Do you want know about hiding
-things? Just read a next chapter.<br>
-<br>
-</big>
-<h2><a class="mozTocH2" name="mozTocId383677"></a><big>Chapter 2.
-Internal classes</big></h2>
-
-<big><br>
-Some classes designed for internal use only. Don’t touch them. What
-doing these strange classes?<br>
-<br>
-<span style="font-style: italic;">FPS</span> implement fps counter.<br>
-<span style="font-style: italic;">Render</span> implement frame-buffer
-render.<br>
-<br>
-</big>
-<h2><a class="mozTocH2" name="mozTocId445066"></a><big>Chapter 3.
-Low-level sound subsystem</big></h2>
-
-<big><br>
-Low-level sound subsystem work over <a href="http://www.opensound.com/">Open
-sound subsystem</a>. It is a standard sound subsystem in Dingux.<br>
-<br>
-</big>
-<h2><a class="mozTocH2" name="mozTocId214872"></a><big>Chapter 4. Base
-graphics subsystem</big></h2>
-
-<big><br>
-Base graphics subsystem work over frame-buffer. Base graphics subsystem
-active use back buffer. The back buffer is just array of pixels.<br>
-The pixel store in B5G6R5 format: 5 bits for blue component, 6 bits for
-green component, 5 bits for red component. A singe pixel represent by
-unsigned two-byte value. Shadow buffer is array of pixels too.<br>
-<br>
-</big>
-<h2><a class="mozTocH2" name="mozTocId509433"></a><big>Chapter 5. Input
-subsystem</big></h2>
-
-<big><br>
-<span style="text-decoration: underline;">Two state arrays</span><br>
-<br>
-Button states store in two state arrays: current state array and old
-state array. State array is just array of bytes.<br>
-<br>
-<span style="text-decoration: underline;">Button state</span><br>
-<br>
-The button states look as predefined constants.<br>
-<br>
-</big>
-<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
-
-  <tbody>
-    <tr>
-      <td style="vertical-align: top;"><big>State code<br>
-      </big></td>
-      <td style="vertical-align: top;"><big>Description<br>
-      </big></td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;"><big>GAMEPAD_RELEASE<br>
-      </big></td>
-      <td style="vertical-align: top;"><big>Button is released<br>
-      </big></td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top;"><big>GAMEPAD_PRESS<br>
-      </big></td>
-      <td style="vertical-align: top;"><big>Button is pressed<br>
-      </big></td>
-    </tr>
-  </tbody>
-</table>
-
-<big><br>
-</big>
-<h2><a class="mozTocH2" name="mozTocId949422"></a><big>Chapter 6. Base
-image subsystem</big></h2>
-
-<big><br>
-Base image subsystem active use internal image buffer. This buffer is
-very simple. It is just array of pixel. The special structure contain a
-singe pixel. Let’s look to this structure.<br>
-<br>
-<span style="font-style: italic;">struct IMG_Pixel</span><br style="font-style: italic;">
-<span style="font-style: italic;">{</span><br style="font-style: italic;">
-<span style="font-style: italic;">unsigned char blue:8;</span><br style="font-style: italic;">
-<span style="font-style: italic;">unsigned char green:8;</span><br style="font-style: italic;">
-<span style="font-style: italic;">unsigned char red:8;</span><br style="font-style: italic;">
-<span style="font-style: italic;">};</span><br>
-<br>
-</big>
-<h1><a class="mozTocH1" name="mozTocId152114"></a><big>Changelog</big></h1>
-
-<big><br>
-0.1 – Initial version.<br>
-0.2 – Game-pad support was added.<br>
-0.3 – 0.5 – Game-pad support was improved.<br>
-0.6 – System information subsystem was added.<br>
-0.7 – Base graphics subsystem was totally rewritten.<br>
-0.7.1 – 0.7.3 – Base graphic subsystem was improved.<br>
-0.7.4 – Small changes.<br>
-0.7.5 – Advanced graphics subsystem was added.<br>
-0.7.6 – Small bugs has been fixed.<br>
-0.7.7 – 0.7.8 – Small changes.<br>
-0.7.9 – A big bug in base graphic subsystem was fixed.<br>
-0.8 – Small changes.<br>
-0.8.1 – Render speed was increased.<br>
-0.8.2 – Advanced graphics subsystem was improved.<br>
-0.8.3 – Small changes.<br>
-0.8.4 – A big bug in base graphic subsystem was fixed.<br>
-0.8.5 – 0.8.6 – Small changes.<br>
-0.8.7 – 0.8.8 – Game-pad support was improved.<br>
-0.8.9 – Advanced graphics subsystem was improved.<br>
-0.9 – A small bug in system interaction subsystem was fixed.<br>
-0.9.1 – Small changes.<br>
-0.9.2 – Game-pad support was improved.<br>
-0.9.3 – System interaction subsystem was improved.<br>
-0.9.4 – Small changes.<br>
-0.9.5 – Geometric primitive subsystem was added.<br>
-0.9.5.1 – Geometric primitive subsystem was improved.<br>
-0.9.5.2 – 0.9.5.3 – Advanced graphics subsystem was improved.<br>
-0.9.5.4 – Small changes.<br>
-0.9.5.5 – Small changes in source code. Library documentation has been
-added.<br>
-0.9.5.6 – Base graphic subsystem was improved.<br>
-0.9.5.7 – 0.9.5.9 – Advanced graphics subsystem was improved.<br>
-0.9.6 – Small changes.<br>
-0.9.6.1 – Game-pad support was improved.<br>
-0.9.6.2 – Small changes.<br>
-0.9.6.3 – Project name has been changed.<br>
-0.9.6.4 – A big bug in Game-pad subsystem was fixed.<br>
-0.9.6.5 – Timer subsystem was added.<br>
-0.9.6.6 – System interaction subsystem was improved.<br>
-0.9.6.7 – Geometric primitive subsystem was improved.<br>
-0.9.6.8 – Collision subsystem was added.<br>
-0.9.6.9 – Geometric primitive subsystem was improved.<br>
-0.9.7 – Render speed was increased.<br>
-0.9.7.1 – Small changes.<br>
-0.9.7.2 – Base graphic subsystem was improved.<br>
-0.9.7.3 – Game-pad support was improved.<br>
-0.9.7.4 – Small changes.<br>
-0.9.7.5 – Geometric primitive subsystem was improved.<br>
-0.9.7.6 – 0.9.7.9 – Advanced graphics subsystem was improved.<br>
-0.9.8 – Collision subsystem was improved.<br>
-0.9.8.1 – Image loader was improved.<br>
-0.9.8.2 – Game-pad support was improved.<br>
-0.9.8.3 – 0.9.8.4 – Small changes.<br>
-0.9.8.5 – Memory subsystem was added.<br>
-0.9.8.6 – Small changes.<br>
-0.9.8.7 – System interaction subsystem was improved.<br>
-0.9.8.8 – Small changes.<br>
-0.9.8.9 – 0.9.9 – Image loader was improved.<br>
-0.9.9.1 – System interaction subsystem was improved.<br>
-0.9.9.2 – 0.9.9.3 – Small changes.<br>
-0.9.9.4 – Base graphics subsystem was improved.<br>
-0.9.9.5 – Low-level sound subsystem was added.<br>
-0.9.9.6 – 0.9.9.7 – Low-level sound subsystem was improved.<br>
-0.9.9.8 – Audio subsystem was added.<br>
-0.9.9.9 – 1.0 – Low-level sound subsystem was improved.<br>
-1.0.1 – Small bug was fixed.<br>
-1.0.2 – Low-level sound subsystem was improved.<br>
-1.0.3 – Audio subsystem was improved.<br>
-1.0.4 – Low-level sound subsystem was improved.<br>
-1.0.5 – Audio loader has been added.<br>
-1.0.6 – Audio playing subsystem was improved.<br>
-1.0.7 – 1.1 – Low-level sound subsystem was improved.<br>
-1.1.1 – 1.1.3 – Small changes.<br>
-1.1.4 – 1.1.5 – Game-pad support was improved.<br>
-1.1.6 – Low-level sound subsystem was improved.<br>
-1.1.7 – Small bug in low-level sound subsystem was fixed.<br>
-1.1.8 – 1.2 – Small changes.<br>
-1.2.1 – 1.2.5 – Low-level sound subsystem was improved.<br>
-1.2.6 – Small changes.<br>
-1.2.7 – Advanced graphics subsystem was improved.<br>
-1.2.8 – Source code was synced with Simple windows game framework 1.3.9.<br>
-1.2.9 – Base graphics subsystem was improved.<br>
-1.3 – Image loader was improved.<br>
-1.3.1 – Geometric primitive subsystem was improved.<br>
-1.3.2 – Advanced graphics subsystem was improved.<br>
-1.3.3 – Geometric primitive subsystem was improved.<br>
-1.3.4 – Image loader was improved. License has been changed.<br>
-1.3.5 – Image loader was improved.<br>
-1.3.6 – Background and sprite subsystems was added.<br>
-1.3.7 – Collision subsystems was improved.<br>
-1.3.8 – Sprite subsystems was improved.<br>
-1.3.9 – Text drawing subsystems was added.<br>
-1.4 – Text drawing subsystems was improved.<br>
-1.4.1 – 1.4.2 – Image loader was improved.<br>
-1.4.3 – Collision subsystems was improved.<br>
-1.4.4 – Background subsystems was improved.<br>
-1.4.5 – System interaction subsystem was improved.<br>
-1.4.6 – Source code was synced with Simple windows game framework 2.4.4.<br>
-1.4.7 – 1.4.8 – Game-pad support was improved.<br>
-1.4.9 – Source code was synced with Indie game framework 0.5.7.<br>
-1.5 – Render speed was increased.<br>
-1.5.1 – 1.5.6 – Small changes.<br>
-1.5.7 – Sound support was removed.<br>
-1.5.8 – Small changes.<br>
-1.5.9 – Collision subsystem was improved.<br>
-1.6 – 1.6.1 – Small changes.<br>
-1.6.2 – 1.6.3 – Sprite subsystem was improved.<br>
-1.6.4 – Background subsystem was improved.<br>
-1.6.5 – Sprite subsystem was improved.<br>
-1.6.6 – 1.6.9 – Render was improved.<br>
-1.7 – 1.7.2 – Small changes.<br>
-1.7.3 – Small bug in background subsystem was fixed.<br>
-1.7.4 – Source code was synced with Orthodox game framework 0.8.2.<br>
-1.7.5 – Source code was synced with Orthodox game framework 0.9.6.<br>
-1.7.6 – Source code was synced with Orthodox game framework 1.1.3.<br>
-1.7.7 – Small bug in text drawing subsystem was fixed.<br>
-1.7.8 – Source code was synced with Orthodox game framework 1.1.7.<br>
-1.7.9 – Source code was synced with Orthodox game framework 1.2.1.<br>
-1.8 – 1.8.5 – Render was improved.<br>
-1.8.6 – Small changes.<br>
-1.8.7 – Small bug was fixed.<br>
-1.8.8 – Source code was synced with Orthodox game framework 1.4.3.<br>
-1.8.9 – Source code was synced with Orthodox game framework 1.4.5.<br>
-1.9 – Source code was synced with Orthodox game framework 1.4.8.<br>
-1.9.1 – Source code was synced with Orthodox game framework 1.5.9.
-License has been changed.<br>
-1.9.2 – Source code was synced with Orthodox game framework 1.6.8.<br>
-1.9.3 – Source code was synced with Orthodox game framework 1.7.<br>
-1.9.4 – Memory usage was reduced.<br>
-19.5 – 1.9.6 – Small changes.<br>
-1.9.7 – Source code was synced with Orthodox game framework 1.8.<br>
-1.9.8 – Source code was synced with Orthodox game framework 1.8.1.<br>
-1.9.9 – Source code was synced with Orthodox game framework 1.8.3.<br>
-2.0 – Source code was synced with Orthodox game framework 1.8.6.<br>
-2.1 – Source code was synced with Orthodox game framework 1.9.6.<br>
-2.2 – Source code was synced with Orthodox game framework 2.1.<br>
-3.0 – Source code was synced with Orthodox game framework 3.1.<br>
-3.1 – Source code was synced with Orthodox game framework 3.2.2.<br>
-3.2 – Source code was synced with Orthodox game framework 3.3.<br>
-3.2.1 – Small changes.<br>
-3.2.2 – Source code was synced with Orthodox game framework 3.5.8.<br>
-3.2.3 – Source code was synced with Orthodox game framework 3.6.<br>
-3.2.4 – Source code was synced with Orthodox game framework 3.6.1.<br>
-3.2.5 – Source code was synced with Orthodox game framework 3.6.4.<br>
-3.2.6 – Source code was synced with Orthodox game framework 3.6.5.<br>
-3.2.7 – Source code was synced with Orthodox game framework 3.7.6.<br>
-3.2.8 – Source code was synced with Orthodox game framework 3.7.7.<br>
-3.2.9 – Source code was synced with Orthodox game framework 3.7.9.<br>
-3.3 – Source code was synced with Orthodox game framework 3.8.<br>
-3.3.1 – Source code was synced with Orthodox game framework 3.8.1.<br>
-3.3.2 – Source code was synced with Orthodox game framework 3.8.5.<br>
-3.3.3 – Source code was synced with Orthodox game framework 3.8.8.<br>
-3.3.4 – Source code was synced with Orthodox game framework 3.8.9.<br>
-3.3.5 – Source code was synced with Orthodox game framework 3.9.<br>
-3.3.6 – Source code was synced with Orthodox game framework 3.9.1.<br>
-3.3.7 – Source code was synced with Orthodox game framework 3.9.2.<br>
-3.3.8 – Source code was synced with Orthodox game framework 4.0.<br>
-3.3.9 – Source code was synced with Orthodox game framework 4.0.1.<br>
-3.4 – Source code was synced with Orthodox game framework 4.0.2.<br>
-3.4.1 – Source code was synced with Orthodox game framework 4.0.3.<br>
-3.4.2 – Source code was synced with Orthodox game framework 4.0.4.<br>
-3.4.3 – Source code was synced with Orthodox game framework 4.0.5.<br>
-3.4.4 – Source code was synced with Orthodox game framework 4.0.6.<br>
-3.4.5 – 3.4.7 – Small changes.<br>
-3.4.8 – Source code was synced with Orthodox game framework 4.0.7.<br>
-3.4.9 – 3.5 – Render performance was increased.<br>
-3.5.1 – 3.5.3 – Small changes.<br>
-3.5.4 – Base graphics subsystem was improved.<br>
-3.5.5 – 3.5.6 – Render was improved.<br>
-3.5.7 – 3.6 – Small changes.<br>
-3.6.1 – Source code was synced with Orthodox game framework 4.1.4.<br>
-3.6.2 – Project name was changed.<br>
-3.6.3 – 3.6.7 – Game-pad support was improved.<br>
-3.6.8 – Source code was synced with Neon game development kit 4.1.8.<br>
-3.6.9 – 3.7.8 – Game-pad support was improved.<br>
-3.7.9 – Small changes.<br>
-3.8 – 3.8.7 – Game-pad support was improved.<br>
-3.8.8 – Small bug was fixed.<br>
-3.8.9 – 3.9.3 – Small changes.<br>
-3.9.4 – Source code was synced with Neon game development kit 4.2.7.<br>
-3.9.5 – Battery subsystem was added.<br>
-3.9.6 – 3.9.7 – Small changes.<br>
-3.9.8 – Battery subsystem was improved.<br>
-3.9.9 – Small bug was fixed.<br>
-4.0 – Small changes.<br>
-4.0.1 – Battery subsystem was removed. Source code was synced with Neon
-game development kit 4.2.8.<br>
-4.0.2 – Small changes.<br>
-4.0.3 – Source code was synced with Neon game development kit 4.3.<br>
-4.0.4 – Source code was synced with Neon game development kit 4.3.2.<br>
-4.0.5 – Small changes.<br>
-4.0.6 – Source code was synced with Neon game development kit 4.3.3.<br>
-4.0.7 – Source code was synced with Neon game development kit 4.3.4.<br>
-4.0.8 – Source code was synced with Gopher game development kit 0.5.8.<br>
-4.0.9 – Source code was synced with Gopher game development kit 0.5.9.<br>
-4.1 – Source code was synced with Gopher game development kit 0.6.<br>
-4.1.1 – Source code was synced with Gopher game development kit 0.6.1.<br>
-4.1.2 – Source code was synced with Gopher game development kit 0.6.2.<br>
-4.1.3 – Source code was synced with Gopher game development kit 0.6.3.<br>
-4.1.4 – Source code was synced with Gopher game development kit 0.6.4.<br>
-4.2 – Source code was synced with Gopher game development kit 0.9.8.<br>
-4.2.1 – Small bug was fixed.<br>
-4.2.2 – 4.2.3 – Small changes.<br>
-4.3 – Source code was synced with Gopher game development kit 1.2.1.<br>
-4.3.1 – Source code was synced with Gopher game development kit 1.2.2.<br>
-4.3.2 – Source code was synced with Gopher game development kit 1.2.3.<br>
-4.3.3 – Source code was synced with Gopher game development kit 1.2.4.<br>
-4.3.4 – Source code was synced with Neon game development kit 4.3.5.<br>
-4.3.5 – Source code was synced with Neon game development kit 4.3.6.<br>
-4.3.6 – Source code was synced with Neon game development kit 4.4.1.<br>
-4.3.7 – Source code was synced with Neon game development kit 4.4.4.<br>
-4.3.8 – Source code was synced with Neon game development kit 4.4.5.<br>
-4.3.9 – Small changes in render.<br>
-4.4 – Small changes in game-pad subsystem.<br>
-4.4.1 – Small changes in audio loader.<br>
-4.4.2 – Small changes in mixer subsystem.<br>
-4.4.3 – Small changes in display back-light subsystem.<br>
-4.4.4 – Small changes in audio playing subsystem.<br>
-4.4.5 – Small changes in low-level sound subsystem.<br>
-4.4.6 – Small changes in the library core.<br>
-4.4.7 – Small bug was fixed.<br>
-4.4.8 – Source code was synced with Neon game development kit 4.4.8.<br>
-4.4.9 – Source code was synced with Neon game development kit 4.4.9.<br>
-4.5 – Source code was synced with Neon game development kit 4.5.<br>
-4.5.1 – Source code was synced with Neon game development kit 4.5.1.<br>
-4.5.2 – Source code was synced with Neon game development kit 4.5.2.<br>
-4.5.3 – Source code was synced with Neon game development kit 4.5.3.<br>
-4.5.4 – Source code was synced with Neon game development kit 4.5.4.<br>
-4.5.5 – Small changes in game-pad subsystem.<br>
-4.5.6 – Small changes in audio loader.<br>
-4.5.7 – Small changes in low-level sound subsystem.<br>
-4.5.8 – Small changes in audio playing subsystem.<br>
-4.5.9 – Source code was synced with Neon game development kit 4.6.1.<br>
-4.6 – Source code was synced with Neon game development kit 4.6.5.<br>
-4.6.1 – Source code was synced with Neon game development kit 4.6.6.<br>
-4.6.2 – Source code was synced with Neon game development kit 4.6.7.<br>
-4.6.3 – Render speed was increased.<br>
-4.6.4 – Source code was synced with Neon game development kit 4.6.8.<br>
-4.6.5 – Source code was synced with Neon game development kit 4.7.8.<br>
-4.6.6 – Source code was synced with Neon game development kit 4.8.<br>
-4.6.7 – Source code was synced with Neon game development kit 4.8.1.<br>
-4.6.7.1 – Documentation was converted to HTML format.<br>
-4.6.8 – Small changes.<br>
-</body></html>
+    <big><br>
+    </big>
+    <h2><a class="mozTocH2" name="mozTocId647026"></a><big>Chapter 4.
+        Compilation</big></h2>
+    <big><br>
+      Disable all compiler optimization. It needs for correct work. See GCC
+      documentation for more information about compiler optimization.<br>
+      <br>
+    </big>
+    <h2><a class="mozTocH2" name="mozTocId59157"></a><big>Chapter 5.
+        Library name-space</big></h2>
+    <big><br>
+      All library classes declared in <span style="font-style: italic;">DINGUXGDK</span>
+      name-space.<br>
+      <br>
+    </big>
+    <h2><a class="mozTocH2" name="mozTocId239028"></a><big>Chapter 6.
+        License</big></h2>
+    <big><br>
+      <span style="text-decoration: underline;">Dingux game development kit
+        license</span><br>
+      <br>
+      <br>
+      Copyright (C) 2015-2020 Popov Evgeniy Alekseyevich<br>
+      This software is provided 'as-is', without any express or implied
+      warranty. In no event will the authors be held liable for any damages
+      arising from the use of this software. Permission is granted to anyone
+      to use this software for any purpose, including commercial
+      applications, and to alter it and redistribute it freely, subject to
+      the following restrictions:<br>
+      <br>
+      <br>
+      1. The origin of this software must not be misrepresented; you must not<br>
+      claim that you wrote the original software. If you use this software<br>
+      in a product, an acknowledgment in the product documentation would be<br>
+      appreciated but is not required.<br>
+      2. Altered source versions must be plainly marked as such, and must not
+      be<br>
+      misrepresented as being the original software.<br>
+      3. This notice may not be removed or altered from any source
+      distribution.<br>
+      <br>
+      <span style="text-decoration: underline;">Third–party code license</span><br>
+      <br>
+      Pixel packing algorithm bases on code from <a href="http://www.svgalib.org">SVGALib</a>.
+      SVGALib is public domain.<br>
+      <br>
+    </big>
+    <h1><a class="mozTocH1" name="mozTocId489599"></a><big>Part 2. Base
+        things</big></h1>
+    <big><br>
+    </big>
+    <h2><a class="mozTocH2" name="mozTocId927227"></a><big>Chapter 1.
+        Coordinate system</big></h2>
+    <big><br>
+      Simple windows game framework use standard screen coordinate system.
+      Coordinates start at top-left corner of screen. Look to this picture
+      for understand it.<br>
+      <br>
+      <img style="width: 107px; height: 111px;" alt="" src="coordinate_system.png"><br>
+      <br>
+    </big>
+    <h2><a class="mozTocH2" name="mozTocId705363"></a><big>Chapter 2. A
+        game cycle</big></h2>
+    <big><br>
+      What is main point in you game? A game cycle. You can see structure of
+      typical game cycle below.<br>
+      <br>
+      <img style="width: 357px; height: 316px;" alt="" src="game_cycle.png"><br>
+      <br>
+      <br>
+      <br>
+    </big>
+    <h1><a class="mozTocH1" name="mozTocId13479"></a><big>Part 3. Graphics</big></h1>
+    <big><br>
+    </big>
+    <h2><a class="mozTocH2" name="mozTocId981471"></a><big>Chapter 1.
+        Virtual surface</big></h2>
+    <big><br>
+      <span style="text-decoration: underline;">Introduce to virtual surface</span><br>
+      <br>
+      Computer graphics is cool. A screen can show you many amazing things.
+      But all amazing things contain pixels. Virtual surface let you draw the
+      pixels.<br>
+      <br>
+      <span style="text-decoration: underline;">Frame resolution</span><br>
+      <br>
+      Frame in virtual surface have a fixed resolution. It equals to screen
+      resolution by default.<br>
+      <br>
+      <span style="text-decoration: underline;">Work with virtual surface</span><br>
+      <br>
+      <span style="font-style: italic;">Frame</span> class provide simple
+      access virtual surface. Don’t use it directly. Let’s look to public
+      methods.<br>
+      <br>
+      <span style="font-style: italic;">unsigned short int*
+        Frame::get_buffer();</span> – Return handle to surface buffer.<br>
+      <span style="font-style: italic;">size_t Frame::get_pixels() const;</span>
+      – Return amount of pixels in the buffer.<br>
+      <span style="font-style: italic;">void Frame::clear_screen();</span> –
+      Clear the surface. Fill it by black color.<br>
+      <span style="font-style: italic;">void Frame::draw_pixel(const unsigned
+        long int x,const unsigned long int y, const unsigned char red,const
+        unsigned char green, const unsigned char blue);</span> – Draw a pixel
+      to the surface.<br>
+      <span style="font-style: italic;">unsigned long int
+        Frame::get_frame_width() const;</span> – Return the frame width in
+      pixels.<br>
+      <span style="font-style: italic;">unsigned long int
+        Frame::get_frame_height() const;</span> – Return the frame height in
+      pixels.<br>
+      <span style="font-style: italic;">void Frame::save();</span> – Save
+      surface content to shadow buffer.<br>
+      <span style="font-style: italic;">void Frame::restore();</span> –
+      Restore surface content from shadow buffer.<br>
+      <span style="font-style: italic;">void Frame::restore(const unsigned
+        long int x,const unsigned long int y,const unsigned long int
+        width,const unsigned long int height);</span> – Copy piece of shadow
+      buffer to surface.<br>
+      <br>
+    </big>
+    <h2><a class="mozTocH2" name="mozTocId636407"></a><big>Chapter 2. Plane</big></h2>
+    <big><br>
+      <span style="text-decoration: underline;">A few words about planes</span><br>
+      <br>
+      Plane is surface with custom defined size. Image from plane will scale
+      when transfer to virtual surface.<br>
+      <br>
+      <span style="text-decoration: underline;">Work with planes</span><br>
+      <br>
+      <span style="font-style: italic;">Plane</span> class provide access to
+      the plane subsystem. It is derived from Frame class. Let’s look on
+      public methods.<br>
+      <br>
+      <span style="font-style: italic;">void Plane::create_plane(const
+        unsigned long int width,const unsigned long int height,const unsigned
+        long int surface_width,const unsigned long int surface_height, unsigned
+        short int *surface_buffer);</span> – Create the plane.<br>
+      <span style="font-style: italic;">void Plane::transfer();</span> –
+      Transfer image from plane to virtual surface.<br>
+      <span style="font-style: italic;">Plane* Plane::get_handle();</span> –
+      Return the handle to the plane.<br>
+      <br>
+    </big>
+    <h2><a class="mozTocH2" name="mozTocId436473"></a><big>Chapter 3. Base
+        graphics subsystem</big></h2>
+    <big><br>
+      <span style="text-decoration: underline;">Introduce to base graphics
+        subsystem</span><br>
+      <br>
+      Base graphics subsystem rendering game scene. It works together with
+      virtual surface.<br>
+      <br>
+      <span style="text-decoration: underline;">Work with base graphics
+        subsystem</span><br>
+      <br>
+      <span style="font-style: italic;">Screen</span> class provide access to
+      the base graphic subsystem. It is derived from Frame class. Let’s look
+      on public methods.<br>
+      <br>
+      <span style="font-style: italic;">void Screen::initialize();</span> –
+      Initialize the subsystem.<br>
+      <span style="font-style: italic;">void Screen::update();</span> – Show
+      current back buffer content on screen.<br>
+      <span style="font-style: italic;">const unsigned long int
+        Screen::get_width() const;</span> – Return the screen width in pixels.<br>
+      <span style="font-style: italic;">const unsigned long int
+        Screen::get_height() const;</span> – Return the screen height in pixels.<br>
+      <span style="font-style: italic;">Screen* Screen::get_handle();</span>
+      – Return the handle to base graphics subsystem object.<br>
+      <span style="font-style: italic;">unsigned long int Screen::get_fps()
+        const;</span> – Return current fps value.<br>
+      <span style="font-style: italic;">unsigned long int Screen::get_color()
+        const;</span> – Return current color in bits per pixel.<br>
+      <br>
+    </big>
+    <h2><a class="mozTocH2" name="mozTocId857731"></a><big>Chapter 4.
+        Graphic primitives</big></h2>
+    <big><br>
+      Drawing a pixel is funny action. But you need more. What about graphic
+      primitives?<br>
+      <span style="font-style: italic;">Primitive</span> class can draw it.
+      It is simple class with a few methods.<br>
+      <br>
+      <span style="font-style: italic;">void Primitive::initialize(Screen
+        *Screen);</span> – Initialize the graphic primitive subsystem.<br>
+      <span style="font-style: italic;">void Primitive::set_color(const
+        unsigned char red, const unsigned char green, const unsigned char blue);</span>
+      – Set the current color. It is black by default.<br>
+      <span style="font-style: italic;">void Primitive::draw_line(const
+        unsigned long int x1,const unsigned long int y1,const unsigned long int
+        x2,const unsigned long int y2);</span> – Just draw a line.<br>
+      <span style="font-style: italic;">void Primitive::draw_rectangle(const
+        unsigned long int x,const unsigned long int y,const unsigned long int
+        width,const unsigned long int height);</span> – Draw a simple rectangle.<br>
+      <span style="font-style: italic;">void
+        Primitive::draw_filled_rectangle(const unsigned long int x,const
+        unsigned long int y,const unsigned long int width);</span> – Draw a
+      filled rectangle.<br>
+      <br>
+    </big>
+    <h2><a class="mozTocH2" name="mozTocId881761"></a><big>Chapter 5. Base
+        image subsystem</big></h2>
+    <big><br>
+      <span style="text-decoration: underline;">Very important subsystems</span><br>
+      <br>
+      Base image subsystem is very important. All another image subsystem
+      working over base image subsystem.<br>
+      <br>
+      <span style="text-decoration: underline;">Mirror type</span><br>
+      <br>
+      Mirror type codes look as predefined constants. You can see it bellow.<br>
+      <br>
+    </big>
+    <table style="text-align: left; width: 100%;" cellspacing="2" cellpadding="2"
+      border="1">
+      <tbody>
+        <tr>
+          <td style="vertical-align: top;"><big>Mirror type code<br>
+            </big></td>
+          <td style="vertical-align: top;"><big>Description<br>
+            </big></td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top;"><big>MIRROR_HORIZONTAL<br>
+            </big></td>
+          <td style="vertical-align: top;"><big>Horizontal mirror<br>
+            </big></td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top;"><big>MIRROR_VERTICAL<br>
+            </big></td>
+          <td style="vertical-align: top;"><big>Vertical mirror<br>
+            </big></td>
+        </tr>
+      </tbody>
+    </table>
+    <big><br>
+      <span style="text-decoration: underline;">Work with advanced graphics</span><br>
+      <br>
+      <span style="font-style: italic;">Surface</span> class provide simple
+      access to base image subsystem. Don’t use it directly. Let’s look to
+      public methods.<br>
+      <br>
+      <span style="font-style: italic;">void Surface::initialize(Screen
+        *Screen);</span> – Initialize the subsystem.<br>
+      <span style="font-style: italic;">IMG_Pixel *Surface::get_image();</span>
+      – Return handle to image buffer.<br>
+      <span style="font-style: italic;">size_t Surface::get_length() const;</span>
+      – Return length of image buffer in bytes.<br>
+      <span style="font-style: italic;">unsigned long int
+        Surface::get_image_width() const;</span> – Return image width in pixels.<br>
+      <span style="font-style: italic;">unsigned long int
+        Surface::get_image_height() const;</span> – Return image height in
+      pixels.<br>
+      <span style="font-style: italic;">void Surface::resize_image(const
+        unsigned long int new_width, const unsigned long int new_height);</span>
+      – Resize current image.<br>
+      <span style="font-style: italic;">void Surface::mirror_image(const
+        MIRROR_TYPE kind);</span> – Do mirror the current image.<br>
+      <br>
+    </big>
+    <h2><a class="mozTocH2" name="mozTocId889327"></a><big>Chapter 6.
+        Advanced image subsystem</big></h2>
+    <big><br>
+      <span style="text-decoration: underline;">Very important subsystems</span><br>
+      <br>
+      Advanced image subsystem is extended version of base image subsystem.
+      Background and sprite subsystems working over advanced image subsystem.<br>
+      <br>
+      <span style="text-decoration: underline;">Work with advanced graphics</span><br>
+      <br>
+      <span style="font-style: italic;">Canvas</span> class provide simple
+      access to advanced image subsystem. It is derived from Surface class.
+      Don’t use it directly. Let’s look to public methods.<br>
+      <br>
+      <span style="font-style: italic;">void Canvas::set_frames(const
+        unsigned long int amount);</span> – Set amounts of frames in scrolling
+      background or animated sprite.<br>
+      <span style="font-style: italic;">unsigned long int
+        Canvas::get_frames() const;</span> – Return amount of frames in
+      scrolling background or animated sprite.<br>
+      <span style="font-style: italic;">unsigned long int Canvas::get_frame()
+        const;</span> – Return current frame in scrolling background or
+      animated sprite.<br>
+      <span style="font-style: italic;">void Canvas::load_image(Image
+        &amp;buffer);</span> – Load an image from memory buffer. Replace
+      current image if exist.<br>
+      <br>
+    </big>
+    <h2><a class="mozTocH2" name="mozTocId678026"></a><big>Chapter 7.
+        Background</big></h2>
+    <big><br>
+      <span style="text-decoration: underline;">Level decoration</span><br>
+      <br>
+      Background is a big image. It like decoration in theater stage. Any
+      game has a background. There are two kind of background: normal
+      background and scrolling background. The scrolling background is a big
+      image with few frames. Horizontal orientated scrolling background like
+      horizontal orientated photo ribbon. Vertical orientated scrolling
+      background like vertical orientated photo ribbon.<br>
+      <br>
+      <span style="text-decoration: underline;">Background types</span><br>
+      <br>
+      Background types codes look as predefined constants. You can see it
+      bellow.<br>
+      <br>
+    </big>
+    <table style="text-align: left; width: 100%;" cellspacing="2" cellpadding="2"
+      border="1">
+      <tbody>
+        <tr>
+          <td style="vertical-align: top;"><big>Background type<br>
+            </big></td>
+          <td style="vertical-align: top;"><big>Description<br>
+            </big></td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top;"><big>NORMAL_BACKGROUND<br>
+            </big></td>
+          <td style="vertical-align: top;"><big>Normal background<br>
+            </big></td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top;"><big>HORIZONTAL_BACKGROUND<br>
+            </big></td>
+          <td style="vertical-align: top;"><big>Horizontal scrolling
+              background<br>
+            </big></td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top;"><big>VERTICAL_BACKGROUND<br>
+            </big></td>
+          <td style="vertical-align: top;"><big>Vertical scrolling
+              background<br>
+            </big></td>
+        </tr>
+      </tbody>
+    </table>
+    <big><br>
+      <span style="text-decoration: underline;">Work with background</span><br>
+      <br>
+      Just use <span style="font-style: italic;">Background</span> class for
+      work with background. It is derived from Canvas. Let’s look to public
+      methods.<br>
+      <br>
+      <span style="font-style: italic;">unsigned long int
+        Background::get_width() const;</span> – Return background width in
+      pixels.<br>
+      <span style="font-style: italic;">unsigned long int
+        Background::get_height() const;</span> – Return background height in
+      pixels.<br>
+      <span style="font-style: italic;">void Background::set_target(const
+        unsigned long int target);</span> – Set target frame in scrolling
+      background.<br>
+      <span style="font-style: italic;">void Background::step();</span> –
+      Increase number of target frame in scrolling background. Set it to 1 if
+      number of target frame more than amount of frames.<br>
+      <span style="font-style: italic;">void Background::set_kind(const
+        BACKGROUND_TYPE target);</span> – Set background type.<br>
+      <span style="font-style: italic;">void Background::draw_background();</span>
+      – Draw a background.<br>
+      <br>
+      <span style="text-decoration: underline;">Important notes</span><br style="text-decoration: underline;">
+      <br>
+      Always call <span style="font-style: italic;">set_kind</span> method
+      after load background image. Always call <span style="font-style: italic;">set_frames</span>
+      method before call <span style="font-style: italic;">set_kind</span>
+      method if you will use
+      scrolling background.<br>
+      <br>
+    </big>
+    <h2><a class="mozTocH2" name="mozTocId104290"></a><big>Chapter 8.
+        Sprites</big></h2>
+    <big><br>
+      <span style="text-decoration: underline;">Small important thing</span><br>
+      <br>
+      A sprite is a small transparent image. It useful for many things:
+      enemies, bonuses, etc…<br>
+      <br>
+      <span style="text-decoration: underline;">Sprite types</span><br>
+      <br>
+      There are two kinds of sprites: normal sprites and strip. The strip is
+      animated sprite. Do you remember analog camera? Strip look like photo
+      ribbon. Horizontal strip look like the horizontal orientated photo
+      ribbon. Vertical strip look like the vertical orientated photo ribbon.<br>
+      <br>
+      <span style="text-decoration: underline;">Some words about sprite
+        transparency</span><br>
+      <br>
+      Some pixel will be ignored. Ignored pixels have a transparent color.
+      How to determinate it? The transparent color is color of first pixel.
+      Transparent mode is enabled by default.<br>
+      <br>
+      <span style="text-decoration: underline;">Sprite type flags</span><br>
+      <br>
+      Sprite types codes look as predefined constants. You can see it bellow.<br>
+      <br>
+    </big>
+    <table style="text-align: left; width: 100%;" cellspacing="2" cellpadding="2"
+      border="1">
+      <tbody>
+        <tr>
+          <td style="vertical-align: top;"><big>Sprite type<br>
+            </big></td>
+          <td style="vertical-align: top;"><big>Description<br>
+            </big></td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top;"><big>SINGLE_SPRITE<br>
+            </big></td>
+          <td style="vertical-align: top;"><big>Normal sprite<br>
+            </big></td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top;"><big>HORIZONTAL_STRIP<br>
+            </big></td>
+          <td style="vertical-align: top;"><big>Horizontal strip<br>
+            </big></td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top;"><big>VERTICAL_STRIP<br>
+            </big></td>
+          <td style="vertical-align: top;"><big>Vertical strip<br>
+            </big></td>
+        </tr>
+      </tbody>
+    </table>
+    <big><br>
+      <span style="text-decoration: underline;">Work with sprites</span><br>
+      <br>
+      Just use <span style="font-style: italic;">Sprite</span> class for
+      work with a sprite. It is derived from Canvas. Let’s look to public
+      methods.<br>
+      <br>
+      <span style="font-style: italic;">void Sprite::load_sprite(Image
+        &amp;buffer,const SPRITE_TYPE kind,const unsigned long int frames);</span>
+      – Load a sprite from memory buffer and set sprite setting.<br>
+      <span style="font-style: italic;">void Sprite::set_target(const
+        unsigned long int target);</span> – Set target frame in animated sprite.<br>
+      <span style="font-style: italic;">void Sprite::step();</span> –
+      Increase number of target frame in strip. Set it to 1 if number of
+      target frame more than amount of frames.<br>
+      <span style="font-style: italic;">void Sprite::set_kind(const
+        SPRITE_TYPE target);</span> – Set sprite type.<br>
+      <span style="font-style: italic;">SPRITE_TYPE Sprite::get_kind() const;</span>
+      – Get sprite type.<br>
+      <span style="font-style: italic;">void Sprite::set_transparent(const
+        bool enabled);</span> – Enable or disable transparent mode.<br>
+      <span style="font-style: italic;">bool Sprite::get_transparent() const;</span>
+      – Return true if transparent mode is enabled.<br>
+      <span style="font-style: italic;">void Sprite::set_x(const unsigned
+        long int x);</span> – Set x-coordinate of the sprite position.<br>
+      <span style="font-style: italic;">void Sprite::set_y(const unsigned
+        long int y);</span> – Set y-coordinate of the sprite position.<br>
+      <span style="font-style: italic;">void Sprite::increase_x(const
+        unsigned long int increment);</span> – Increase x-coordinate of the
+      current sprite position.<br>
+      <span style="font-style: italic;">void Sprite::decrease_x(const
+        unsigned long int decrement);</span> – Decrease x-coordinate of the
+      current sprite position.<br>
+      <span style="font-style: italic;">void Sprite::increase_y(const
+        unsigned long int increment);</span> – Increase y-coordinate of the
+      current sprite position.<br>
+      <span style="font-style: italic;">void Sprite::decrease_y(const
+        unsigned long int decrement);</span> – Decrease y-coordinate of the
+      current sprite position.<br>
+      <span style="font-style: italic;">unsigned long int Sprite::get_x()
+        const;</span> – Return the x position of the sprite.<br>
+      <span style="font-style: italic;">unsigned long int Sprite::get_y()
+        const;</span> – Return the y position of the sprite.<br>
+      <span style="font-style: italic;">unsigned long int Sprite::get_width()
+        const;</span> – Return the width of the sprite.<br>
+      <span style="font-style: italic;">unsigned long int
+        Sprite::get_height() const;</span> – Return the height of the sprite.<br>
+      <span style="font-style: italic;">Sprite* Sprite::get_handle();</span>
+      – Return the handle to sprite object.<br>
+      <span style="font-style: italic;">Collision_Box Sprite::get_box() const;</span>
+      – Return collision related information.<br>
+      <span style="font-style: italic;">void Sprite::clone(Sprite *target);</span>
+      – Create copy of exist sprite.<br>
+      <span style="font-style: italic;">void Sprite::set_position(const
+        unsigned long int x, const unsigned long int y);</span> – Set sprite
+      position.<br>
+      <span style="font-style: italic;">void Sprite::draw_sprite();</span> –
+      Draw a sprite.<br>
+      <span style="font-style: italic;">void Sprite::draw_sprite(const
+        unsigned long int x, const unsigned long int y);</span> – Set sprite
+      position and draw it.<br>
+      <br>
+      <span style="text-decoration: underline;">Important notes</span><br>
+      <br>
+      Always call <span style="font-style: italic;">set_kind</span> method
+      after load sprite image. Always call <span style="font-style: italic;">set_frames</span>
+      method before call <span style="font-style: italic;">set_kind</span>
+      method if you will use animated sprite. Also you can use <span style="font-style: italic;">load_sprite</span>
+      method instead calling <span style="font-style: italic;">set_kind</span>
+      method.<br>
+      <br>
+    </big>
+    <h2><a class="mozTocH2" name="mozTocId443325"></a><big>Chapter 9.
+        Tile-set</big></h2>
+    <big><br>
+      <span style="text-decoration: underline;">Some words about complex
+        backgrounds</span><br>
+      <br>
+      Tile-set is very useful thing for constructing complex background. Tile
+      is a small non-transparent image. Each tile have fixed size. Tile-set
+      is matrix of tiles. Look to this picture for understand it.<br>
+      <br>
+      <img style="width: 380px; height: 249px;" alt="" src="tileset.png"><br>
+      <br>
+      <span style="text-decoration: underline;">Rows and columns</span><br>
+      <br>
+      First row index is 0. Last row index is row amount-1. First column
+      index is 0. Last column index is column amount-1.<br>
+      <br>
+      <span style="text-decoration: underline;">Work with tile-set subsystem</span><br>
+      <br>
+      <span style="font-style: italic;">Tileset</span> class provide access
+      to the tile-set subsystem. It is derived from <span style="font-style: italic;">Surface</span>
+      class. Let’s look on public
+      methods.<br>
+      <br>
+      <span style="font-style: italic;">unsigned long int
+        Tileset::get_tile_width() const;</span> – Return tile width in pixels.<br>
+      <span style="font-style: italic;">unsigned long int
+        Tileset::get_tile_height() const;</span> – Return tile height in pixels.<br>
+      <span style="font-style: italic;">unsigned long int Tileset::get_rows()
+        const;</span> – Return amount of rows.<br>
+      <span style="font-style: italic;">unsigned long int
+        Tileset::get_columns() const;</span> – Return amount of columns.<br>
+      <span style="font-style: italic;">void Tileset::select_tile(const
+        unsigned long int row,const unsigned long int column);</span> – Select
+      target tile.<br>
+      <span style="font-style: italic;">void Tileset::draw_tile(const
+        unsigned long int x,const unsigned long int y);</span> – Draw selected
+      tile.<br>
+      <span style="font-style: italic;">void Tileset::load_tileset(Image
+        &amp;buffer,const unsigned long int row_amount,const unsigned long int
+        column_amount);</span> – Load a tile-set.<br>
+      <br>
+    </big>
+    <h2><a class="mozTocH2" name="mozTocId804597"></a><big>Chapter 10. Text</big></h2>
+    <big><br>
+      <span style="text-decoration: underline;">How draw a text?</span><br>
+      <br>
+      Just use text subsystem for draw a text. This subsystem need a font for
+      text drawing. You must load a font before start draw the text. The font
+      is just horizontal strip with 128 frames.<br>
+      <br>
+      <span style="text-decoration: underline;">Valid characters</span><br>
+      <br>
+      You can use only standard ASCII characters for draw the text.<br>
+      <br>
+      <span style="text-decoration: underline;">Work with text</span><br>
+      <br>
+      <span style="font-style: italic;">Text</span> class provide simple
+      interface to text subsystem. Let’s look to public methods.<br>
+      <br>
+      <span style="font-style: italic;">void Text::set_position(const
+        unsigned long int x,const unsigned long int y);</span> – Set output
+      position.<br>
+      <span style="font-style: italic;">void Text::load_font(Sprite *font);</span>
+      – Load a font.<br>
+      <span style="font-style: italic;">void Text::draw_character(const char
+        target);</span> – Draw single character at current position.<br>
+      <span style="font-style: italic;">void Text::draw_text(const char
+        *text);</span> – Draw text at current position.<br>
+      <span style="font-style: italic;">void Text::draw_character(const
+        unsigned long int x,const unsigned long int y,const char target);</span>
+      – Draw single character at specific position.<br>
+      <span style="font-style: italic;">void Text::draw_text(const unsigned
+        long int x,const unsigned long int y,const char *text);</span> – Draw
+      text at specific position.<br>
+      <br>
+    </big>
+    <h2><a class="mozTocH2" name="mozTocId51687"></a><big>Chapter 11.
+        Loading an images</big></h2>
+    <big><br>
+      <span style="text-decoration: underline;">Load an image from a files</span><br>
+      <br>
+      Use image loader for load an image from a file. <span style="font-style: italic;">Image</span>
+      class provide simple access
+      to image loader. It is very simple class with few methods.<br>
+      <br>
+      <span style="font-style: italic;">void Image::load_tga(const char
+        *name);</span> – Load a Truevision TGA image.<br>
+      <span style="font-style: italic;">void Image::load_pcx(const char
+        *name);</span> – Load a ZSoft PC Paintbrush image.<br>
+      <span style="font-style: italic;">unsigned long int Image::get_width()
+        const;</span> – Return width of current image.<br>
+      <span style="font-style: italic;">unsigned long int Image::get_height()
+        const;</span> – Return height of current image.<br>
+      <span style="font-style: italic;">size_t Image::get_length() const;</span>
+      – Return length in bytes of image buffer.<br>
+      <span style="font-style: italic;">unsigned char *Image::get_data();</span>
+      – Return handle to image buffer.<br>
+      <span style="font-style: italic;">void Image::destroy_image();</span> –
+      Destroy current image and free image buffer.<br>
+      <br>
+      <span style="text-decoration: underline;">Important remark</span><br>
+      <br>
+      New image replace current image if current image already exist.<br>
+      <br>
+      <span style="text-decoration: underline;">Supported format</span><br>
+      <br>
+      All loading images must have correct specification. You can see list of
+      supported format below.<br>
+      <br>
+    </big>
+    <table style="text-align: left; width: 100%;" cellspacing="2" cellpadding="2"
+      border="1">
+      <tbody>
+        <tr>
+          <td style="vertical-align: top;"><big>Format<br>
+            </big></td>
+          <td style="vertical-align: top;"><big>Color<br>
+            </big></td>
+          <td style="vertical-align: top;"><big>Compression<br>
+            </big></td>
+          <td style="vertical-align: top;"><big>Palette<br>
+            </big></td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top;"><big>Truevision TGA image<br>
+            </big></td>
+          <td style="vertical-align: top;"><big>24 bit<br>
+            </big></td>
+          <td style="vertical-align: top;"><big>None, RLE<br>
+            </big></td>
+          <td style="vertical-align: top;"><big>Not present<br>
+            </big></td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top;"><big>ZSoft PC Paintbrush<br>
+            </big></td>
+          <td style="vertical-align: top;"><big>24 bit<br>
+            </big></td>
+          <td style="vertical-align: top;"><big>RLE<br>
+            </big></td>
+          <td style="vertical-align: top;"><big>Not present<br>
+            </big></td>
+        </tr>
+      </tbody>
+    </table>
+    <big><br>
+      <span style="text-decoration: underline;">Recommend software</span><br>
+      <br>
+      You can use wide range of graphics software for convert you images to
+      correct format. I recommend use <a href="https://www.gimp.org">GIMP</a>
+      for do it. It is powerful open source and cross-platform image editor.<br>
+      <br>
+    </big>
+    <h1><a class="mozTocH1" name="mozTocId983100"></a><big>Part 4. Game
+        specific things</big></h1>
+    <big><br>
+    </big>
+    <h2><a class="mozTocH2" name="mozTocId1365"></a><big>Chapter 1.
+        Collision</big></h2>
+    <big><br>
+      <span style="text-decoration: underline;">Very important thing for any
+        game</span><br>
+      <br>
+      What is very important thing for a video games? A collision.<br>
+      <br>
+      <span style="text-decoration: underline;">Collision detail</span><br>
+      <br>
+      Collision detector using bounding box collision method for detect
+      collision. Collision related information represent by special
+      structure. Let me introduce it.<br>
+      <br>
+      <span style="font-style: italic;">struct Collision_Box</span><br style="font-style: italic;">
+      <span style="font-style: italic;">{</span><br style="font-style: italic;">
+      <span style="font-style: italic;">unsigned long int x:32;</span><br style="font-style: italic;">
+      <span style="font-style: italic;">unsigned long int y:32;</span><br style="font-style: italic;">
+      <span style="font-style: italic;">unsigned long int width:32;</span><br style="font-style: italic;">
+      <span style="font-style: italic;">unsigned long int height:32;</span><br style="font-style: italic;">
+      <span style="font-style: italic;">};</span><br>
+      <br style="text-decoration: underline;">
+      <span style="text-decoration: underline;">Work with collision detector</span><br>
+      <br>
+      <span style="font-style: italic;">Collision</span> class provide easy
+      access to collision detector. It is very simple class with few methods.
+      Let’s look to public methods.<br>
+      <br>
+      <span style="font-style: italic;">void Collision::set_target(const
+        Box_Collision &amp;first_target,const Box_Collision &amp;second_target);</span>
+      – Set targets for collision detector.<br>
+      <span style="font-style: italic;">bool
+        Collision::check_horizontal_collision() const;</span> – Return true if
+      horizontal collision between two objects is accepted.<br>
+      <span style="font-style: italic;">bool
+        Collision::check_vertical_collision() const;</span> – Return true if
+      vertical collision between two objects is accepted.<br>
+      <span style="font-style: italic;">bool Collision::check_collision()
+        const;</span> – Return true if horizontal or vertical collision between
+      two objects is accepted.<br>
+      <span style="font-style: italic;">Collision_Box
+        Collision::generate_box(const unsigned long int x,const unsigned long
+        int y,const unsigned long int width,const unsigned long int height)
+        const;</span> – Generate collision related information from the object
+      properties.<br>
+      <br>
+    </big>
+    <h2><a class="mozTocH2" name="mozTocId414110"></a><big>Chapter 2. Timer</big></h2>
+    <big><br>
+      <span style="font-style: italic;">Timer</span> is very useful thing.
+      Just use Timer class for work with the timer. Let’s look to public
+      methods.<br>
+      <br>
+      <span style="font-style: italic;">void Timer::set_timer(const unsigned
+        long int seconds);</span> – Set timer interval and initialize start
+      point.<br>
+      <span style="font-style: italic;">bool Timer::check_timer();</span> –
+      Initialize stop point. Return true and reinitialize start point if
+      interval between stop and start points large or equal than specific
+      seconds.<br>
+      <br>
+    </big>
+    <h2><a class="mozTocH2" name="mozTocId446066"></a><big>Chapter 3.
+        Binary files</big></h2>
+    <big><br>
+      <span style="text-decoration: underline;">Work with binary files</span><br>
+      <br>
+      Just use <span style="font-style: italic;">Binary_File</span> class
+      for work with the binary files. Let’s look to public methods.<br>
+      <br>
+      <span style="font-style: italic;">void Binary_File::create_temp();</span>
+      – Create a temporary file. This file will be deleted when it closed.<br>
+      <span style="font-style: italic;">void Binary_File::open_read(const
+        char *name);</span> – Open a file for read.<br>
+      <span style="font-style: italic;">void Binary_File::open_write(const
+        char *name);</span> – Open a file for read and write.<br>
+      <span style="font-style: italic;">void Binary_File::close();</span> –
+      Close the file.<br>
+      <span style="font-style: italic;">void Binary_File::set_position(const
+        off_t offset);</span> – Set the file position.<br>
+      <span style="font-style: italic;">long int Binary_File::get_position();</span>
+      – Return current file position.<br>
+      <span style="font-style: italic;">long int Binary_File::get_length();</span>
+      – Return file length in bytes.<br>
+      <span style="font-style: italic;">void Binary_File::read(void
+        *buffer,const size_t length);</span> – Read data from the file.<br>
+      <span style="font-style: italic;">void Binary_File::write(void
+        *buffer,const size_t length);</span> – Write data to the file.<br>
+      <span style="font-style: italic;">void Binary_File::check_error();</span>
+      – Return true if last file operation failed.<br>
+      <br>
+      <span style="text-decoration: underline;">Important notice</span><br>
+      <br>
+      Target file size limit is 2 gigabytes.<br>
+      <br>
+    </big>
+    <h1><a class="mozTocH1" name="mozTocId308337"></a><big>Part 5. Other
+        important things</big></h1>
+    <big><br>
+    </big>
+    <h2><a class="mozTocH2" name="mozTocId702206"></a><big>Chapter 1. Memory</big></h2>
+    <big><br>
+      RAM is very important resource. Just use <span style="font-style: italic;">Memory</span>
+      class for get total memory
+      size and free memory size. Let’s look to public methods.<br>
+      <br>
+      <span style="font-style: italic;">unsigned long int
+        System::get_total_memory();</span> – Return a total memory size in
+      bytes.<br>
+      <span style="font-style: italic;">unsigned long int
+        System::get_free_memory();</span> – Return a free memory size in bytes.<br>
+      <br>
+    </big>
+    <h2><a class="mozTocH2" name="mozTocId776211"></a><big>Chapter 2.
+        Display back-light</big></h2>
+    <big><br>
+      <span style="text-decoration: underline;">Control display back-light</span><br>
+      <br>
+      You can control level of display back-light via back-light subsystem.<br>
+      <br>
+      <span style="text-decoration: underline;">Back-light level</span><br>
+      <br>
+      Minimal back-light level is 10. Maximum back-light level is 90.
+      Increasing/decreasing step is 10.<br>
+      <br>
+      <span style="text-decoration: underline;">Working with back-light</span><br>
+      <br>
+      Just use <span style="font-style: italic;">Backlight</span> class for
+      work with the back-light. Let’s look to public methods.<br>
+      <br>
+      <span style="font-style: italic;">unsigned char
+        Backlight::get_minimum() const;</span> – Return minimum level of
+      display back-light.<br>
+      <span style="font-style: italic;">unsigned char
+        Backlight::get_maximum() const;</span> – Return maximum level of
+      display back-light.<br>
+      <span style="font-style: italic;">unsigned char Backlight::get_level();</span>
+      – Return current level of display back-light.<br>
+      <span style="font-style: italic;">void Backlight::increase_level();</span>
+      – Increase current level of display back-light.<br>
+      <span style="font-style: italic;">void Backlight::decrease_level();</span>
+      – Decrease current level of display back-light.<br>
+      <span style="font-style: italic;">void Backlight::turn_off();</span> –
+      Turn off display back-light.<br>
+      <span style="font-style: italic;">void Backlight::turn_on();</span> –
+      Turn on display back-light.<br>
+      <span style="font-style: italic;">void Backlight::set_light(const
+        unsigned char level);</span> – Set level of display back-light.<br>
+      <br>
+    </big>
+    <h2><a class="mozTocH2" name="mozTocId54966"></a><big>Chapter 3.
+        Abnormal program termination</big></h2>
+    <big><br>
+      You can use <span style="font-style: italic;">Halt</span> function for
+      terminate program. This function declared in <span style="font-style: italic;">DINGUXGDK</span>
+      name-space.<br>
+      <br>
+      <span style="font-style: italic;">void DINGUXGDK::Halt(const char
+        *message);</span> – Terminate the program. Write error message to log
+      file if logging enabled.<br>
+      <br>
+    </big>
+    <h2><a class="mozTocH2" name="mozTocId338492"></a><big>Chapter 4.
+        Interaction with operation system</big></h2>
+    <big><br>
+      You may need interaction with operation system. Just use <span style="font-style: italic;">System</span>
+      class for do it. Let’s look
+      to public methods.<br>
+      <br>
+      <span style="font-style: italic;">const unsigned long int
+        System::get_random(const unsigned long int number);</span> – Return a
+      random number from zero to argument–1.<br>
+      <span style="font-style: italic;">void System::quit();</span> – Exit
+      from you program and return user to operation system.<br>
+      <span style="font-style: italic;">void System::run(const char *command);</span>
+      – Execute shell command or external program.<br>
+      <span style="font-style: italic;">char* System::read_environment(const
+        char *variable);</span> – Return value of specific system environment
+      variable.<br>
+      <span style="font-style: italic;">bool System::file_exist(const char
+        *name);</span> – Return true if the file is existed.<br>
+      <span style="font-style: italic;">bool System::delete_file(const char
+        *name);</span> – Delete the target file. Return true if operation was
+      successfully complete.<br>
+      <span style="font-style: italic;">void System::enable_logging(const
+        char *name);</span> – Enable error logging. Error messages will
+      redirect to a log file.<br>
+      <br>
+    </big>
+    <h2><a class="mozTocH2" name="mozTocId73461"></a><big>Chapter 5. Input</big></h2>
+    <big><br>
+      <span style="text-decoration: underline;">A few words about built-in
+        game-pad</span><br>
+      <br>
+      A portable game consoles like DINGOO A320 have the built–in game-pad.<br>
+      <br>
+      <span style="text-decoration: underline;">Working with game-pad</span><br>
+      <br>
+      Just use <span style="font-style: italic;">Gamepad</span> class for
+      work with the built–in game-pad. Let’s look to public methods.<br>
+      <br>
+      <span style="font-style: italic;">void Gamepad::initialize();</span> –
+      Initialize the game-pad subsystem.<br>
+      <span style="font-style: italic;">void Gamepad::update();</span> –
+      Update buttons state. Always call this method before check the button.<br>
+      <span style="font-style: italic;">bool Gamepad::check_hold(const
+        GAMEPAD_BUTTONS button);</span> – Return true if target button is
+      pressed or holding.<br>
+      <span style="font-style: italic;">bool Gamepad::check_press(const
+        GAMEPAD_BUTTONS button);</span> – Return true if target button is
+      pressed.<br>
+      <span style="font-style: italic;">bool Gamepad::check_released(const
+        GAMEPAD_BUTTONS button);</span> – Return true if target button is
+      released.<br>
+      <br>
+      <span style="text-decoration: underline;">Key codes</span><br>
+      <br>
+      The game-pad keys bind to key codes. These codes look as predefined
+      constants.<br>
+      <br>
+    </big>
+    <table style="text-align: left; width: 100%;" cellspacing="2" cellpadding="2"
+      border="1">
+      <tbody>
+        <tr>
+          <td style="vertical-align: top;"><big>Key code<br>
+            </big></td>
+          <td style="vertical-align: top;"><big>Game-pad key<br>
+            </big></td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top;"><big>BUTTON_UP<br>
+            </big></td>
+          <td style="vertical-align: top;"><big>D–pad up<br>
+            </big></td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top;"><big>BUTTON_DOWN</big></td>
+          <td style="vertical-align: top;"><big>D–pad down<br>
+            </big></td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top;"><big>BUTTON_LEFT</big></td>
+          <td style="vertical-align: top;"><big>D–pad left<br>
+            </big></td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top;"><big>BUTTON_RIGHT</big></td>
+          <td style="vertical-align: top;"><big>D–pad right<br>
+            </big></td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top;"><big>BUTTON_A</big></td>
+          <td style="vertical-align: top;"><big>A<br>
+            </big></td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top;"><big>BUTTON_B</big></td>
+          <td style="vertical-align: top;"><big>B<br>
+            </big></td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top;"><big>BUTTON_X</big></td>
+          <td style="vertical-align: top;"><big>X<br>
+            </big></td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top;"><big>BUTTON_Y</big></td>
+          <td style="vertical-align: top;"><big>Y<br>
+            </big></td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top;"><big>BUTTON_L</big></td>
+          <td style="vertical-align: top;"><big>L<br>
+            </big></td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top;"><big>BUTTON_R</big></td>
+          <td style="vertical-align: top;"><big>R<br>
+            </big></td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top;"><big>BUTTON_START</big></td>
+          <td style="vertical-align: top;"><big>Start<br>
+            </big></td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top;"><big>BUTTON_SELECT</big></td>
+          <td style="vertical-align: top;"><big>Select<br>
+            </big></td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top;"><big>BUTTON_POWER</big></td>
+          <td style="vertical-align: top;"><big>Power<br>
+            </big></td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top;"><big>BUTTON_HOLD</big></td>
+          <td style="vertical-align: top;"><big>Hold<br>
+            </big></td>
+        </tr>
+      </tbody>
+    </table>
+    <big><br>
+    </big>
+    <h1><a class="mozTocH1" name="mozTocId412631"></a><big>Part 6. Sound</big></h1>
+    <big><br>
+    </big>
+    <h2><a class="mozTocH2" name="mozTocId251362"></a><big>Chapter 1.
+        Low-level sound subsystem</big></h2>
+    <big><br>
+      <span style="text-decoration: underline;">Sound device</span><br>
+      <br>
+      Low-level sound subsystem provide simple access to sound device.<br>
+      <br>
+      <span style="text-decoration: underline;">Default sound format</span><br>
+      <br>
+      You can see specification of default sound format bellow.<br>
+      <br>
+    </big>
+    <table style="text-align: left; width: 100%;" cellspacing="2" cellpadding="2"
+      border="1">
+      <tbody>
+        <tr>
+          <td style="vertical-align: top;"><big>Data format<br>
+            </big></td>
+          <td style="vertical-align: top;"><big>Signed PCM<br>
+            </big></td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top;"><big>Bits per sample<br>
+            </big></td>
+          <td style="vertical-align: top;"><big>16<br>
+            </big></td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top;"><big>Channels<br>
+            </big></td>
+          <td style="vertical-align: top;"><big>2<br>
+            </big></td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top;"><big>Compression<br>
+            </big></td>
+          <td style="vertical-align: top;"><big>None<br>
+            </big></td>
+        </tr>
+      </tbody>
+    </table>
+    <big><br>
+      <span style="text-decoration: underline;">Data conversion</span><br>
+      <br>
+      Low-level sound subsystem don’t support automatic conversion. Your
+      software must do source sound data conversion by itself.<br>
+      <br>
+      <span style="text-decoration: underline;">Work with low-level sound
+        subsystem</span><br>
+      <br>
+      Just use <span style="font-style: italic;">Sound</span> class for work
+      with low-level sound subsystem. Let’s look to public methods.<br>
+      <br>
+      <span style="font-style: italic;">void Sound::initialize(const int
+        rate);</span> – Initialize the subsystem.<br>
+      <span style="font-style: italic;">bool Sound::check_busy();</span> –
+      Return true if sound device is busy.<br>
+      <span style="font-style: italic;">size_t Sound::get_length() const;</span>
+      – Return sound buffer length in bytes.<br>
+      <span style="font-style: italic;">size_t Sound::send(char *buffer,const
+        size_t length);</span> – Send audio data to sound device and return
+      amount of send data in bytes.<br>
+      <span style="font-style: italic;">Sound* Sound::get_handle();</span> –
+      Return the handle to low-level sound subsystem object.<br>
+      <br>
+    </big>
+    <h2><a class="mozTocH2" name="mozTocId873628"></a><big>Chapter 2.
+        Loading audio</big></h2>
+    <big><br>
+      <span style="text-decoration: underline;">Audio loader</span><br>
+      <br>
+      Audio loader let you load audio data from <a href="https://en.wikipedia.org/wiki/Wave_Sound">Waveform
+        Audio</a>
+      files.<br>
+      <br>
+      <span style="text-decoration: underline;">Audio blocks</span><br>
+      <br>
+      Audio data is array of audio blocks. Duration of single audio block is
+      1 second. You can calculate length of the block by simple way:
+      (rate*channels*bits)/8.<br>
+      <br>
+      <span style="text-decoration: underline;">Supported format</span><br>
+      <br>
+      All loading audio files must have correct specification. You can see it
+      below.<br>
+      <br>
+    </big>
+    <table style="text-align: left; width: 100%;" cellspacing="2" cellpadding="2"
+      border="1">
+      <tbody>
+        <tr>
+          <td style="vertical-align: top;"><big>Data format<br>
+            </big></td>
+          <td style="vertical-align: top;"><big>Signed PCM<br>
+            </big></td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top;"><big>Bits per sample<br>
+            </big></td>
+          <td style="vertical-align: top;"><big>16<br>
+            </big></td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top;"><big>Channels<br>
+            </big></td>
+          <td style="vertical-align: top;"><big>1 or 2<br>
+            </big></td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top;"><big>Compression<br>
+            </big></td>
+          <td style="vertical-align: top;"><big>None<br>
+            </big></td>
+        </tr>
+      </tbody>
+    </table>
+    <big><br>
+      <span style="text-decoration: underline;">Recommend software</span><br>
+      <br>
+      You can use wide range of sound software for convert you audio to
+      correct format. I recommend use <a href="https://www.audacityteam.org/">Audacity</a>
+      or <a href="http://www.freac.org/">fre:ac</a> for do it.<br>
+      <br style="text-decoration: underline;">
+      <span style="text-decoration: underline;">Load audio from files</span><br>
+      <br>
+      <span style="font-style: italic;">Audio</span> class provide simple
+      access to audio loader. Let’s look to public methods.<br>
+      <br>
+      <span style="font-style: italic;">Audio* Audio::get_handle();</span> –
+      Return handle to audio loader subsystem.<br>
+      <span style="font-style: italic;">size_t Audio::get_total() const;</span>
+      – Return total length of audio data in bytes.<br>
+      <span style="font-style: italic;">size_t Audio::get_block() const;</span>
+      – Return length of audio block in bytes.<br>
+      <span style="font-style: italic;">unsigned long int Audio::get_rate()
+        const;</span> – Return sound rate.<br>
+      <span style="font-style: italic;">unsigned short int
+        Audio::get_channels() const;</span> – Return number of audio channels.<br>
+      <span style="font-style: italic;">unsigned short int Audio::get_bits()
+        const;</span> – Return amount of bits per sample.<br>
+      <span style="font-style: italic;">void Audio::go_start();</span> – Go
+      to start of audio data.<br>
+      <span style="font-style: italic;">void Audio::read_data(char
+        *buffer,const size_t length);</span> – Read audio data.<br>
+      <span style="font-style: italic;">void Audio::load_wave(const char
+        *name);</span> – Load audio from Waveform Audio file.<br>
+      <br>
+    </big>
+    <h2><a class="mozTocH2" name="mozTocId657923"></a><big>Chapter 3.
+        Playing audio</big></h2>
+    <big><br>
+      <span style="text-decoration: underline;">Audio player</span><br>
+      <br>
+      How play audio? Just audio player for do it.<br>
+      <br style="text-decoration: underline;">
+      <span style="text-decoration: underline;">Work with audio player</span><br>
+      <br>
+      Just use <span style="font-style: italic;">Player</span> class for
+      work with audio player. Let’s look to public methods.<br>
+      <br>
+      <span style="font-style: italic;">void Player::initialize(Sound
+        *target);</span> – Initialize the subsystem.<br>
+      <span style="font-style: italic;">void Player::load(Audio *audio);</span>
+      – Load audio.<br>
+      <span style="font-style: italic;">void Player::play();</span> – Play
+      current audio block and increase playing position.<br>
+      <span style="font-style: italic;">void Player::loop();</span> – Play
+      current audio block and increase playing position. Jump to start if
+      don't have available audio block anymore.<br>
+      <span style="font-style: italic;">bool Player::is_end() const;</span> –
+      Return true if don't have available audio block anymore.<br>
+      <span style="font-style: italic;">void Player::rewind_audio();</span> –
+      Set playing position to start.<br>
+      <br>
+    </big>
+    <h2><a class="mozTocH2" name="mozTocId553480"></a><big>Chapter 4. Mixer</big></h2>
+    <big><br>
+      <span style="text-decoration: underline;">Mixer</span><br>
+      <br>
+      Mixer let you control level of sound volume.<br>
+      <br>
+      <span style="text-decoration: underline;">Volume level</span><br>
+      <br>
+      Minimal sound volume level is 15. Maximum sound volume level is 255.<br>
+      <br>
+      <span style="text-decoration: underline;">Work with mixer</span><br>
+      <br>
+      Just use <span style="font-style: italic;">Mixer</span> class for work
+      with mixer subsystem. Let’s look to public methods.<br>
+      <br>
+      <span style="font-style: italic;">void Mixer::initialize();</span> –
+      Initialize the subsystem.<br>
+      <span style="font-style: italic;">void Mixer::set_volume(const int
+        volume);</span> – Set level of sound volume.<br>
+      <span style="font-style: italic;">void Mixer::turn_on();</span> – Turn
+      on sound.<br>
+      <span style="font-style: italic;">void Mixer::turn_off();</span> – Turn
+      off sound.<br>
+      <span style="font-style: italic;">int Mixer::get_maximum() const;</span>
+      – Return maximum level of sound volume.<br>
+      <span style="font-style: italic;">int Mixer::get_minimum() const;</span>
+      – Return minimum level of sound volume.<br>
+      <span style="font-style: italic;">int Mixer::get_volume() const;</span>
+      – Return current level of sound volume.<br>
+      <br>
+    </big>
+    <h1><a class="mozTocH1" name="mozTocId912509"></a><big>Part 7. Internal
+        details of the library subsystems</big></h1>
+    <big><br>
+    </big>
+    <h2><a class="mozTocH2" name="mozTocId596077"></a><big>Chapter 1. A few
+        words for a curious programmers</big></h2>
+    <big><br>
+      The library subsystems have a different internal structure. It hidden
+      from you and you don’t have access to it. Do you want know about hiding
+      things? Just read a next chapter.<br>
+      <br>
+    </big>
+    <h2><a class="mozTocH2" name="mozTocId383677"></a><big>Chapter 2.
+        Internal classes</big></h2>
+    <big><br>
+      Some classes designed for internal use only. Don’t touch them. What
+      doing these strange classes?<br>
+      <br>
+      <span style="font-style: italic;">FPS</span> implement fps counter.<br>
+      <span style="font-style: italic;">Render</span> implement frame-buffer
+      render.<br>
+      <br>
+    </big>
+    <h2><a class="mozTocH2" name="mozTocId445066"></a><big>Chapter 3.
+        Low-level sound subsystem</big></h2>
+    <big><br>
+      Low-level sound subsystem work over <a href="http://www.opensound.com/">Open
+sound
+        subsystem</a>. It is a standard sound subsystem in Dingux.<br>
+      <br>
+    </big>
+    <h2><a class="mozTocH2" name="mozTocId214872"></a><big>Chapter 4. Base
+        graphics subsystem</big></h2>
+    <big><br>
+      Base graphics subsystem work over frame-buffer. Base graphics subsystem
+      active use back buffer. The back buffer is just array of pixels.<br>
+      The pixel store in B5G6R5 format: 5 bits for blue component, 6 bits for
+      green component, 5 bits for red component. A singe pixel represent by
+      unsigned two-byte value. Shadow buffer is array of pixels too.<br>
+      <br>
+    </big>
+    <h2><a class="mozTocH2" name="mozTocId509433"></a><big>Chapter 5. Input
+        subsystem</big></h2>
+    <big><br>
+      <span style="text-decoration: underline;">Two state arrays</span><br>
+      <br>
+      Button states store in two state arrays: current state array and old
+      state array. State array is just array of bytes.<br>
+      <br>
+      <span style="text-decoration: underline;">Button state</span><br>
+      <br>
+      The button states look as predefined constants.<br>
+      <br>
+    </big>
+    <table style="text-align: left; width: 100%;" cellspacing="2" cellpadding="2"
+      border="1">
+      <tbody>
+        <tr>
+          <td style="vertical-align: top;"><big>State code<br>
+            </big></td>
+          <td style="vertical-align: top;"><big>Description<br>
+            </big></td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top;"><big>GAMEPAD_RELEASE<br>
+            </big></td>
+          <td style="vertical-align: top;"><big>Button is released<br>
+            </big></td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top;"><big>GAMEPAD_PRESS<br>
+            </big></td>
+          <td style="vertical-align: top;"><big>Button is pressed<br>
+            </big></td>
+        </tr>
+      </tbody>
+    </table>
+    <big><br>
+    </big>
+    <h2><a class="mozTocH2" name="mozTocId949422"></a><big>Chapter 6. Base
+        image subsystem</big></h2>
+    <big><br>
+      Base image subsystem active use internal image buffer. This buffer is
+      very simple. It is just array of pixel. The special structure contain a
+      singe pixel. Let’s look to this structure.<br>
+      <br>
+      <span style="font-style: italic;">struct IMG_Pixel</span><br style="font-style: italic;">
+      <span style="font-style: italic;">{</span><br style="font-style: italic;">
+      <span style="font-style: italic;">unsigned char blue:8;</span><br style="font-style: italic;">
+      <span style="font-style: italic;">unsigned char green:8;</span><br style="font-style: italic;">
+      <span style="font-style: italic;">unsigned char red:8;</span><br style="font-style: italic;">
+      <span style="font-style: italic;">};</span><br>
+      <br>
+    </big>
+    <h1><a class="mozTocH1" name="mozTocId152114"></a><big>Changelog</big></h1>
+    <big><br>
+      0.1 – Initial version.<br>
+      0.2 – Game-pad support was added.<br>
+      0.3 – 0.5 – Game-pad support was improved.<br>
+      0.6 – System information subsystem was added.<br>
+      0.7 – Base graphics subsystem was totally rewritten.<br>
+      0.7.1 – 0.7.3 – Base graphic subsystem was improved.<br>
+      0.7.4 – Small changes.<br>
+      0.7.5 – Advanced graphics subsystem was added.<br>
+      0.7.6 – Small bugs has been fixed.<br>
+      0.7.7 – 0.7.8 – Small changes.<br>
+      0.7.9 – A big bug in base graphic subsystem was fixed.<br>
+      0.8 – Small changes.<br>
+      0.8.1 – Render speed was increased.<br>
+      0.8.2 – Advanced graphics subsystem was improved.<br>
+      0.8.3 – Small changes.<br>
+      0.8.4 – A big bug in base graphic subsystem was fixed.<br>
+      0.8.5 – 0.8.6 – Small changes.<br>
+      0.8.7 – 0.8.8 – Game-pad support was improved.<br>
+      0.8.9 – Advanced graphics subsystem was improved.<br>
+      0.9 – A small bug in system interaction subsystem was fixed.<br>
+      0.9.1 – Small changes.<br>
+      0.9.2 – Game-pad support was improved.<br>
+      0.9.3 – System interaction subsystem was improved.<br>
+      0.9.4 – Small changes.<br>
+      0.9.5 – Geometric primitive subsystem was added.<br>
+      0.9.5.1 – Geometric primitive subsystem was improved.<br>
+      0.9.5.2 – 0.9.5.3 – Advanced graphics subsystem was improved.<br>
+      0.9.5.4 – Small changes.<br>
+      0.9.5.5 – Small changes in source code. Library documentation has been
+      added.<br>
+      0.9.5.6 – Base graphic subsystem was improved.<br>
+      0.9.5.7 – 0.9.5.9 – Advanced graphics subsystem was improved.<br>
+      0.9.6 – Small changes.<br>
+      0.9.6.1 – Game-pad support was improved.<br>
+      0.9.6.2 – Small changes.<br>
+      0.9.6.3 – Project name has been changed.<br>
+      0.9.6.4 – A big bug in Game-pad subsystem was fixed.<br>
+      0.9.6.5 – Timer subsystem was added.<br>
+      0.9.6.6 – System interaction subsystem was improved.<br>
+      0.9.6.7 – Geometric primitive subsystem was improved.<br>
+      0.9.6.8 – Collision subsystem was added.<br>
+      0.9.6.9 – Geometric primitive subsystem was improved.<br>
+      0.9.7 – Render speed was increased.<br>
+      0.9.7.1 – Small changes.<br>
+      0.9.7.2 – Base graphic subsystem was improved.<br>
+      0.9.7.3 – Game-pad support was improved.<br>
+      0.9.7.4 – Small changes.<br>
+      0.9.7.5 – Geometric primitive subsystem was improved.<br>
+      0.9.7.6 – 0.9.7.9 – Advanced graphics subsystem was improved.<br>
+      0.9.8 – Collision subsystem was improved.<br>
+      0.9.8.1 – Image loader was improved.<br>
+      0.9.8.2 – Game-pad support was improved.<br>
+      0.9.8.3 – 0.9.8.4 – Small changes.<br>
+      0.9.8.5 – Memory subsystem was added.<br>
+      0.9.8.6 – Small changes.<br>
+      0.9.8.7 – System interaction subsystem was improved.<br>
+      0.9.8.8 – Small changes.<br>
+      0.9.8.9 – 0.9.9 – Image loader was improved.<br>
+      0.9.9.1 – System interaction subsystem was improved.<br>
+      0.9.9.2 – 0.9.9.3 – Small changes.<br>
+      0.9.9.4 – Base graphics subsystem was improved.<br>
+      0.9.9.5 – Low-level sound subsystem was added.<br>
+      0.9.9.6 – 0.9.9.7 – Low-level sound subsystem was improved.<br>
+      0.9.9.8 – Audio subsystem was added.<br>
+      0.9.9.9 – 1.0 – Low-level sound subsystem was improved.<br>
+      1.0.1 – Small bug was fixed.<br>
+      1.0.2 – Low-level sound subsystem was improved.<br>
+      1.0.3 – Audio subsystem was improved.<br>
+      1.0.4 – Low-level sound subsystem was improved.<br>
+      1.0.5 – Audio loader has been added.<br>
+      1.0.6 – Audio playing subsystem was improved.<br>
+      1.0.7 – 1.1 – Low-level sound subsystem was improved.<br>
+      1.1.1 – 1.1.3 – Small changes.<br>
+      1.1.4 – 1.1.5 – Game-pad support was improved.<br>
+      1.1.6 – Low-level sound subsystem was improved.<br>
+      1.1.7 – Small bug in low-level sound subsystem was fixed.<br>
+      1.1.8 – 1.2 – Small changes.<br>
+      1.2.1 – 1.2.5 – Low-level sound subsystem was improved.<br>
+      1.2.6 – Small changes.<br>
+      1.2.7 – Advanced graphics subsystem was improved.<br>
+      1.2.8 – Source code was synced with Simple windows game framework 1.3.9.<br>
+      1.2.9 – Base graphics subsystem was improved.<br>
+      1.3 – Image loader was improved.<br>
+      1.3.1 – Geometric primitive subsystem was improved.<br>
+      1.3.2 – Advanced graphics subsystem was improved.<br>
+      1.3.3 – Geometric primitive subsystem was improved.<br>
+      1.3.4 – Image loader was improved. License has been changed.<br>
+      1.3.5 – Image loader was improved.<br>
+      1.3.6 – Background and sprite subsystems was added.<br>
+      1.3.7 – Collision subsystems was improved.<br>
+      1.3.8 – Sprite subsystems was improved.<br>
+      1.3.9 – Text drawing subsystems was added.<br>
+      1.4 – Text drawing subsystems was improved.<br>
+      1.4.1 – 1.4.2 – Image loader was improved.<br>
+      1.4.3 – Collision subsystems was improved.<br>
+      1.4.4 – Background subsystems was improved.<br>
+      1.4.5 – System interaction subsystem was improved.<br>
+      1.4.6 – Source code was synced with Simple windows game framework 2.4.4.<br>
+      1.4.7 – 1.4.8 – Game-pad support was improved.<br>
+      1.4.9 – Source code was synced with Indie game framework 0.5.7.<br>
+      1.5 – Render speed was increased.<br>
+      1.5.1 – 1.5.6 – Small changes.<br>
+      1.5.7 – Sound support was removed.<br>
+      1.5.8 – Small changes.<br>
+      1.5.9 – Collision subsystem was improved.<br>
+      1.6 – 1.6.1 – Small changes.<br>
+      1.6.2 – 1.6.3 – Sprite subsystem was improved.<br>
+      1.6.4 – Background subsystem was improved.<br>
+      1.6.5 – Sprite subsystem was improved.<br>
+      1.6.6 – 1.6.9 – Render was improved.<br>
+      1.7 – 1.7.2 – Small changes.<br>
+      1.7.3 – Small bug in background subsystem was fixed.<br>
+      1.7.4 – Source code was synced with Orthodox game framework 0.8.2.<br>
+      1.7.5 – Source code was synced with Orthodox game framework 0.9.6.<br>
+      1.7.6 – Source code was synced with Orthodox game framework 1.1.3.<br>
+      1.7.7 – Small bug in text drawing subsystem was fixed.<br>
+      1.7.8 – Source code was synced with Orthodox game framework 1.1.7.<br>
+      1.7.9 – Source code was synced with Orthodox game framework 1.2.1.<br>
+      1.8 – 1.8.5 – Render was improved.<br>
+      1.8.6 – Small changes.<br>
+      1.8.7 – Small bug was fixed.<br>
+      1.8.8 – Source code was synced with Orthodox game framework 1.4.3.<br>
+      1.8.9 – Source code was synced with Orthodox game framework 1.4.5.<br>
+      1.9 – Source code was synced with Orthodox game framework 1.4.8.<br>
+      1.9.1 – Source code was synced with Orthodox game framework 1.5.9.
+      License has been changed.<br>
+      1.9.2 – Source code was synced with Orthodox game framework 1.6.8.<br>
+      1.9.3 – Source code was synced with Orthodox game framework 1.7.<br>
+      1.9.4 – Memory usage was reduced.<br>
+      19.5 – 1.9.6 – Small changes.<br>
+      1.9.7 – Source code was synced with Orthodox game framework 1.8.<br>
+      1.9.8 – Source code was synced with Orthodox game framework 1.8.1.<br>
+      1.9.9 – Source code was synced with Orthodox game framework 1.8.3.<br>
+      2.0 – Source code was synced with Orthodox game framework 1.8.6.<br>
+      2.1 – Source code was synced with Orthodox game framework 1.9.6.<br>
+      2.2 – Source code was synced with Orthodox game framework 2.1.<br>
+      3.0 – Source code was synced with Orthodox game framework 3.1.<br>
+      3.1 – Source code was synced with Orthodox game framework 3.2.2.<br>
+      3.2 – Source code was synced with Orthodox game framework 3.3.<br>
+      3.2.1 – Small changes.<br>
+      3.2.2 – Source code was synced with Orthodox game framework 3.5.8.<br>
+      3.2.3 – Source code was synced with Orthodox game framework 3.6.<br>
+      3.2.4 – Source code was synced with Orthodox game framework 3.6.1.<br>
+      3.2.5 – Source code was synced with Orthodox game framework 3.6.4.<br>
+      3.2.6 – Source code was synced with Orthodox game framework 3.6.5.<br>
+      3.2.7 – Source code was synced with Orthodox game framework 3.7.6.<br>
+      3.2.8 – Source code was synced with Orthodox game framework 3.7.7.<br>
+      3.2.9 – Source code was synced with Orthodox game framework 3.7.9.<br>
+      3.3 – Source code was synced with Orthodox game framework 3.8.<br>
+      3.3.1 – Source code was synced with Orthodox game framework 3.8.1.<br>
+      3.3.2 – Source code was synced with Orthodox game framework 3.8.5.<br>
+      3.3.3 – Source code was synced with Orthodox game framework 3.8.8.<br>
+      3.3.4 – Source code was synced with Orthodox game framework 3.8.9.<br>
+      3.3.5 – Source code was synced with Orthodox game framework 3.9.<br>
+      3.3.6 – Source code was synced with Orthodox game framework 3.9.1.<br>
+      3.3.7 – Source code was synced with Orthodox game framework 3.9.2.<br>
+      3.3.8 – Source code was synced with Orthodox game framework 4.0.<br>
+      3.3.9 – Source code was synced with Orthodox game framework 4.0.1.<br>
+      3.4 – Source code was synced with Orthodox game framework 4.0.2.<br>
+      3.4.1 – Source code was synced with Orthodox game framework 4.0.3.<br>
+      3.4.2 – Source code was synced with Orthodox game framework 4.0.4.<br>
+      3.4.3 – Source code was synced with Orthodox game framework 4.0.5.<br>
+      3.4.4 – Source code was synced with Orthodox game framework 4.0.6.<br>
+      3.4.5 – 3.4.7 – Small changes.<br>
+      3.4.8 – Source code was synced with Orthodox game framework 4.0.7.<br>
+      3.4.9 – 3.5 – Render performance was increased.<br>
+      3.5.1 – 3.5.3 – Small changes.<br>
+      3.5.4 – Base graphics subsystem was improved.<br>
+      3.5.5 – 3.5.6 – Render was improved.<br>
+      3.5.7 – 3.6 – Small changes.<br>
+      3.6.1 – Source code was synced with Orthodox game framework 4.1.4.<br>
+      3.6.2 – Project name was changed.<br>
+      3.6.3 – 3.6.7 – Game-pad support was improved.<br>
+      3.6.8 – Source code was synced with Neon game development kit 4.1.8.<br>
+      3.6.9 – 3.7.8 – Game-pad support was improved.<br>
+      3.7.9 – Small changes.<br>
+      3.8 – 3.8.7 – Game-pad support was improved.<br>
+      3.8.8 – Small bug was fixed.<br>
+      3.8.9 – 3.9.3 – Small changes.<br>
+      3.9.4 – Source code was synced with Neon game development kit 4.2.7.<br>
+      3.9.5 – Battery subsystem was added.<br>
+      3.9.6 – 3.9.7 – Small changes.<br>
+      3.9.8 – Battery subsystem was improved.<br>
+      3.9.9 – Small bug was fixed.<br>
+      4.0 – Small changes.<br>
+      4.0.1 – Battery subsystem was removed. Source code was synced with Neon
+      game development kit 4.2.8.<br>
+      4.0.2 – Small changes.<br>
+      4.0.3 – Source code was synced with Neon game development kit 4.3.<br>
+      4.0.4 – Source code was synced with Neon game development kit 4.3.2.<br>
+      4.0.5 – Small changes.<br>
+      4.0.6 – Source code was synced with Neon game development kit 4.3.3.<br>
+      4.0.7 – Source code was synced with Neon game development kit 4.3.4.<br>
+      4.0.8 – Source code was synced with Gopher game development kit 0.5.8.<br>
+      4.0.9 – Source code was synced with Gopher game development kit 0.5.9.<br>
+      4.1 – Source code was synced with Gopher game development kit 0.6.<br>
+      4.1.1 – Source code was synced with Gopher game development kit 0.6.1.<br>
+      4.1.2 – Source code was synced with Gopher game development kit 0.6.2.<br>
+      4.1.3 – Source code was synced with Gopher game development kit 0.6.3.<br>
+      4.1.4 – Source code was synced with Gopher game development kit 0.6.4.<br>
+      4.2 – Source code was synced with Gopher game development kit 0.9.8.<br>
+      4.2.1 – Small bug was fixed.<br>
+      4.2.2 – 4.2.3 – Small changes.<br>
+      4.3 – Source code was synced with Gopher game development kit 1.2.1.<br>
+      4.3.1 – Source code was synced with Gopher game development kit 1.2.2.<br>
+      4.3.2 – Source code was synced with Gopher game development kit 1.2.3.<br>
+      4.3.3 – Source code was synced with Gopher game development kit 1.2.4.<br>
+      4.3.4 – Source code was synced with Neon game development kit 4.3.5.<br>
+      4.3.5 – Source code was synced with Neon game development kit 4.3.6.<br>
+      4.3.6 – Source code was synced with Neon game development kit 4.4.1.<br>
+      4.3.7 – Source code was synced with Neon game development kit 4.4.4.<br>
+      4.3.8 – Source code was synced with Neon game development kit 4.4.5.<br>
+      4.3.9 – Small changes in render.<br>
+      4.4 – Small changes in game-pad subsystem.<br>
+      4.4.1 – Small changes in audio loader.<br>
+      4.4.2 – Small changes in mixer subsystem.<br>
+      4.4.3 – Small changes in display back-light subsystem.<br>
+      4.4.4 – Small changes in audio playing subsystem.<br>
+      4.4.5 – Small changes in low-level sound subsystem.<br>
+      4.4.6 – Small changes in the library core.<br>
+      4.4.7 – Small bug was fixed.<br>
+      4.4.8 – Source code was synced with Neon game development kit 4.4.8.<br>
+      4.4.9 – Source code was synced with Neon game development kit 4.4.9.<br>
+      4.5 – Source code was synced with Neon game development kit 4.5.<br>
+      4.5.1 – Source code was synced with Neon game development kit 4.5.1.<br>
+      4.5.2 – Source code was synced with Neon game development kit 4.5.2.<br>
+      4.5.3 – Source code was synced with Neon game development kit 4.5.3.<br>
+      4.5.4 – Source code was synced with Neon game development kit 4.5.4.<br>
+      4.5.5 – Small changes in game-pad subsystem.<br>
+      4.5.6 – Small changes in audio loader.<br>
+      4.5.7 – Small changes in low-level sound subsystem.<br>
+      4.5.8 – Small changes in audio playing subsystem.<br>
+      4.5.9 – Source code was synced with Neon game development kit 4.6.1.<br>
+      4.6 – Source code was synced with Neon game development kit 4.6.5.<br>
+      4.6.1 – Source code was synced with Neon game development kit 4.6.6.<br>
+      4.6.2 – Source code was synced with Neon game development kit 4.6.7.<br>
+      4.6.3 – Render speed was increased.<br>
+      4.6.4 – Source code was synced with Neon game development kit 4.6.8.<br>
+      4.6.5 – Source code was synced with Neon game development kit 4.7.8.<br>
+      4.6.6 – Source code was synced with Neon game development kit 4.8.<br>
+      4.6.7 – Source code was synced with Neon game development kit 4.8.1.<br>
+      4.6.7.1 – Documentation was converted to HTML format.</big><br>
+    <big>
+      4.6.8 – Small changes.</big><br>
+    <big>4.6.9 – Source code was synced with Neon game development kit 4.8.5.</big>
+  </body>
+</html>

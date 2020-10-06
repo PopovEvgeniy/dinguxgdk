@@ -2293,8 +2293,14 @@ void Text::draw_text(const unsigned long int x,const unsigned long int y,const c
 
 Collision::Collision()
 {
- memset(&first,0,sizeof(Collision_Box));
- memset(&second,0,sizeof(Collision_Box));
+ first.x=0;
+ first.y=0;
+ first.width=0;
+ first.height=0;
+ second.x=0;
+ second.y=0;
+ second.width=0;
+ second.height=0;
 }
 
 Collision::~Collision()
