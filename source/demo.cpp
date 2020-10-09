@@ -2,7 +2,6 @@
 
 int main()
 {
- long int x,y,screen_width,screen_height;
  char perfomance[8];
  DINGUXGDK::Backlight light;
  DINGUXGDK::Screen screen;
@@ -16,14 +15,11 @@ int main()
  DINGUXGDK::Sprite ship,font;
  DINGUXGDK::Text text;
  screen.initialize();
- screen_width=screen.get_width();
- screen_height=screen.get_height();
- x=screen_width/2;
- y=screen_height/2;
  image.load_tga("space.tga");
  space.load_image(image);
  image.load_tga("ship.tga");
  ship.load_sprite(image,HORIZONTAL_STRIP,2);
+ ship.set_position(screen.get_width()/2,screen.get_height()/2);
  image.load_tga("font.tga");
  font.load_image(image);
  text.load_font(font.get_handle());
@@ -31,7 +27,7 @@ int main()
  space.initialize(screen.get_handle());
  ship.initialize(screen.get_handle());
  font.initialize(screen.get_handle());
- space.resize_image(screen_width,screen_height);
+ space.resize_image(screen.get_width(),screen.get_height());
  space.set_kind(NORMAL_BACKGROUND);
  screen.clear_screen();
  text.set_position(font.get_width(),font.get_height());
@@ -54,16 +50,15 @@ int main()
   if (gamepad.check_press(BUTTON_L)==true) light.turn_on();
   if (gamepad.check_press(BUTTON_X)==true) light.increase_level();
   if (gamepad.check_press(BUTTON_Y)==true) light.decrease_level();
-  if (gamepad.check_hold(BUTTON_UP)==true) y-=4;
-  if (gamepad.check_hold(BUTTON_DOWN)==true) y+=4;
-  if (gamepad.check_hold(BUTTON_LEFT)==true) x-=4;
-  if (gamepad.check_hold(BUTTON_RIGHT)==true) x+=4;
-  if ((x<=0)||(x>=screen_width)) x=screen_width/2;
-  if ((y<=0)||(y>=screen_height)) y=screen_height/2;
+  if (gamepad.check_hold(BUTTON_UP)==true) ship.decrease_y(4);
+  if (gamepad.check_hold(BUTTON_DOWN)==true) ship.increase_y(4);
+  if (gamepad.check_hold(BUTTON_LEFT)==true) ship.increase_x(4);
+  if (gamepad.check_hold(BUTTON_RIGHT)==true) ship.increase_x(4);
+  if (ship.get_x()>screen.get_width()) ship.set_x(screen.get_width()/2);
+  if (ship.get_y()>screen.get_height()) ship.set_y(screen.get_height()/2);
   sprintf(perfomance,"%lu",screen.get_fps());
   space.draw_background();
   text.draw_text(perfomance);
-  ship.set_position(x,y);
   ship.draw_sprite();
   if (timer.check_timer()==true)
   {

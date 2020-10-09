@@ -3,21 +3,20 @@
     <meta http-equiv="content-type" content="text/html; charset=windows-1251">
     <title>Programmer reference</title>
   </head>
-  <body>
-    <big><br>
+  <body> <big><br>
     </big>
     <div style="text-align: center;"><big>Dingux game development kit:
         Programmer reference</big><br>
     </div>
     <big><br>
       <br>
-      Table of content<br>
+      Table of contents<br>
       <br>
     </big>
     <ul id="mozToc">
       <!--mozToc h1 1 h2 2 h3 3 h4 4 h5 5 h6 6-->
-      <li><a href="#mozTocId817184">Part 1. Welcome to Dingux game
-          development kit</a>
+      <li><a href="#mozTocId817184">Part 1. Welcome to Dingux game development
+          kit</a>
         <ul>
           <li><a href="#mozTocId387531">Chapter 1. Introduction</a></li>
           <li><a href="#mozTocId558083">Chapter 2. A special thanks</a></li>
@@ -59,10 +58,9 @@
         <ul>
           <li><a href="#mozTocId702206">Chapter 1. Memory</a></li>
           <li><a href="#mozTocId776211">Chapter 2. Display back-light</a></li>
-          <li><a href="#mozTocId54966">Chapter 3. Abnormal program
-              termination</a></li>
-          <li><a href="#mozTocId338492">Chapter 4. Interaction with
-              operation system</a></li>
+          <li><a href="#mozTocId54966">Chapter 3. Abnormal program termination</a></li>
+          <li><a href="#mozTocId338492">Chapter 4. Interaction with operation
+              system</a></li>
           <li><a href="#mozTocId73461">Chapter 5. Input</a></li>
         </ul>
       </li>
@@ -77,8 +75,8 @@
       <li><a href="#mozTocId912509">Part 7. Internal details of the library
           subsystems</a>
         <ul>
-          <li><a href="#mozTocId596077">Chapter 1. A few words for a
-              curious programmers</a></li>
+          <li><a href="#mozTocId596077">Chapter 1. A few words for a curious
+              programmers</a></li>
           <li><a href="#mozTocId383677">Chapter 2. Internal classes</a></li>
           <li><a href="#mozTocId445066">Chapter 3. Low-level sound subsystem</a></li>
           <li><a href="#mozTocId214872">Chapter 4. Base graphics subsystem</a></li>
@@ -91,8 +89,8 @@
     <big><br>
       <br>
     </big>
-    <h1><a class="mozTocH1" name="mozTocId817184"></a><big>Part 1. Welcome
-        to Dingux game development kit</big></h1>
+    <h1><a class="mozTocH1" name="mozTocId817184"></a><big>Part 1. Welcome to
+        Dingux game development kit</big></h1>
     <big><br>
     </big>
     <h2><a class="mozTocH2" name="mozTocId387531"></a><big>Chapter 1.
@@ -101,13 +99,13 @@
       <span style="text-decoration: underline;">Introduction</span><br>
       <br>
       Hello from Russia. My name is Popov Evgeniy Alekseyevich. I am the
-      individual programmer. I enjoy creating a software. I also like
-      old–school video games. Portable game consoles like Dingoo A320 is
-      ideal device for persons like me. Dingoo Linux(DINGUX) is Linux
-      adaptation for Dingoo A320. I like Linux too, but I don’t like <a href="http://www.libsdl.org">SDL</a>
-      library. This library using for
-      programming under Dingoo Linux. I made my own library. I hope that my
-      C++ library will be useful for many programmers.<br>
+      individual programmer. I enjoy creating a software. I also like old–school
+      video games. Portable game consoles like Dingoo A320 is ideal device for
+      persons like me. Dingoo Linux(DINGUX) is Linux adaptation for Dingoo A320.
+      I like Linux too, but I don’t like <a href="http://www.libsdl.org">SDL</a>
+      library. This library using for programming under Dingoo Linux. I made my
+      own library. I hope that my C++ library will be useful for many
+      programmers.<br>
       <br>
       <span style="text-decoration: underline;">Supported devices</span><br>
       <br>
@@ -151,12 +149,12 @@
     <big><br>
       <span style="text-decoration: underline;">Feedback</span><br>
       <br>
-      Send me <a href="mailto:tuzik87@inbox.ru">e-mail</a> if you want
-      contact with me.<br>
+      Send me <a href="mailto:tuzik87@inbox.ru">e-mail</a> if you want contact
+      with me.<br>
       <br>
     </big>
-    <h2><a class="mozTocH2" name="mozTocId558083"></a><big>Chapter 2. A
-        special thanks</big></h2>
+    <h2><a class="mozTocH2" name="mozTocId558083"></a><big>Chapter 2. A special
+        thanks</big></h2>
     <big><br>
       What you need when you try to create a big thing? A technical
       consultation. I need it too. I want to say «Big thanks for technical
@@ -166,8 +164,7 @@
     <ul>
       <li><a href="https://github.com/dmitrysmagin"><big>Dmitry Smagin</big></a></li>
       <li><a href="https://bsg.org.ua"><big>Pavel Samko</big></a></li>
-      <li><a href="http://www.almost-university.com"><big>Vladimir
-            Mozhenkov</big></a></li>
+      <li><a href="http://www.almost-university.com"><big>Vladimir Mozhenkov</big></a></li>
       <li><a href="https://vk.com/strong666"><big>Vitaliy Molochkov</big></a></li>
       <li><a href="https://vk.com/pereulok"><big>Alexander Pereulok</big></a></li>
       <li><big>DDMZ<br>
@@ -202,15 +199,14 @@ Dingux
       documentation for more information about compiler optimization.<br>
       <br>
     </big>
-    <h2><a class="mozTocH2" name="mozTocId59157"></a><big>Chapter 5.
-        Library name-space</big></h2>
+    <h2><a class="mozTocH2" name="mozTocId59157"></a><big>Chapter 5. Library
+        name-space</big></h2>
     <big><br>
       All library classes declared in <span style="font-style: italic;">DINGUXGDK</span>
       name-space.<br>
       <br>
     </big>
-    <h2><a class="mozTocH2" name="mozTocId239028"></a><big>Chapter 6.
-        License</big></h2>
+    <h2><a class="mozTocH2" name="mozTocId239028"></a><big>Chapter 6. License</big></h2>
     <big><br>
       <span style="text-decoration: underline;">Dingux game development kit
         license</span><br>
@@ -219,21 +215,19 @@ Dingux
       Copyright (C) 2015-2020 Popov Evgeniy Alekseyevich<br>
       This software is provided 'as-is', without any express or implied
       warranty. In no event will the authors be held liable for any damages
-      arising from the use of this software. Permission is granted to anyone
-      to use this software for any purpose, including commercial
-      applications, and to alter it and redistribute it freely, subject to
-      the following restrictions:<br>
+      arising from the use of this software. Permission is granted to anyone to
+      use this software for any purpose, including commercial applications, and
+      to alter it and redistribute it freely, subject to the following
+      restrictions:<br>
       <br>
       <br>
       1. The origin of this software must not be misrepresented; you must not<br>
       claim that you wrote the original software. If you use this software<br>
       in a product, an acknowledgment in the product documentation would be<br>
       appreciated but is not required.<br>
-      2. Altered source versions must be plainly marked as such, and must not
-      be<br>
+      2. Altered source versions must be plainly marked as such, and must not be<br>
       misrepresented as being the original software.<br>
-      3. This notice may not be removed or altered from any source
-      distribution.<br>
+      3. This notice may not be removed or altered from any source distribution.<br>
       <br>
       <span style="text-decoration: underline;">Third–party code license</span><br>
       <br>
@@ -241,22 +235,21 @@ Dingux
       SVGALib is public domain.<br>
       <br>
     </big>
-    <h1><a class="mozTocH1" name="mozTocId489599"></a><big>Part 2. Base
-        things</big></h1>
+    <h1><a class="mozTocH1" name="mozTocId489599"></a><big>Part 2. Base things</big></h1>
     <big><br>
     </big>
-    <h2><a class="mozTocH2" name="mozTocId927227"></a><big>Chapter 1.
-        Coordinate system</big></h2>
+    <h2><a class="mozTocH2" name="mozTocId927227"></a><big>Chapter 1. Coordinate
+        system</big></h2>
     <big><br>
       Simple windows game framework use standard screen coordinate system.
-      Coordinates start at top-left corner of screen. Look to this picture
-      for understand it.<br>
+      Coordinates start at top-left corner of screen. Look to this picture for
+      understand it.<br>
       <br>
       <img style="width: 107px; height: 111px;" alt="" src="coordinate_system.png"><br>
       <br>
     </big>
-    <h2><a class="mozTocH2" name="mozTocId705363"></a><big>Chapter 2. A
-        game cycle</big></h2>
+    <h2><a class="mozTocH2" name="mozTocId705363"></a><big>Chapter 2. A game
+        cycle</big></h2>
     <big><br>
       What is main point in you game? A game cycle. You can see structure of
       typical game cycle below.<br>
@@ -269,13 +262,13 @@ Dingux
     <h1><a class="mozTocH1" name="mozTocId13479"></a><big>Part 3. Graphics</big></h1>
     <big><br>
     </big>
-    <h2><a class="mozTocH2" name="mozTocId981471"></a><big>Chapter 1.
-        Virtual surface</big></h2>
+    <h2><a class="mozTocH2" name="mozTocId981471"></a><big>Chapter 1. Virtual
+        surface</big></h2>
     <big><br>
       <span style="text-decoration: underline;">Introduce to virtual surface</span><br>
       <br>
-      Computer graphics is cool. A screen can show you many amazing things.
-      But all amazing things contain pixels. Virtual surface let you draw the
+      Computer graphics is cool. A screen can show you many amazing things. But
+      all amazing things contain pixels. Virtual surface let you draw the
       pixels.<br>
       <br>
       <span style="text-decoration: underline;">Frame resolution</span><br>
@@ -285,20 +278,19 @@ Dingux
       <br>
       <span style="text-decoration: underline;">Work with virtual surface</span><br>
       <br>
-      <span style="font-style: italic;">Frame</span> class provide simple
-      access virtual surface. Don’t use it directly. Let’s look to public
-      methods.<br>
+      <span style="font-style: italic;">Frame</span> class provide simple access
+      virtual surface. Don’t use it directly. Let’s look to public methods.<br>
       <br>
-      <span style="font-style: italic;">unsigned short int*
-        Frame::get_buffer();</span> – Return handle to surface buffer.<br>
+      <span style="font-style: italic;">unsigned short int* Frame::get_buffer();</span>
+      – Return handle to surface buffer.<br>
       <span style="font-style: italic;">size_t Frame::get_pixels() const;</span>
       – Return amount of pixels in the buffer.<br>
       <span style="font-style: italic;">void Frame::clear_screen();</span> –
       Clear the surface. Fill it by black color.<br>
       <span style="font-style: italic;">void Frame::draw_pixel(const unsigned
         long int x,const unsigned long int y, const unsigned char red,const
-        unsigned char green, const unsigned char blue);</span> – Draw a pixel
-      to the surface.<br>
+        unsigned char green, const unsigned char blue);</span> – Draw a pixel to
+      the surface.<br>
       <span style="font-style: italic;">unsigned long int
         Frame::get_frame_width() const;</span> – Return the frame width in
       pixels.<br>
@@ -307,12 +299,12 @@ Dingux
       pixels.<br>
       <span style="font-style: italic;">void Frame::save();</span> – Save
       surface content to shadow buffer.<br>
-      <span style="font-style: italic;">void Frame::restore();</span> –
-      Restore surface content from shadow buffer.<br>
-      <span style="font-style: italic;">void Frame::restore(const unsigned
-        long int x,const unsigned long int y,const unsigned long int
-        width,const unsigned long int height);</span> – Copy piece of shadow
-      buffer to surface.<br>
+      <span style="font-style: italic;">void Frame::restore();</span> – Restore
+      surface content from shadow buffer.<br>
+      <span style="font-style: italic;">void Frame::restore(const unsigned long
+        int x,const unsigned long int y,const unsigned long int width,const
+        unsigned long int height);</span> – Copy piece of shadow buffer to
+      surface.<br>
       <br>
     </big>
     <h2><a class="mozTocH2" name="mozTocId636407"></a><big>Chapter 2. Plane</big></h2>
@@ -324,14 +316,14 @@ Dingux
       <br>
       <span style="text-decoration: underline;">Work with planes</span><br>
       <br>
-      <span style="font-style: italic;">Plane</span> class provide access to
-      the plane subsystem. It is derived from Frame class. Let’s look on
-      public methods.<br>
+      <span style="font-style: italic;">Plane</span> class provide access to the
+      plane subsystem. It is derived from Frame class. Let’s look on public
+      methods.<br>
       <br>
-      <span style="font-style: italic;">void Plane::create_plane(const
-        unsigned long int width,const unsigned long int height,const unsigned
-        long int surface_width,const unsigned long int surface_height, unsigned
-        short int *surface_buffer);</span> – Create the plane.<br>
+      <span style="font-style: italic;">void Plane::create_plane(const unsigned
+        long int width,const unsigned long int height,const unsigned long int
+        surface_width,const unsigned long int surface_height, unsigned short int
+        *surface_buffer);</span> – Create the plane.<br>
       <span style="font-style: italic;">void Plane::transfer();</span> –
       Transfer image from plane to virtual surface.<br>
       <span style="font-style: italic;">Plane* Plane::get_handle();</span> –
@@ -351,8 +343,8 @@ Dingux
         subsystem</span><br>
       <br>
       <span style="font-style: italic;">Screen</span> class provide access to
-      the base graphic subsystem. It is derived from Frame class. Let’s look
-      on public methods.<br>
+      the base graphic subsystem. It is derived from Frame class. Let’s look on
+      public methods.<br>
       <br>
       <span style="font-style: italic;">void Screen::initialize();</span> –
       Initialize the subsystem.<br>
@@ -362,30 +354,30 @@ Dingux
         Screen::get_width() const;</span> – Return the screen width in pixels.<br>
       <span style="font-style: italic;">const unsigned long int
         Screen::get_height() const;</span> – Return the screen height in pixels.<br>
-      <span style="font-style: italic;">Screen* Screen::get_handle();</span>
-      – Return the handle to base graphics subsystem object.<br>
+      <span style="font-style: italic;">Screen* Screen::get_handle();</span> –
+      Return the handle to base graphics subsystem object.<br>
       <span style="font-style: italic;">unsigned long int Screen::get_fps()
         const;</span> – Return current fps value.<br>
       <span style="font-style: italic;">unsigned long int Screen::get_color()
         const;</span> – Return current color in bits per pixel.<br>
       <br>
     </big>
-    <h2><a class="mozTocH2" name="mozTocId857731"></a><big>Chapter 4.
-        Graphic primitives</big></h2>
+    <h2><a class="mozTocH2" name="mozTocId857731"></a><big>Chapter 4. Graphic
+        primitives</big></h2>
     <big><br>
       Drawing a pixel is funny action. But you need more. What about graphic
       primitives?<br>
-      <span style="font-style: italic;">Primitive</span> class can draw it.
-      It is simple class with a few methods.<br>
+      <span style="font-style: italic;">Primitive</span> class can draw it. It
+      is simple class with a few methods.<br>
       <br>
       <span style="font-style: italic;">void Primitive::initialize(Screen
         *Screen);</span> – Initialize the graphic primitive subsystem.<br>
-      <span style="font-style: italic;">void Primitive::set_color(const
-        unsigned char red, const unsigned char green, const unsigned char blue);</span>
-      – Set the current color. It is black by default.<br>
-      <span style="font-style: italic;">void Primitive::draw_line(const
-        unsigned long int x1,const unsigned long int y1,const unsigned long int
-        x2,const unsigned long int y2);</span> – Just draw a line.<br>
+      <span style="font-style: italic;">void Primitive::set_color(const unsigned
+        char red, const unsigned char green, const unsigned char blue);</span> –
+      Set the current color. It is black by default.<br>
+      <span style="font-style: italic;">void Primitive::draw_line(const unsigned
+        long int x1,const unsigned long int y1,const unsigned long int x2,const
+        unsigned long int y2);</span> – Just draw a line.<br>
       <span style="font-style: italic;">void Primitive::draw_rectangle(const
         unsigned long int x,const unsigned long int y,const unsigned long int
         width,const unsigned long int height);</span> – Draw a simple rectangle.<br>
@@ -395,8 +387,8 @@ Dingux
       filled rectangle.<br>
       <br>
     </big>
-    <h2><a class="mozTocH2" name="mozTocId881761"></a><big>Chapter 5. Base
-        image subsystem</big></h2>
+    <h2><a class="mozTocH2" name="mozTocId881761"></a><big>Chapter 5. Base image
+        subsystem</big></h2>
     <big><br>
       <span style="text-decoration: underline;">Very important subsystems</span><br>
       <br>
@@ -408,8 +400,8 @@ Dingux
       Mirror type codes look as predefined constants. You can see it bellow.<br>
       <br>
     </big>
-    <table style="text-align: left; width: 100%;" cellspacing="2" cellpadding="2"
-      border="1">
+    <table style="text-align: left; width: 387px; height: 94px;" cellspacing="2"
+      cellpadding="2" border="1">
       <tbody>
         <tr>
           <td style="vertical-align: top;"><big>Mirror type code<br>
@@ -456,8 +448,8 @@ Dingux
         MIRROR_TYPE kind);</span> – Do mirror the current image.<br>
       <br>
     </big>
-    <h2><a class="mozTocH2" name="mozTocId889327"></a><big>Chapter 6.
-        Advanced image subsystem</big></h2>
+    <h2><a class="mozTocH2" name="mozTocId889327"></a><big>Chapter 6. Advanced
+        image subsystem</big></h2>
     <big><br>
       <span style="text-decoration: underline;">Very important subsystems</span><br>
       <br>
@@ -470,31 +462,30 @@ Dingux
       access to advanced image subsystem. It is derived from Surface class.
       Don’t use it directly. Let’s look to public methods.<br>
       <br>
-      <span style="font-style: italic;">void Canvas::set_frames(const
-        unsigned long int amount);</span> – Set amounts of frames in scrolling
-      background or animated sprite.<br>
-      <span style="font-style: italic;">unsigned long int
-        Canvas::get_frames() const;</span> – Return amount of frames in
-      scrolling background or animated sprite.<br>
-      <span style="font-style: italic;">unsigned long int Canvas::get_frame()
-        const;</span> – Return current frame in scrolling background or
+      <span style="font-style: italic;">void Canvas::set_frames(const unsigned
+        long int amount);</span> – Set amounts of frames in scrolling background
+      or animated sprite.<br>
+      <span style="font-style: italic;">unsigned long int Canvas::get_frames()
+        const;</span> – Return amount of frames in scrolling background or
       animated sprite.<br>
+      <span style="font-style: italic;">unsigned long int Canvas::get_frame()
+        const;</span> – Return current frame in scrolling background or animated
+      sprite.<br>
       <span style="font-style: italic;">void Canvas::load_image(Image
-        &amp;buffer);</span> – Load an image from memory buffer. Replace
-      current image if exist.<br>
+        &amp;buffer);</span> – Load an image from memory buffer. Replace current
+      image if exist.<br>
       <br>
     </big>
-    <h2><a class="mozTocH2" name="mozTocId678026"></a><big>Chapter 7.
-        Background</big></h2>
+    <h2><a class="mozTocH2" name="mozTocId678026"></a><big>Chapter 7. Background</big></h2>
     <big><br>
       <span style="text-decoration: underline;">Level decoration</span><br>
       <br>
-      Background is a big image. It like decoration in theater stage. Any
-      game has a background. There are two kind of background: normal
-      background and scrolling background. The scrolling background is a big
-      image with few frames. Horizontal orientated scrolling background like
-      horizontal orientated photo ribbon. Vertical orientated scrolling
-      background like vertical orientated photo ribbon.<br>
+      Background is a big image. It like decoration in theater stage. Any game
+      has a background. There are two kind of background: normal background and
+      scrolling background. The scrolling background is a big image with few
+      frames. Horizontal orientated scrolling background like horizontal
+      orientated photo ribbon. Vertical orientated scrolling background like
+      vertical orientated photo ribbon.<br>
       <br>
       <span style="text-decoration: underline;">Background types</span><br>
       <br>
@@ -502,8 +493,8 @@ Dingux
       bellow.<br>
       <br>
     </big>
-    <table style="text-align: left; width: 100%;" cellspacing="2" cellpadding="2"
-      border="1">
+    <table style="text-align: left; width: 562px; height: 124px;" cellspacing="2"
+      cellpadding="2" border="1">
       <tbody>
         <tr>
           <td style="vertical-align: top;"><big>Background type<br>
@@ -520,15 +511,13 @@ Dingux
         <tr>
           <td style="vertical-align: top;"><big>HORIZONTAL_BACKGROUND<br>
             </big></td>
-          <td style="vertical-align: top;"><big>Horizontal scrolling
-              background<br>
+          <td style="vertical-align: top;"><big>Horizontal scrolling background<br>
             </big></td>
         </tr>
         <tr>
           <td style="vertical-align: top;"><big>VERTICAL_BACKGROUND<br>
             </big></td>
-          <td style="vertical-align: top;"><big>Vertical scrolling
-              background<br>
+          <td style="vertical-align: top;"><big>Vertical scrolling background<br>
             </big></td>
         </tr>
       </tbody>
@@ -551,10 +540,12 @@ Dingux
       background.<br>
       <span style="font-style: italic;">void Background::step();</span> –
       Increase number of target frame in scrolling background. Set it to 1 if
-      number of target frame more than amount of frames.<br>
-      <span style="font-style: italic;">void Background::set_kind(const
-        BACKGROUND_TYPE target);</span> – Set background type.<br>
-      <span style="font-style: italic;">void Background::draw_background();</span>
+      number of target frame more than amount of frames.</big><br>
+    <big> <span style="font-style: italic;">void Background::set_kind(const
+        BACKGROUND_TYPE target);</span> – Set background type.</big><br>
+    <big><i>void Background::set_setting(const BACKGROUND_TYPE kind,const
+        unsigned long int frames);</i> – Set background setting.</big><br>
+    <big> <span style="font-style: italic;">void Background::draw_background();</span>
       – Draw a background.<br>
       <br>
       <span style="text-decoration: underline;">Important notes</span><br style="text-decoration: underline;">
@@ -562,30 +553,29 @@ Dingux
       Always call <span style="font-style: italic;">set_kind</span> method
       after load background image. Always call <span style="font-style: italic;">set_frames</span>
       method before call <span style="font-style: italic;">set_kind</span>
-      method if you will use
-      scrolling background.<br>
+      method if you will use scrolling background. Also you can use <i>set_setting</i>
+      method instead calling <i>set_kind</i> method.<br>
       <br>
     </big>
-    <h2><a class="mozTocH2" name="mozTocId104290"></a><big>Chapter 8.
-        Sprites</big></h2>
+    <h2><a class="mozTocH2" name="mozTocId104290"></a><big>Chapter 8. Sprites</big></h2>
     <big><br>
       <span style="text-decoration: underline;">Small important thing</span><br>
       <br>
-      A sprite is a small transparent image. It useful for many things:
-      enemies, bonuses, etc…<br>
+      A sprite is a small transparent image. It useful for many things: enemies,
+      bonuses, etc…<br>
       <br>
       <span style="text-decoration: underline;">Sprite types</span><br>
       <br>
       There are two kinds of sprites: normal sprites and strip. The strip is
       animated sprite. Do you remember analog camera? Strip look like photo
-      ribbon. Horizontal strip look like the horizontal orientated photo
-      ribbon. Vertical strip look like the vertical orientated photo ribbon.<br>
+      ribbon. Horizontal strip look like the horizontal orientated photo ribbon.
+      Vertical strip look like the vertical orientated photo ribbon.<br>
       <br>
       <span style="text-decoration: underline;">Some words about sprite
         transparency</span><br>
       <br>
-      Some pixel will be ignored. Ignored pixels have a transparent color.
-      How to determinate it? The transparent color is color of first pixel.
+      Some pixel will be ignored. Ignored pixels have a transparent color. How
+      to determinate it? The transparent color is color of first pixel.
       Transparent mode is enabled by default.<br>
       <br>
       <span style="text-decoration: underline;">Sprite type flags</span><br>
@@ -593,8 +583,8 @@ Dingux
       Sprite types codes look as predefined constants. You can see it bellow.<br>
       <br>
     </big>
-    <table style="text-align: left; width: 100%;" cellspacing="2" cellpadding="2"
-      border="1">
+    <table style="text-align: left; width: 388px; height: 124px;" cellspacing="2"
+      cellpadding="2" border="1">
       <tbody>
         <tr>
           <td style="vertical-align: top;"><big>Sprite type<br>
@@ -625,64 +615,62 @@ Dingux
     <big><br>
       <span style="text-decoration: underline;">Work with sprites</span><br>
       <br>
-      Just use <span style="font-style: italic;">Sprite</span> class for
-      work with a sprite. It is derived from Canvas. Let’s look to public
-      methods.<br>
+      Just use <span style="font-style: italic;">Sprite</span> class for work
+      with a sprite. It is derived from Canvas. Let’s look to public methods.<br>
       <br>
       <span style="font-style: italic;">void Sprite::load_sprite(Image
         &amp;buffer,const SPRITE_TYPE kind,const unsigned long int frames);</span>
       – Load a sprite from memory buffer and set sprite setting.<br>
-      <span style="font-style: italic;">void Sprite::set_target(const
-        unsigned long int target);</span> – Set target frame in animated sprite.<br>
-      <span style="font-style: italic;">void Sprite::step();</span> –
-      Increase number of target frame in strip. Set it to 1 if number of
-      target frame more than amount of frames.<br>
-      <span style="font-style: italic;">void Sprite::set_kind(const
-        SPRITE_TYPE target);</span> – Set sprite type.<br>
+      <span style="font-style: italic;">void Sprite::set_target(const unsigned
+        long int target);</span> – Set target frame in animated sprite.<br>
+      <span style="font-style: italic;">void Sprite::step();</span> – Increase
+      number of target frame in strip. Set it to 1 if number of target frame
+      more than amount of frames.<br>
+      <span style="font-style: italic;">void Sprite::set_kind(const SPRITE_TYPE
+        target);</span> – Set sprite type.<br>
       <span style="font-style: italic;">SPRITE_TYPE Sprite::get_kind() const;</span>
       – Get sprite type.<br>
-      <span style="font-style: italic;">void Sprite::set_transparent(const
-        bool enabled);</span> – Enable or disable transparent mode.<br>
+      <span style="font-style: italic;">void Sprite::set_transparent(const bool
+        enabled);</span> – Enable or disable transparent mode.<br>
       <span style="font-style: italic;">bool Sprite::get_transparent() const;</span>
       – Return true if transparent mode is enabled.<br>
-      <span style="font-style: italic;">void Sprite::set_x(const unsigned
-        long int x);</span> – Set x-coordinate of the sprite position.<br>
-      <span style="font-style: italic;">void Sprite::set_y(const unsigned
-        long int y);</span> – Set y-coordinate of the sprite position.<br>
-      <span style="font-style: italic;">void Sprite::increase_x(const
-        unsigned long int increment);</span> – Increase x-coordinate of the
-      current sprite position.<br>
-      <span style="font-style: italic;">void Sprite::decrease_x(const
-        unsigned long int decrement);</span> – Decrease x-coordinate of the
-      current sprite position.<br>
-      <span style="font-style: italic;">void Sprite::increase_y(const
-        unsigned long int increment);</span> – Increase y-coordinate of the
-      current sprite position.<br>
-      <span style="font-style: italic;">void Sprite::decrease_y(const
-        unsigned long int decrement);</span> – Decrease y-coordinate of the
-      current sprite position.<br>
-      <span style="font-style: italic;">unsigned long int Sprite::get_x()
-        const;</span> – Return the x position of the sprite.<br>
-      <span style="font-style: italic;">unsigned long int Sprite::get_y()
-        const;</span> – Return the y position of the sprite.<br>
+      <span style="font-style: italic;">void Sprite::set_x(const unsigned long
+        int x);</span> – Set x-coordinate of the sprite position.<br>
+      <span style="font-style: italic;">void Sprite::set_y(const unsigned long
+        int y);</span> – Set y-coordinate of the sprite position.<br>
+      <span style="font-style: italic;">void Sprite::increase_x(const unsigned
+        long int increment);</span> – Increase x-coordinate of the current
+      sprite position.<br>
+      <span style="font-style: italic;">void Sprite::decrease_x(const unsigned
+        long int decrement);</span> – Decrease x-coordinate of the current
+      sprite position.<br>
+      <span style="font-style: italic;">void Sprite::increase_y(const unsigned
+        long int increment);</span> – Increase y-coordinate of the current
+      sprite position.<br>
+      <span style="font-style: italic;">void Sprite::decrease_y(const unsigned
+        long int decrement);</span> – Decrease y-coordinate of the current
+      sprite position.<br>
+      <span style="font-style: italic;">unsigned long int Sprite::get_x() const;</span>
+      – Return the x position of the sprite.<br>
+      <span style="font-style: italic;">unsigned long int Sprite::get_y() const;</span>
+      – Return the y position of the sprite.<br>
       <span style="font-style: italic;">unsigned long int Sprite::get_width()
         const;</span> – Return the width of the sprite.<br>
-      <span style="font-style: italic;">unsigned long int
-        Sprite::get_height() const;</span> – Return the height of the sprite.<br>
-      <span style="font-style: italic;">Sprite* Sprite::get_handle();</span>
-      – Return the handle to sprite object.<br>
+      <span style="font-style: italic;">unsigned long int Sprite::get_height()
+        const;</span> – Return the height of the sprite.<br>
+      <span style="font-style: italic;">Sprite* Sprite::get_handle();</span> –
+      Return the handle to sprite object.<br>
       <span style="font-style: italic;">Collision_Box Sprite::get_box() const;</span>
       – Return collision related information.<br>
       <span style="font-style: italic;">void Sprite::clone(Sprite *target);</span>
       – Create copy of exist sprite.<br>
-      <span style="font-style: italic;">void Sprite::set_position(const
-        unsigned long int x, const unsigned long int y);</span> – Set sprite
-      position.<br>
+      <span style="font-style: italic;">void Sprite::set_position(const unsigned
+        long int x, const unsigned long int y);</span> – Set sprite position.<br>
       <span style="font-style: italic;">void Sprite::draw_sprite();</span> –
       Draw a sprite.<br>
-      <span style="font-style: italic;">void Sprite::draw_sprite(const
-        unsigned long int x, const unsigned long int y);</span> – Set sprite
-      position and draw it.<br>
+      <span style="font-style: italic;">void Sprite::draw_sprite(const unsigned
+        long int x, const unsigned long int y);</span> – Set sprite position and
+      draw it.<br>
       <br>
       <span style="text-decoration: underline;">Important notes</span><br>
       <br>
@@ -694,29 +682,27 @@ Dingux
       method.<br>
       <br>
     </big>
-    <h2><a class="mozTocH2" name="mozTocId443325"></a><big>Chapter 9.
-        Tile-set</big></h2>
+    <h2><a class="mozTocH2" name="mozTocId443325"></a><big>Chapter 9. Tile-set</big></h2>
     <big><br>
       <span style="text-decoration: underline;">Some words about complex
         backgrounds</span><br>
       <br>
-      Tile-set is very useful thing for constructing complex background. Tile
-      is a small non-transparent image. Each tile have fixed size. Tile-set
-      is matrix of tiles. Look to this picture for understand it.<br>
+      Tile-set is very useful thing for constructing complex background. Tile is
+      a small non-transparent image. Each tile have fixed size. Tile-set is
+      matrix of tiles. Look to this picture for understand it.<br>
       <br>
       <img style="width: 380px; height: 249px;" alt="" src="tileset.png"><br>
       <br>
       <span style="text-decoration: underline;">Rows and columns</span><br>
       <br>
-      First row index is 0. Last row index is row amount-1. First column
-      index is 0. Last column index is column amount-1.<br>
+      First row index is 0. Last row index is row amount-1. First column index
+      is 0. Last column index is column amount-1.<br>
       <br>
       <span style="text-decoration: underline;">Work with tile-set subsystem</span><br>
       <br>
-      <span style="font-style: italic;">Tileset</span> class provide access
-      to the tile-set subsystem. It is derived from <span style="font-style: italic;">Surface</span>
-      class. Let’s look on public
-      methods.<br>
+      <span style="font-style: italic;">Tileset</span> class provide access to
+      the tile-set subsystem. It is derived from <span style="font-style: italic;">Surface</span>
+      class. Let’s look on public methods.<br>
       <br>
       <span style="font-style: italic;">unsigned long int
         Tileset::get_tile_width() const;</span> – Return tile width in pixels.<br>
@@ -724,14 +710,13 @@ Dingux
         Tileset::get_tile_height() const;</span> – Return tile height in pixels.<br>
       <span style="font-style: italic;">unsigned long int Tileset::get_rows()
         const;</span> – Return amount of rows.<br>
-      <span style="font-style: italic;">unsigned long int
-        Tileset::get_columns() const;</span> – Return amount of columns.<br>
-      <span style="font-style: italic;">void Tileset::select_tile(const
-        unsigned long int row,const unsigned long int column);</span> – Select
-      target tile.<br>
-      <span style="font-style: italic;">void Tileset::draw_tile(const
-        unsigned long int x,const unsigned long int y);</span> – Draw selected
+      <span style="font-style: italic;">unsigned long int Tileset::get_columns()
+        const;</span> – Return amount of columns.<br>
+      <span style="font-style: italic;">void Tileset::select_tile(const unsigned
+        long int row,const unsigned long int column);</span> – Select target
       tile.<br>
+      <span style="font-style: italic;">void Tileset::draw_tile(const unsigned
+        long int x,const unsigned long int y);</span> – Draw selected tile.<br>
       <span style="font-style: italic;">void Tileset::load_tileset(Image
         &amp;buffer,const unsigned long int row_amount,const unsigned long int
         column_amount);</span> – Load a tile-set.<br>
@@ -742,8 +727,8 @@ Dingux
       <span style="text-decoration: underline;">How draw a text?</span><br>
       <br>
       Just use text subsystem for draw a text. This subsystem need a font for
-      text drawing. You must load a font before start draw the text. The font
-      is just horizontal strip with 128 frames.<br>
+      text drawing. You must load a font before start draw the text. The font is
+      just horizontal strip with 128 frames.<br>
       <br>
       <span style="text-decoration: underline;">Valid characters</span><br>
       <br>
@@ -754,36 +739,35 @@ Dingux
       <span style="font-style: italic;">Text</span> class provide simple
       interface to text subsystem. Let’s look to public methods.<br>
       <br>
-      <span style="font-style: italic;">void Text::set_position(const
-        unsigned long int x,const unsigned long int y);</span> – Set output
-      position.<br>
+      <span style="font-style: italic;">void Text::set_position(const unsigned
+        long int x,const unsigned long int y);</span> – Set output position.<br>
       <span style="font-style: italic;">void Text::load_font(Sprite *font);</span>
       – Load a font.<br>
       <span style="font-style: italic;">void Text::draw_character(const char
         target);</span> – Draw single character at current position.<br>
-      <span style="font-style: italic;">void Text::draw_text(const char
-        *text);</span> – Draw text at current position.<br>
-      <span style="font-style: italic;">void Text::draw_character(const
-        unsigned long int x,const unsigned long int y,const char target);</span>
-      – Draw single character at specific position.<br>
-      <span style="font-style: italic;">void Text::draw_text(const unsigned
-        long int x,const unsigned long int y,const char *text);</span> – Draw
-      text at specific position.<br>
+      <span style="font-style: italic;">void Text::draw_text(const char *text);</span>
+      – Draw text at current position.<br>
+      <span style="font-style: italic;">void Text::draw_character(const unsigned
+        long int x,const unsigned long int y,const char target);</span> – Draw
+      single character at specific position.<br>
+      <span style="font-style: italic;">void Text::draw_text(const unsigned long
+        int x,const unsigned long int y,const char *text);</span> – Draw text at
+      specific position.<br>
       <br>
     </big>
-    <h2><a class="mozTocH2" name="mozTocId51687"></a><big>Chapter 11.
-        Loading an images</big></h2>
+    <h2><a class="mozTocH2" name="mozTocId51687"></a><big>Chapter 11. Loading an
+        images</big></h2>
     <big><br>
       <span style="text-decoration: underline;">Load an image from a files</span><br>
       <br>
       Use image loader for load an image from a file. <span style="font-style: italic;">Image</span>
-      class provide simple access
-      to image loader. It is very simple class with few methods.<br>
+      class provide simple access to image loader. It is very simple class with
+      few methods.<br>
       <br>
-      <span style="font-style: italic;">void Image::load_tga(const char
-        *name);</span> – Load a Truevision TGA image.<br>
-      <span style="font-style: italic;">void Image::load_pcx(const char
-        *name);</span> – Load a ZSoft PC Paintbrush image.<br>
+      <span style="font-style: italic;">void Image::load_tga(const char *name);</span>
+      – Load a Truevision TGA image.<br>
+      <span style="font-style: italic;">void Image::load_pcx(const char *name);</span>
+      – Load a ZSoft PC Paintbrush image.<br>
       <span style="font-style: italic;">unsigned long int Image::get_width()
         const;</span> – Return width of current image.<br>
       <span style="font-style: italic;">unsigned long int Image::get_height()
@@ -805,8 +789,8 @@ Dingux
       supported format below.<br>
       <br>
     </big>
-    <table style="text-align: left; width: 100%;" cellspacing="2" cellpadding="2"
-      border="1">
+    <table style="text-align: left; width: 686px; height: 94px;" cellspacing="2"
+      cellpadding="2" border="1">
       <tbody>
         <tr>
           <td style="vertical-align: top;"><big>Format<br>
@@ -848,12 +832,11 @@ Dingux
       for do it. It is powerful open source and cross-platform image editor.<br>
       <br>
     </big>
-    <h1><a class="mozTocH1" name="mozTocId983100"></a><big>Part 4. Game
-        specific things</big></h1>
+    <h1><a class="mozTocH1" name="mozTocId983100"></a><big>Part 4. Game specific
+        things</big></h1>
     <big><br>
     </big>
-    <h2><a class="mozTocH2" name="mozTocId1365"></a><big>Chapter 1.
-        Collision</big></h2>
+    <h2><a class="mozTocH2" name="mozTocId1365"></a><big>Chapter 1. Collision</big></h2>
     <big><br>
       <span style="text-decoration: underline;">Very important thing for any
         game</span><br>
@@ -863,8 +846,8 @@ Dingux
       <span style="text-decoration: underline;">Collision detail</span><br>
       <br>
       Collision detector using bounding box collision method for detect
-      collision. Collision related information represent by special
-      structure. Let me introduce it.<br>
+      collision. Collision related information represent by special structure.
+      Let me introduce it.<br>
       <br>
       <span style="font-style: italic;">struct Collision_Box</span><br style="font-style: italic;">
       <span style="font-style: italic;">{</span><br style="font-style: italic;">
@@ -889,9 +872,9 @@ Dingux
       <span style="font-style: italic;">bool
         Collision::check_vertical_collision() const;</span> – Return true if
       vertical collision between two objects is accepted.<br>
-      <span style="font-style: italic;">bool Collision::check_collision()
-        const;</span> – Return true if horizontal or vertical collision between
-      two objects is accepted.<br>
+      <span style="font-style: italic;">bool Collision::check_collision() const;</span>
+      – Return true if horizontal or vertical collision between two objects is
+      accepted.<br>
       <span style="font-style: italic;">Collision_Box
         Collision::generate_box(const unsigned long int x,const unsigned long
         int y,const unsigned long int width,const unsigned long int height)
@@ -901,9 +884,8 @@ Dingux
     </big>
     <h2><a class="mozTocH2" name="mozTocId414110"></a><big>Chapter 2. Timer</big></h2>
     <big><br>
-      <span style="font-style: italic;">Timer</span> is very useful thing.
-      Just use Timer class for work with the timer. Let’s look to public
-      methods.<br>
+      <span style="font-style: italic;">Timer</span> is very useful thing. Just
+      use Timer class for work with the timer. Let’s look to public methods.<br>
       <br>
       <span style="font-style: italic;">void Timer::set_timer(const unsigned
         long int seconds);</span> – Set timer interval and initialize start
@@ -914,20 +896,20 @@ Dingux
       seconds.<br>
       <br>
     </big>
-    <h2><a class="mozTocH2" name="mozTocId446066"></a><big>Chapter 3.
-        Binary files</big></h2>
+    <h2><a class="mozTocH2" name="mozTocId446066"></a><big>Chapter 3. Binary
+        files</big></h2>
     <big><br>
       <span style="text-decoration: underline;">Work with binary files</span><br>
       <br>
-      Just use <span style="font-style: italic;">Binary_File</span> class
-      for work with the binary files. Let’s look to public methods.<br>
+      Just use <span style="font-style: italic;">Binary_File</span> class for
+      work with the binary files. Let’s look to public methods.<br>
       <br>
       <span style="font-style: italic;">void Binary_File::create_temp();</span>
       – Create a temporary file. This file will be deleted when it closed.<br>
-      <span style="font-style: italic;">void Binary_File::open_read(const
-        char *name);</span> – Open a file for read.<br>
-      <span style="font-style: italic;">void Binary_File::open_write(const
-        char *name);</span> – Open a file for read and write.<br>
+      <span style="font-style: italic;">void Binary_File::open_read(const char
+        *name);</span> – Open a file for read.<br>
+      <span style="font-style: italic;">void Binary_File::open_write(const char
+        *name);</span> – Open a file for read and write.<br>
       <span style="font-style: italic;">void Binary_File::close();</span> –
       Close the file.<br>
       <span style="font-style: italic;">void Binary_File::set_position(const
@@ -955,8 +937,8 @@ Dingux
     <h2><a class="mozTocH2" name="mozTocId702206"></a><big>Chapter 1. Memory</big></h2>
     <big><br>
       RAM is very important resource. Just use <span style="font-style: italic;">Memory</span>
-      class for get total memory
-      size and free memory size. Let’s look to public methods.<br>
+      class for get total memory size and free memory size. Let’s look to public
+      methods.<br>
       <br>
       <span style="font-style: italic;">unsigned long int
         System::get_total_memory();</span> – Return a total memory size in
@@ -965,8 +947,8 @@ Dingux
         System::get_free_memory();</span> – Return a free memory size in bytes.<br>
       <br>
     </big>
-    <h2><a class="mozTocH2" name="mozTocId776211"></a><big>Chapter 2.
-        Display back-light</big></h2>
+    <h2><a class="mozTocH2" name="mozTocId776211"></a><big>Chapter 2. Display
+        back-light</big></h2>
     <big><br>
       <span style="text-decoration: underline;">Control display back-light</span><br>
       <br>
@@ -982,12 +964,10 @@ Dingux
       Just use <span style="font-style: italic;">Backlight</span> class for
       work with the back-light. Let’s look to public methods.<br>
       <br>
-      <span style="font-style: italic;">unsigned char
-        Backlight::get_minimum() const;</span> – Return minimum level of
-      display back-light.<br>
-      <span style="font-style: italic;">unsigned char
-        Backlight::get_maximum() const;</span> – Return maximum level of
-      display back-light.<br>
+      <span style="font-style: italic;">unsigned char Backlight::get_minimum()
+        const;</span> – Return minimum level of display back-light.<br>
+      <span style="font-style: italic;">unsigned char Backlight::get_maximum()
+        const;</span> – Return maximum level of display back-light.<br>
       <span style="font-style: italic;">unsigned char Backlight::get_level();</span>
       – Return current level of display back-light.<br>
       <span style="font-style: italic;">void Backlight::increase_level();</span>
@@ -996,14 +976,14 @@ Dingux
       – Decrease current level of display back-light.<br>
       <span style="font-style: italic;">void Backlight::turn_off();</span> –
       Turn off display back-light.<br>
-      <span style="font-style: italic;">void Backlight::turn_on();</span> –
-      Turn on display back-light.<br>
-      <span style="font-style: italic;">void Backlight::set_light(const
-        unsigned char level);</span> – Set level of display back-light.<br>
+      <span style="font-style: italic;">void Backlight::turn_on();</span> – Turn
+      on display back-light.<br>
+      <span style="font-style: italic;">void Backlight::set_light(const unsigned
+        char level);</span> – Set level of display back-light.<br>
       <br>
     </big>
-    <h2><a class="mozTocH2" name="mozTocId54966"></a><big>Chapter 3.
-        Abnormal program termination</big></h2>
+    <h2><a class="mozTocH2" name="mozTocId54966"></a><big>Chapter 3. Abnormal
+        program termination</big></h2>
     <big><br>
       You can use <span style="font-style: italic;">Halt</span> function for
       terminate program. This function declared in <span style="font-style: italic;">DINGUXGDK</span>
@@ -1018,14 +998,13 @@ Dingux
         Interaction with operation system</big></h2>
     <big><br>
       You may need interaction with operation system. Just use <span style="font-style: italic;">System</span>
-      class for do it. Let’s look
-      to public methods.<br>
+      class for do it. Let’s look to public methods.<br>
       <br>
       <span style="font-style: italic;">const unsigned long int
         System::get_random(const unsigned long int number);</span> – Return a
       random number from zero to argument–1.<br>
-      <span style="font-style: italic;">void System::quit();</span> – Exit
-      from you program and return user to operation system.<br>
+      <span style="font-style: italic;">void System::quit();</span> – Exit from
+      you program and return user to operation system.<br>
       <span style="font-style: italic;">void System::run(const char *command);</span>
       – Execute shell command or external program.<br>
       <span style="font-style: italic;">char* System::read_environment(const
@@ -1036,9 +1015,9 @@ Dingux
       <span style="font-style: italic;">bool System::delete_file(const char
         *name);</span> – Delete the target file. Return true if operation was
       successfully complete.<br>
-      <span style="font-style: italic;">void System::enable_logging(const
-        char *name);</span> – Enable error logging. Error messages will
-      redirect to a log file.<br>
+      <span style="font-style: italic;">void System::enable_logging(const char
+        *name);</span> – Enable error logging. Error messages will redirect to a
+      log file.<br>
       <br>
     </big>
     <h2><a class="mozTocH2" name="mozTocId73461"></a><big>Chapter 5. Input</big></h2>
@@ -1050,13 +1029,13 @@ Dingux
       <br>
       <span style="text-decoration: underline;">Working with game-pad</span><br>
       <br>
-      Just use <span style="font-style: italic;">Gamepad</span> class for
-      work with the built–in game-pad. Let’s look to public methods.<br>
+      Just use <span style="font-style: italic;">Gamepad</span> class for work
+      with the built–in game-pad. Let’s look to public methods.<br>
       <br>
       <span style="font-style: italic;">void Gamepad::initialize();</span> –
       Initialize the game-pad subsystem.<br>
-      <span style="font-style: italic;">void Gamepad::update();</span> –
-      Update buttons state. Always call this method before check the button.<br>
+      <span style="font-style: italic;">void Gamepad::update();</span> – Update
+      buttons state. Always call this method before check the button.<br>
       <span style="font-style: italic;">bool Gamepad::check_hold(const
         GAMEPAD_BUTTONS button);</span> – Return true if target button is
       pressed or holding.<br>
@@ -1073,8 +1052,8 @@ Dingux
       constants.<br>
       <br>
     </big>
-    <table style="text-align: left; width: 100%;" cellspacing="2" cellpadding="2"
-      border="1">
+    <table style="text-align: left; width: 477px; height: 454px;" cellspacing="2"
+      cellpadding="2" border="1">
       <tbody>
         <tr>
           <td style="vertical-align: top;"><big>Key code<br>
@@ -1160,8 +1139,8 @@ Dingux
     <h1><a class="mozTocH1" name="mozTocId412631"></a><big>Part 6. Sound</big></h1>
     <big><br>
     </big>
-    <h2><a class="mozTocH2" name="mozTocId251362"></a><big>Chapter 1.
-        Low-level sound subsystem</big></h2>
+    <h2><a class="mozTocH2" name="mozTocId251362"></a><big>Chapter 1. Low-level
+        sound subsystem</big></h2>
     <big><br>
       <span style="text-decoration: underline;">Sound device</span><br>
       <br>
@@ -1172,8 +1151,8 @@ Dingux
       You can see specification of default sound format bellow.<br>
       <br>
     </big>
-    <table style="text-align: left; width: 100%;" cellspacing="2" cellpadding="2"
-      border="1">
+    <table style="text-align: left; width: 350px; height: 124px;" cellspacing="2"
+      cellpadding="2" border="1">
       <tbody>
         <tr>
           <td style="vertical-align: top;"><big>Data format<br>
@@ -1213,8 +1192,8 @@ Dingux
       Just use <span style="font-style: italic;">Sound</span> class for work
       with low-level sound subsystem. Let’s look to public methods.<br>
       <br>
-      <span style="font-style: italic;">void Sound::initialize(const int
-        rate);</span> – Initialize the subsystem.<br>
+      <span style="font-style: italic;">void Sound::initialize(const int rate);</span>
+      – Initialize the subsystem.<br>
       <span style="font-style: italic;">bool Sound::check_busy();</span> –
       Return true if sound device is busy.<br>
       <span style="font-style: italic;">size_t Sound::get_length() const;</span>
@@ -1226,19 +1205,18 @@ Dingux
       Return the handle to low-level sound subsystem object.<br>
       <br>
     </big>
-    <h2><a class="mozTocH2" name="mozTocId873628"></a><big>Chapter 2.
-        Loading audio</big></h2>
+    <h2><a class="mozTocH2" name="mozTocId873628"></a><big>Chapter 2. Loading
+        audio</big></h2>
     <big><br>
       <span style="text-decoration: underline;">Audio loader</span><br>
       <br>
       Audio loader let you load audio data from <a href="https://en.wikipedia.org/wiki/Wave_Sound">Waveform
-        Audio</a>
-      files.<br>
+        Audio</a> files.<br>
       <br>
       <span style="text-decoration: underline;">Audio blocks</span><br>
       <br>
-      Audio data is array of audio blocks. Duration of single audio block is
-      1 second. You can calculate length of the block by simple way:
+      Audio data is array of audio blocks. Duration of single audio block is 1
+      second. You can calculate length of the block by simple way:
       (rate*channels*bits)/8.<br>
       <br>
       <span style="text-decoration: underline;">Supported format</span><br>
@@ -1247,8 +1225,8 @@ Dingux
       below.<br>
       <br>
     </big>
-    <table style="text-align: left; width: 100%;" cellspacing="2" cellpadding="2"
-      border="1">
+    <table style="text-align: left; width: 408px; height: 124px;" cellspacing="2"
+      cellpadding="2" border="1">
       <tbody>
         <tr>
           <td style="vertical-align: top;"><big>Data format<br>
@@ -1279,14 +1257,14 @@ Dingux
     <big><br>
       <span style="text-decoration: underline;">Recommend software</span><br>
       <br>
-      You can use wide range of sound software for convert you audio to
-      correct format. I recommend use <a href="https://www.audacityteam.org/">Audacity</a>
+      You can use wide range of sound software for convert you audio to correct
+      format. I recommend use <a href="https://www.audacityteam.org/">Audacity</a>
       or <a href="http://www.freac.org/">fre:ac</a> for do it.<br>
       <br style="text-decoration: underline;">
       <span style="text-decoration: underline;">Load audio from files</span><br>
       <br>
-      <span style="font-style: italic;">Audio</span> class provide simple
-      access to audio loader. Let’s look to public methods.<br>
+      <span style="font-style: italic;">Audio</span> class provide simple access
+      to audio loader. Let’s look to public methods.<br>
       <br>
       <span style="font-style: italic;">Audio* Audio::get_handle();</span> –
       Return handle to audio loader subsystem.<br>
@@ -1296,20 +1274,20 @@ Dingux
       – Return length of audio block in bytes.<br>
       <span style="font-style: italic;">unsigned long int Audio::get_rate()
         const;</span> – Return sound rate.<br>
-      <span style="font-style: italic;">unsigned short int
-        Audio::get_channels() const;</span> – Return number of audio channels.<br>
+      <span style="font-style: italic;">unsigned short int Audio::get_channels()
+        const;</span> – Return number of audio channels.<br>
       <span style="font-style: italic;">unsigned short int Audio::get_bits()
         const;</span> – Return amount of bits per sample.<br>
-      <span style="font-style: italic;">void Audio::go_start();</span> – Go
-      to start of audio data.<br>
-      <span style="font-style: italic;">void Audio::read_data(char
-        *buffer,const size_t length);</span> – Read audio data.<br>
-      <span style="font-style: italic;">void Audio::load_wave(const char
-        *name);</span> – Load audio from Waveform Audio file.<br>
+      <span style="font-style: italic;">void Audio::go_start();</span> – Go to
+      start of audio data.<br>
+      <span style="font-style: italic;">void Audio::read_data(char *buffer,const
+        size_t length);</span> – Read audio data.<br>
+      <span style="font-style: italic;">void Audio::load_wave(const char *name);</span>
+      – Load audio from Waveform Audio file.<br>
       <br>
     </big>
-    <h2><a class="mozTocH2" name="mozTocId657923"></a><big>Chapter 3.
-        Playing audio</big></h2>
+    <h2><a class="mozTocH2" name="mozTocId657923"></a><big>Chapter 3. Playing
+        audio</big></h2>
     <big><br>
       <span style="text-decoration: underline;">Audio player</span><br>
       <br>
@@ -1317,18 +1295,18 @@ Dingux
       <br style="text-decoration: underline;">
       <span style="text-decoration: underline;">Work with audio player</span><br>
       <br>
-      Just use <span style="font-style: italic;">Player</span> class for
-      work with audio player. Let’s look to public methods.<br>
+      Just use <span style="font-style: italic;">Player</span> class for work
+      with audio player. Let’s look to public methods.<br>
       <br>
-      <span style="font-style: italic;">void Player::initialize(Sound
-        *target);</span> – Initialize the subsystem.<br>
+      <span style="font-style: italic;">void Player::initialize(Sound *target);</span>
+      – Initialize the subsystem.<br>
       <span style="font-style: italic;">void Player::load(Audio *audio);</span>
       – Load audio.<br>
       <span style="font-style: italic;">void Player::play();</span> – Play
       current audio block and increase playing position.<br>
       <span style="font-style: italic;">void Player::loop();</span> – Play
-      current audio block and increase playing position. Jump to start if
-      don't have available audio block anymore.<br>
+      current audio block and increase playing position. Jump to start if don't
+      have available audio block anymore.<br>
       <span style="font-style: italic;">bool Player::is_end() const;</span> –
       Return true if don't have available audio block anymore.<br>
       <span style="font-style: italic;">void Player::rewind_audio();</span> –
@@ -1354,16 +1332,16 @@ Dingux
       Initialize the subsystem.<br>
       <span style="font-style: italic;">void Mixer::set_volume(const int
         volume);</span> – Set level of sound volume.<br>
-      <span style="font-style: italic;">void Mixer::turn_on();</span> – Turn
-      on sound.<br>
+      <span style="font-style: italic;">void Mixer::turn_on();</span> – Turn on
+      sound.<br>
       <span style="font-style: italic;">void Mixer::turn_off();</span> – Turn
       off sound.<br>
-      <span style="font-style: italic;">int Mixer::get_maximum() const;</span>
-      – Return maximum level of sound volume.<br>
-      <span style="font-style: italic;">int Mixer::get_minimum() const;</span>
-      – Return minimum level of sound volume.<br>
-      <span style="font-style: italic;">int Mixer::get_volume() const;</span>
-      – Return current level of sound volume.<br>
+      <span style="font-style: italic;">int Mixer::get_maximum() const;</span> –
+      Return maximum level of sound volume.<br>
+      <span style="font-style: italic;">int Mixer::get_minimum() const;</span> –
+      Return minimum level of sound volume.<br>
+      <span style="font-style: italic;">int Mixer::get_volume() const;</span> –
+      Return current level of sound volume.<br>
       <br>
     </big>
     <h1><a class="mozTocH1" name="mozTocId912509"></a><big>Part 7. Internal
@@ -1373,24 +1351,24 @@ Dingux
     <h2><a class="mozTocH2" name="mozTocId596077"></a><big>Chapter 1. A few
         words for a curious programmers</big></h2>
     <big><br>
-      The library subsystems have a different internal structure. It hidden
-      from you and you don’t have access to it. Do you want know about hiding
-      things? Just read a next chapter.<br>
+      The library subsystems have a different internal structure. It hidden from
+      you and you don’t have access to it. Do you want know about hiding things?
+      Just read a next chapter.<br>
       <br>
     </big>
-    <h2><a class="mozTocH2" name="mozTocId383677"></a><big>Chapter 2.
-        Internal classes</big></h2>
+    <h2><a class="mozTocH2" name="mozTocId383677"></a><big>Chapter 2. Internal
+        classes</big></h2>
     <big><br>
-      Some classes designed for internal use only. Don’t touch them. What
-      doing these strange classes?<br>
+      Some classes designed for internal use only. Don’t touch them. What doing
+      these strange classes?<br>
       <br>
       <span style="font-style: italic;">FPS</span> implement fps counter.<br>
       <span style="font-style: italic;">Render</span> implement frame-buffer
       render.<br>
       <br>
     </big>
-    <h2><a class="mozTocH2" name="mozTocId445066"></a><big>Chapter 3.
-        Low-level sound subsystem</big></h2>
+    <h2><a class="mozTocH2" name="mozTocId445066"></a><big>Chapter 3. Low-level
+        sound subsystem</big></h2>
     <big><br>
       Low-level sound subsystem work over <a href="http://www.opensound.com/">Open
 sound
@@ -1412,16 +1390,16 @@ sound
     <big><br>
       <span style="text-decoration: underline;">Two state arrays</span><br>
       <br>
-      Button states store in two state arrays: current state array and old
-      state array. State array is just array of bytes.<br>
+      Button states store in two state arrays: current state array and old state
+      array. State array is just array of bytes.<br>
       <br>
       <span style="text-decoration: underline;">Button state</span><br>
       <br>
       The button states look as predefined constants.<br>
       <br>
     </big>
-    <table style="text-align: left; width: 100%;" cellspacing="2" cellpadding="2"
-      border="1">
+    <table style="text-align: left; width: 425px; height: 94px;" cellspacing="2"
+      cellpadding="2" border="1">
       <tbody>
         <tr>
           <td style="vertical-align: top;"><big>State code<br>
@@ -1445,12 +1423,12 @@ sound
     </table>
     <big><br>
     </big>
-    <h2><a class="mozTocH2" name="mozTocId949422"></a><big>Chapter 6. Base
-        image subsystem</big></h2>
+    <h2><a class="mozTocH2" name="mozTocId949422"></a><big>Chapter 6. Base image
+        subsystem</big></h2>
     <big><br>
-      Base image subsystem active use internal image buffer. This buffer is
-      very simple. It is just array of pixel. The special structure contain a
-      singe pixel. Let’s look to this structure.<br>
+      Base image subsystem active use internal image buffer. This buffer is very
+      simple. It is just array of pixel. The special structure contain a singe
+      pixel. Let’s look to this structure.<br>
       <br>
       <span style="font-style: italic;">struct IMG_Pixel</span><br style="font-style: italic;">
       <span style="font-style: italic;">{</span><br style="font-style: italic;">
@@ -1586,8 +1564,8 @@ sound
       1.8.8 – Source code was synced with Orthodox game framework 1.4.3.<br>
       1.8.9 – Source code was synced with Orthodox game framework 1.4.5.<br>
       1.9 – Source code was synced with Orthodox game framework 1.4.8.<br>
-      1.9.1 – Source code was synced with Orthodox game framework 1.5.9.
-      License has been changed.<br>
+      1.9.1 – Source code was synced with Orthodox game framework 1.5.9. License
+      has been changed.<br>
       1.9.2 – Source code was synced with Orthodox game framework 1.6.8.<br>
       1.9.3 – Source code was synced with Orthodox game framework 1.7.<br>
       1.9.4 – Memory usage was reduced.<br>
@@ -1704,8 +1682,9 @@ sound
       4.6.6 – Source code was synced with Neon game development kit 4.8.<br>
       4.6.7 – Source code was synced with Neon game development kit 4.8.1.<br>
       4.6.7.1 – Documentation was converted to HTML format.</big><br>
-    <big>
-      4.6.8 – Small changes.</big><br>
-    <big>4.6.9 – Source code was synced with Neon game development kit 4.8.5.</big>
+    <big> 4.6.8 – Small changes.</big><br>
+    <big>4.6.9 – Source code was synced with Neon game development kit 4.8.5.</big><br>
+    <big>4.7 – Source code was synced with Neon game development kit 4.8.6.</big><br>
+    <big>4.7.1 – Source code was synced with Neon game development kit 4.8.7.</big>
   </body>
 </html>
