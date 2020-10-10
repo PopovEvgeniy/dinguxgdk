@@ -52,7 +52,7 @@ int main()
   if (gamepad.check_press(BUTTON_Y)==true) light.decrease_level();
   if (gamepad.check_hold(BUTTON_UP)==true) ship.decrease_y(4);
   if (gamepad.check_hold(BUTTON_DOWN)==true) ship.increase_y(4);
-  if (gamepad.check_hold(BUTTON_LEFT)==true) ship.increase_x(4);
+  if (gamepad.check_hold(BUTTON_LEFT)==true) ship.decrease_x(4);
   if (gamepad.check_hold(BUTTON_RIGHT)==true) ship.increase_x(4);
   if (ship.get_x()>screen.get_width()) ship.set_x(screen.get_width()/2);
   if (ship.get_y()>screen.get_height()) ship.set_y(screen.get_height()/2);
