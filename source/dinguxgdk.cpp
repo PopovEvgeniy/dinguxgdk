@@ -2053,14 +2053,24 @@ void Sprite::set_y(const unsigned long int y)
  current_y=y;
 }
 
-unsigned long int Sprite::get_x() const
+void Sprite::increase_x()
 {
- return current_x;
+ ++current_x;
 }
 
-unsigned long int Sprite::get_y() const
+void Sprite::decrease_x()
 {
- return current_y;
+ --current_x;
+}
+
+void Sprite::increase_y()
+{
+ ++current_y;
+}
+
+void Sprite::decrease_y()
+{
+ --current_y;
 }
 
 void Sprite::increase_x(const unsigned long int increment)
@@ -2081,6 +2091,16 @@ void Sprite::increase_y(const unsigned long int increment)
 void Sprite::decrease_y(const unsigned long int decrement)
 {
  current_y-=decrement;
+}
+
+unsigned long int Sprite::get_x() const
+{
+ return current_x;
+}
+
+unsigned long int Sprite::get_y() const
+{
+ return current_y;
 }
 
 unsigned long int Sprite::get_width() const
