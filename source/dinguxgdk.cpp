@@ -79,13 +79,44 @@ Frame::~Frame()
 {
  if (buffer!=NULL)
  {
-  free(buffer);
+  delete[] buffer;
   buffer=NULL;
  }
  if (shadow!=NULL)
  {
-  free(shadow);
+  delete[] shadow;
   shadow=NULL;
+ }
+
+}
+
+void Frame::calculate_buffer_length()
+{
+ pixels=static_cast<size_t>(frame_width)*static_cast<size_t>(frame_height);
+ length=pixels*sizeof(unsigned short int);
+}
+
+unsigned short int *Frame::get_memory(const char *error)
+{
+ unsigned short int *target;
+ target=NULL;
+ try
+ {
+  target=new unsigned short int[pixels];
+ }
+ catch (...)
+ {
+  Halt(error);
+ }
+ return target;
+}
+
+void Frame::clear_buffer(unsigned short int *target)
+{
+ size_t index;
+ for (index=0;index<pixels;++index)
+ {
+  target[index]=0;
  }
 
 }
@@ -93,13 +124,10 @@ Frame::~Frame()
 unsigned short int *Frame::create_buffer(const char *error)
 {
  unsigned short int *target;
- pixels=static_cast<size_t>(frame_width)*static_cast<size_t>(frame_height);
- target=static_cast<unsigned short int*>(calloc(pixels,sizeof(unsigned short int)));
- length=pixels*sizeof(unsigned short int);
- if (target==NULL)
- {
-  Halt(error);
- }
+ target=NULL;
+ this->calculate_buffer_length();
+ target=this->get_memory(error);
+ this->clear_buffer(target);
  return target;
 }
 
@@ -166,12 +194,7 @@ void Frame::draw_pixel(const unsigned long int x,const unsigned long int y,const
 
 void Frame::clear_screen()
 {
- size_t index;
- for (index=0;index<pixels;++index)
- {
-  buffer[index]=0;
- }
-
+ this->clear_buffer(buffer);
 }
 
 void Frame::save()
@@ -440,18 +463,40 @@ Gamepad::Gamepad()
 Gamepad::~Gamepad()
 {
  if (device!=-1) close(device);
- if (current!=NULL) free(current);
- if (preversion!=NULL) free(preversion);
+ if (current!=NULL) delete[] current;
+ if (preversion!=NULL) delete[] preversion;
+}
+
+unsigned char *Gamepad::get_memory(const char *message)
+{
+ unsigned char *buffer;
+ buffer=NULL;
+ try
+ {
+  buffer=new unsigned char[BUTTON_AMOUNT];
+ }
+ catch (...)
+ {
+  Halt(message);
+ }
+ return buffer;
+}
+
+void Gamepad::clear_buffer(unsigned char *target)
+{
+ size_t index;
+ for (index=0;index<BUTTON_AMOUNT;++index)
+ {
+  target[index]=GAMEPAD_RELEASE;
+ }
+
 }
 
 unsigned char *Gamepad::create_buffer(const char *message)
 {
  unsigned char *buffer;
- buffer=static_cast<unsigned char*>(calloc(BUTTON_AMOUNT,sizeof(unsigned char)));
- if (buffer==NULL)
- {
-  Halt(message);
- }
+ buffer=this->get_memory(message);
+ this->clear_buffer(buffer);
  return buffer;
 }
 
@@ -1263,7 +1308,7 @@ Player::Player()
 
 Player::~Player()
 {
- if (buffer!=NULL) free(buffer);
+ if (buffer!=NULL) delete[] buffer;
 }
 
 void Player::configure_player(Audio *audio)
@@ -1277,7 +1322,7 @@ void Player::clear_buffer()
 {
  if (buffer!=NULL)
  {
-  free(buffer);
+  delete[] buffer;
   buffer=NULL;
  }
 
@@ -1285,8 +1330,11 @@ void Player::clear_buffer()
 
 void Player::create_buffer()
 {
- buffer=static_cast<char*>(calloc(sound->get_length(),sizeof(char)));
- if (buffer==NULL)
+ try
+ {
+  buffer=new char[sound->get_length()];
+ }
+ catch (...)
  {
   Halt("Can't allocate memory for audio buffer");
  }
@@ -1453,14 +1501,23 @@ Image::Image()
 
 Image::~Image()
 {
- if (data!=NULL) free(data);
+ if (data!=NULL)
+ {
+  delete[] data;
+  data=NULL;
+ }
+
 }
 
 unsigned char *Image::create_buffer(const size_t length)
 {
  unsigned char *result;
- result=static_cast<unsigned char*>(calloc(length,sizeof(unsigned char)));
- if (result==NULL)
+ result=NULL;
+ try
+ {
+  result=new unsigned char[length];
+ }
+ catch (...)
  {
   Halt("Can't allocate memory for image buffer");
  }
@@ -1471,7 +1528,7 @@ void Image::clear_buffer()
 {
  if (data!=NULL)
  {
-  free(data);
+  delete[] data;
   data=NULL;
  }
 
@@ -1539,7 +1596,7 @@ void Image::load_tga(const char *name)
    }
 
   }
-  free(compressed);
+  delete[] compressed;
  }
  target.close();
  data=uncompressed;
@@ -1592,7 +1649,7 @@ void Image::load_pcx(const char *name)
   }
 
  }
- free(original);
+ delete[] original;
  original=this->create_buffer(uncompressed_length);
  for (x=0;x<width;++x)
  {
@@ -1606,7 +1663,7 @@ void Image::load_pcx(const char *name)
   }
 
  }
- free(uncompressed);
+ delete[] uncompressed;
  data=original;
 }
 

@@ -31,6 +31,7 @@ SVGALib homepage: http://www.svgalib.org/
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <new>
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/sysinfo.h>
@@ -138,6 +139,9 @@ class Frame
  unsigned long int frame_height;
  unsigned short int *buffer;
  unsigned short int *shadow;
+ void calculate_buffer_length();
+ unsigned short int *get_memory(const char *error);
+ void clear_buffer(unsigned short int *target);
  unsigned short int *create_buffer(const char *error);
  void put_pixel(const size_t offset,const unsigned short int red,const unsigned short int green,const unsigned short int blue);
  protected:
@@ -243,6 +247,8 @@ class Gamepad
  int device;
  size_t length;
  input_event input;
+ unsigned char *get_memory(const char *message);
+ void clear_buffer(unsigned char *target);
  unsigned char *create_buffer(const char *message);
  void create_buffers();
  void open_device();
