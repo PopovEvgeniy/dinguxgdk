@@ -190,7 +190,7 @@ Dingux
       <span style="text-decoration: underline;">Dingux game development kit
         license</span><br>
     </big><br>
-    <big> Copyright (C) 2015-2020 Popov Evgeniy Alekseyevich</big><br>
+    <big> Copyright (C) 2015-2021 Popov Evgeniy Alekseyevich</big><br>
     <br>
     <big> This software is provided 'as-is', without any express or implied
       warranty. In no event will the authors be held liable for any damages
@@ -659,10 +659,14 @@ Dingux
         const;</span> – Return amount of columns.<br>
       <span style="font-style: italic;">void Tileset::select_tile(const unsigned
         long int row,const unsigned long int column);</span> – Select target
-      tile.<br>
-      <span style="font-style: italic;">void Tileset::draw_tile(const unsigned
-        long int x,const unsigned long int y);</span> – Draw selected tile.<br>
-      <span style="font-style: italic;">void Tileset::load_tileset(Image
+      tile.</big><br>
+    <big> <span style="font-style: italic;">void Tileset::draw_tile(const
+        unsigned long int x,const unsigned long int y);</span> – Draw selected
+      tile at specific position.</big><br>
+    <big><i>void Tileset::draw_tile(const unsigned long int row,const unsigned
+        long int column,const unsigned long int x,const unsigned long int y);</i>
+      – Draw target tile at specific position.</big><br>
+    <big> <span style="font-style: italic;">void Tileset::load_tileset(Image
         &amp;buffer,const unsigned long int row_amount,const unsigned long int
         column_amount);</span> – Load a tile-set. </big>
     <h2><a class="mozTocH2" name="mozTocId804597"></a><big>Chapter 10. Text</big></h2>
@@ -1561,6 +1565,7 @@ sound
     <big>4.7.5 – Source code was synced with Neon game development kit 4.9.6.</big><br>
     <big>4.7.6 – Virtual surface subsystem was improved.</big><br>
     <big>4.7.7 – Game-pad support was improved.</big><br>
-    <big>4.7.8 – Audio playing subsystem was improved.</big>
+    <big>4.7.8 – Audio playing subsystem was improved.</big><br>
+    <big>4.7.9 – Source code was synced with Neon game development kit 5.0.5.</big>
   </body>
 </html>
