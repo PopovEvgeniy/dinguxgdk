@@ -448,6 +448,7 @@ Dingux
     <big><br>
     </big>
     <table style="text-align: left; width: 562px; height: 124px;" cellspacing="2"
+
       cellpadding="2" border="1">
       <tbody>
         <tr>
@@ -802,11 +803,20 @@ Dingux
       horizontal collision between two objects is accepted.<br>
       <span style="font-style: italic;">bool
         Collision::check_vertical_collision() const;</span> – Return true if
-      vertical collision between two objects is accepted.<br>
-      <span style="font-style: italic;">bool Collision::check_collision() const;</span>
-      – Return true if horizontal or vertical collision between two objects is
-      accepted.<br>
-      <span style="font-style: italic;">Collision_Box
+      vertical collision between two objects is accepted.</big><br>
+    <big> <span style="font-style: italic;">bool Collision::check_collision()
+        const;</span> – Return true if horizontal or vertical collision between
+      two objects is accepted.</big><br>
+    <big><i>bool Collision::check_horizontal_collision(const Box_Collision
+        &amp;first_target,const Box_Collision &amp;second_target);</i> – Set
+      collision target and check horizontal collision.</big><br>
+    <big><i>bool Collision::check_vertical_collision(const Box_Collision
+        &amp;first_target,const Box_Collision &amp;second_target);</i> – Set
+      collision target and check vertical collision.</big><br>
+    <big><i>bool Collision::check_collision(const Box_Collision
+        &amp;first_target,const Box_Collision &amp;second_target);</i> – Set
+      collision target and check collision.</big><br>
+    <big> <span style="font-style: italic;">Collision_Box
         Collision::generate_box(const unsigned long int x,const unsigned long
         int y,const unsigned long int width,const unsigned long int height)
         const;</span> – Generate collision related information from the object
@@ -1566,6 +1576,9 @@ sound
     <big>4.7.6 – Virtual surface subsystem was improved.</big><br>
     <big>4.7.7 – Game-pad support was improved.</big><br>
     <big>4.7.8 – Audio playing subsystem was improved.</big><br>
-    <big>4.7.9 – Source code was synced with Neon game development kit 5.0.5.</big>
+    <big>4.7.9 – Source code was synced with Neon game development kit 5.0.5.</big><br>
+    <big>4.8 – Render performance was improved.</big><br>
+    <big>4.8.1 – 4.8.3 – Small changes.</big><br>
+    <big>4.8.4 – Source code was synced with Neon game development kit 5.0.9.</big>
   </body>
 </html>
