@@ -2261,6 +2261,18 @@ void Sprite::draw_sprite(const unsigned long int x,const unsigned long int y)
  this->draw_sprite();
 }
 
+void Sprite::draw_sprite(const bool transparency)
+{
+ this->set_transparent(transparency);
+ this->draw_sprite();
+}
+
+void Sprite::draw_sprite(const bool transparency,const unsigned long int x,const unsigned long int y)
+{
+ this->set_transparent(transparency);
+ this->draw_sprite(x,y);
+}
+
 Tileset::Tileset()
 {
  offset=0;
