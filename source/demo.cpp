@@ -44,8 +44,8 @@ int main()
   gamepad.update();
   player.loop();
   if (gamepad.check_press(BUTTON_START)==true) break;
-  if (gamepad.check_press(BUTTON_A)==true) ship.mirror_image(MIRROR_HORIZONTAL);
-  if (gamepad.check_press(BUTTON_B)==true) ship.mirror_image(MIRROR_VERTICAL);
+  if (gamepad.check_press(BUTTON_A)==true) ship.horizontal_mirror();
+  if (gamepad.check_press(BUTTON_B)==true) ship.vertical_mirror();
   if (gamepad.check_press(BUTTON_R)==true) light.turn_off();
   if (gamepad.check_press(BUTTON_L)==true) light.turn_on();
   if (gamepad.check_press(BUTTON_X)==true) light.increase_level();
