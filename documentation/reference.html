@@ -63,7 +63,8 @@
           <li><a href="#mozTocId54966">Chapter 3. Abnormal program termination</a></li>
           <li><a href="#mozTocId338492">Chapter 4. Interaction with operation
               system</a></li>
-          <li><a href="#mozTocId73461">Chapter 5. Input</a></li>
+          <li><a href="#mozTocId374566">Chapter 5. Filesystem</a></li>
+          <li><a href="#mozTocId73461">Chapter 6. Input</a></li>
         </ul>
       </li>
       <li><a href="#mozTocId412631">Part 7. Sound</a>
@@ -957,16 +958,24 @@ Dingux
       – Execute shell command or external program.<br>
       <span style="font-style: italic;">char* System::read_environment(const
         char *variable);</span> – Return value of specific system environment
-      variable.<br>
-      <span style="font-style: italic;">bool System::file_exist(const char
-        *name);</span> – Return true if the file is existed.<br>
-      <span style="font-style: italic;">bool System::delete_file(const char
-        *name);</span> – Delete the target file. Return true if operation was
-      successfully complete.<br>
+      variable.<span style="font-style: italic;"></span><br>
       <span style="font-style: italic;">void System::enable_logging(const char
         *name);</span> – Enable error logging. Error messages will redirect to a
-      log file. </big>
-    <h2><a class="mozTocH2" name="mozTocId73461"></a><big>Chapter 5. Input</big></h2>
+      log file.<br>
+    </big>
+    <h2><a id="mozTocId374566" class="mozTocH2"></a><big>Chapter 5. Filesystem</big></h2>
+    <big><br>
+      Filesystem subsystem let you doing some file operation. <span style="font-style: italic;">Filesystem</span>
+      class provide simple access to this subsystem. Let’s look to public
+      methods.<br>
+      <br>
+      <span style="font-style: italic;">void Filesystem::file_exist(const char
+        *name);</span> – Check the target file for exist.<br>
+      <span style="font-style: italic;">void Filesystem::delete_file(const char
+        *name);</span> – Delete the target file.<br>
+      <span style="font-style: italic;">bool Filesystem::get_status() const;</span>
+      – Return false if last file operation was failed. </big>
+    <h2><a class="mozTocH2" name="mozTocId73461"></a><big>Chapter 6. Input</big></h2>
     <big><br>
       <span style="text-decoration: underline;">A few words about built-in
         game-pad</span><br>
@@ -1589,6 +1598,7 @@ sound
     <big>4.8.4 – Source code was synced with Neon game development kit 5.0.9.</big><br>
     <big>4.8.5 – Source code was synced with Neon game development kit 5.1.</big><br>
     <big>4.8.6 – Source code was synced with Neon game development kit 5.1.1.</big><br>
-    <big>4.8.7 – Source code was synced with Neon game development kit 5.1.2.</big>
+    <big>4.8.7 – Source code was synced with Neon game development kit 5.1.2.</big><br>
+    <big>4.8.8 – Source code was synced with Neon game development kit 5.1.4.</big>
   </body>
 </html>
