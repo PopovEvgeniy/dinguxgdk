@@ -1061,12 +1061,7 @@ void Filesystem::file_exist(const char *name)
 
 void Filesystem::delete_file(const char *name)
 {
- status=false;
- if (remove(name)==0)
- {
-  status=true;
- }
-
+ status=(remove(name)==0);
 }
 
 bool Filesystem::get_status() const
