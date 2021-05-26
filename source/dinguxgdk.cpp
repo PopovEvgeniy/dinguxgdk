@@ -1417,10 +1417,7 @@ Primitive::Primitive()
 
 Primitive::~Primitive()
 {
- color.red=0;
- color.green=0;
- color.blue=0;
- surface=NULL;
+
 }
 
 void Primitive::initialize(Screen *Screen)
@@ -2379,7 +2376,7 @@ Text::Text()
 
 Text::~Text()
 {
- font=NULL;
+
 }
 
 void Text::increase_position()
