@@ -467,7 +467,7 @@ class Primitive
  public:
  Primitive();
  ~Primitive();
- void initialize(Screen *Screen);
+ void initialize(Screen *screen);
  void set_color(const unsigned char red,const unsigned char green,const unsigned char blue);
  void draw_line(const unsigned long int x1,const unsigned long int y1,const unsigned long int x2,const unsigned long int y2);
  void draw_rectangle(const unsigned long int x,const unsigned long int y,const unsigned long int width,const unsigned long int height);
