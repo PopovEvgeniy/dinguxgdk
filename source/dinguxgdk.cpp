@@ -30,7 +30,7 @@ SVGALib homepage: http://www.svgalib.org/
 const int SOUND_CHANNELS=2;
 const unsigned char GAMEPAD_PRESS=1;
 const unsigned char GAMEPAD_RELEASE=0;
-const size_t BUTTON_AMOUNT=14;
+const size_t BUTTON_AMOUNT=16;
 
 namespace OSS_BACKEND
 {
@@ -567,7 +567,13 @@ GAMEPAD_BUTTONS Gamepad::get_button() const
   button=BUTTON_START;
   break;
   case KEY_ESC:
-  button=BUTTON_SELECT;
+  button=BUTTON_MENU;
+  break;
+  case KEY_2:
+  button=BUTTON_C;
+  break;
+  case KEY_1:
+  button=BUTTON_Z;
   break;
   case KEY_POWER:
   button=BUTTON_POWER;
