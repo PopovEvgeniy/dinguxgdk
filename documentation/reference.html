@@ -267,12 +267,15 @@ Dingux
       <span style="font-style: italic;">size_t Frame::get_pixels() const;</span>
       – Return amount of pixels in the buffer.<br>
       <span style="font-style: italic;">void Frame::clear_screen();</span> –
-      Clear the surface. Fill it by black color.<br>
-      <span style="font-style: italic;">void Frame::draw_pixel(const unsigned
-        long int x,const unsigned long int y, const unsigned char red,const
-        unsigned char green, const unsigned char blue);</span> – Draw a pixel to
-      the surface.<br>
-      <span style="font-style: italic;">unsigned long int
+      Clear the surface. Fill it by black color.</big><br>
+    <big> <span style="font-style: italic;">void Frame::draw_pixel(const
+        unsigned long int x,const unsigned long int y, const unsigned char
+        red,const unsigned char green, const unsigned char blue);</span> – Draw
+      a pixel to the surface.</big><br>
+    <big><i>bool Frame::put_pixel(const size_t offset,const unsigned short int
+        red,const unsigned short int green,const unsigned short int blue);</i> –
+      Put a pixel to the surface buffer. Return false if operation was failed.</big><br>
+    <big> <span style="font-style: italic;">unsigned long int
         Frame::get_frame_width() const;</span> – Return the frame width in
       pixels.<br>
       <span style="font-style: italic;">unsigned long int
@@ -1626,7 +1629,8 @@ sound
     <big>4.9 – Source code was synced with Neon game development kit 5.1.7.</big><br>
     <big>4.9.1 – Source code was synced with Neon game development kit 5.1.8.</big><br>
     <big>4.9.2 – Source code was synced with Neon game development kit 5.2.3.</big><br>
-    <big>4.9.3 – Source code was synced with Neon game development kit 5.2.5.<br>
-      4.9.4 – Gopher 2 support was added.</big>
+    <big>4.9.3 – Source code was synced with Neon game development kit 5.2.5.</big><br>
+    <big> 4.9.4 – Gopher 2 support was added.</big><br>
+    <big>4.9.5 – Source code was synced with Neon game development kit 5.2.6.</big>
   </body>
 </html>

@@ -131,15 +131,6 @@ unsigned short int *Frame::create_buffer(const char *error)
  return target;
 }
 
-void Frame::put_pixel(const size_t offset,const unsigned short int red,const unsigned short int green,const unsigned short int blue)
-{
- if (offset<pixels)
- {
-  buffer[offset]=(blue >> 3) +((green >> 2) << 5)+((red >> 3) << 11); // This code bases on code from SVGALib
- }
-
-}
-
 size_t Frame::get_offset(const unsigned long int x,const unsigned long int y,const unsigned long int target_width)
 {
  return static_cast<size_t>(x)+static_cast<size_t>(y)*static_cast<size_t>(target_width);
@@ -185,6 +176,18 @@ unsigned long int Frame::get_frame_width() const
 unsigned long int Frame::get_frame_height() const
 {
  return frame_height;
+}
+
+bool Frame::put_pixel(const size_t offset,const unsigned short int red,const unsigned short int green,const unsigned short int blue)
+{
+ bool result;
+ result=false;
+ if (offset<pixels)
+ {
+  buffer[offset]=(blue >> 3) +((green >> 2) << 5)+((red >> 3) << 11); // This code bases on code from SVGALib
+  result=true;
+ }
+ return result;
 }
 
 void Frame::draw_pixel(const unsigned long int x,const unsigned long int y,const unsigned char red,const unsigned char green,const unsigned char blue)
