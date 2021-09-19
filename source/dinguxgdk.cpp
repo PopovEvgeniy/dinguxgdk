@@ -272,16 +272,22 @@ void Plane::create_plane(const unsigned long int width,const unsigned long int h
 
 void Plane::transfer()
 {
- unsigned long int x,y,width;
- size_t index,position;
+ unsigned long int x,y,width,steps;
+ size_t index,location,position;
  width=this->get_frame_width();
- for (x=0;x<target_width;++x)
+ x=0;
+ y=0;
+ steps=target_width*target_height;
+ for (index=0;index<steps;++index)
  {
-  for (y=0;y<target_height;++y)
+  location=this->get_offset(x,y,target_width);
+  position=this->get_offset((x_ratio*static_cast<float>(x)),(y_ratio*static_cast<float>(y)),width);
+  target[location]=plane[position];
+  ++x;
+  if (x==target_width)
   {
-   index=this->get_offset(x,y,target_width);
-   position=this->get_offset((x_ratio*static_cast<float>(x)),(y_ratio*static_cast<float>(y)),width);
-   target[index]=plane[position];
+   x=0;
+   ++y;
   }
 
  }
@@ -304,7 +310,7 @@ Timer::~Timer()
 
 }
 
-void Timer::set_timer(const unsigned long int seconds)
+void Timer::set_timer(const double seconds)
 {
  interval=seconds;
  start=time(NULL);
@@ -324,7 +330,7 @@ bool Timer::check_timer()
 
 FPS::FPS()
 {
- timer.set_timer(1);
+ start=time(NULL);
  current=0;
  fps=0;
 }
@@ -337,10 +343,11 @@ FPS::~FPS()
 void FPS::update_counter()
 {
  ++current;
- if (timer.check_timer()==true)
+ if (difftime(time(NULL),start)>=1)
  {
   fps=current;
   current=0;
+  start=time(NULL);
  }
 
 }
@@ -618,14 +625,8 @@ void Gamepad::update()
 
 bool Gamepad::check_hold(const GAMEPAD_BUTTONS button)
 {
- bool result;
- result=false;
- if (current[button]!=GAMEPAD_RELEASE)
- {
-  result=true;
- }
  preversion[button]=current[button];
- return result;
+ return current[button]!=GAMEPAD_RELEASE;
 }
 
 bool Gamepad::check_press(const GAMEPAD_BUTTONS button)
@@ -1044,7 +1045,7 @@ void System::enable_logging(const char *name)
 
 Filesystem::Filesystem()
 {
- status=false;
+
 }
 
 Filesystem::~Filesystem()
@@ -1052,27 +1053,23 @@ Filesystem::~Filesystem()
 
 }
 
-void Filesystem::file_exist(const char *name)
+bool Filesystem::file_exist(const char *name)
 {
  FILE *target;
- status=false;
+ bool exist;
+ exist=false;
  target=fopen(name,"rb");
  if (target!=NULL)
  {
-  status=true;
+  exist=true;
   fclose(target);
  }
-
+ return exist;
 }
 
-void Filesystem::delete_file(const char *name)
+bool Filesystem::delete_file(const char *name)
 {
- status=(remove(name)==0);
-}
-
-bool Filesystem::get_status() const
-{
- return status;
+ return remove(name)==0;
 }
 
 Binary_File::Binary_File()
@@ -1749,22 +1746,9 @@ void Surface::clear_buffer()
 
 }
 
-void Surface::load_from_buffer(Image &buffer)
-{
- width=buffer.get_width();
- height=buffer.get_height();
- this->clear_buffer();
- image=this->create_buffer(width,height);
- memmove(image,buffer.get_data(),buffer.get_length());
-}
-
-void Surface::set_width(const unsigned long int image_width)
+void Surface::set_size(const unsigned long int image_width,const unsigned long int image_height)
 {
  width=image_width;
-}
-
-void Surface::set_height(const unsigned long int image_height)
-{
  height=image_height;
 }
 
@@ -1836,6 +1820,15 @@ IMG_Pixel *Surface::get_image()
  return image;
 }
 
+void Surface::load_image(Image &buffer)
+{
+ width=buffer.get_width();
+ height=buffer.get_height();
+ this->clear_buffer();
+ image=this->create_buffer(width,height);
+ memmove(image,buffer.get_data(),buffer.get_length());
+}
+
 unsigned long int Surface::get_image_width() const
 {
  return width;
@@ -1890,19 +1883,25 @@ void Surface::mirror_image(const MIRROR_TYPE kind)
 void Surface::resize_image(const unsigned long int new_width,const unsigned long int new_height)
 {
  float x_ratio,y_ratio;
- unsigned long int x,y;
- size_t index,position;
+ unsigned long int x,y,steps;
+ size_t index,location,position;
  IMG_Pixel *scaled_image;
+ x=0;
+ y=0;
+ steps=new_width*new_height;
  scaled_image=this->create_buffer(new_width,new_height);
  x_ratio=static_cast<float>(width)/static_cast<float>(new_width);
  y_ratio=static_cast<float>(height)/static_cast<float>(new_height);
- for (x=0;x<new_width;++x)
+ for (index=0;index<steps;++index)
  {
-  for (y=0;y<new_height;++y)
+  location=this->get_offset(0,x,y,new_width);
+  position=this->get_offset(0,(x_ratio*static_cast<float>(x)),(y_ratio*static_cast<float>(y)),width);
+  scaled_image[location]=image[position];
+  ++x;
+  if (x==new_width)
   {
-   index=this->get_offset(0,x,y,new_width);
-   position=this->get_offset(0,(x_ratio*static_cast<float>(x)),(y_ratio*static_cast<float>(y)),width);
-   scaled_image[index]=image[position];
+   x=0;
+   ++y;
   }
 
  }
@@ -1922,19 +1921,19 @@ void Surface::vertical_mirror()
  this->mirror_image(MIRROR_VERTICAL);
 }
 
-Canvas::Canvas()
+Animation::Animation()
 {
  start=0;
  frame=1;
  frames=1;
 }
 
-Canvas::~Canvas()
+Animation::~Animation()
 {
 
 }
 
-void Canvas::set_frame(const unsigned long int target)
+void Animation::set_frame(const unsigned long int target)
 {
  if (target>0)
  {
@@ -1943,7 +1942,7 @@ void Canvas::set_frame(const unsigned long int target)
 
 }
 
-void Canvas::increase_frame()
+void Animation::increase_frame()
 {
  ++frame;
  if (frame>frames)
@@ -1953,24 +1952,19 @@ void Canvas::increase_frame()
 
 }
 
-void Canvas::set_frames(const unsigned long int amount)
+void Animation::set_frames(const unsigned long int amount)
 {
  if (amount>1) frames=amount;
 }
 
-unsigned long int Canvas::get_frames() const
+unsigned long int Animation::get_frames() const
 {
  return frames;
 }
 
-unsigned long int Canvas::get_frame() const
+unsigned long int Animation::get_frame() const
 {
  return frame;
-}
-
-void Canvas::load_image(Image &buffer)
-{
- this->load_from_buffer(buffer);
 }
 
 Background::Background()
@@ -2307,8 +2301,7 @@ void Sprite::set_position(const unsigned long int x,const unsigned long int y)
 
 void Sprite::clone(Sprite &target)
 {
- this->set_width(target.get_image_width());
- this->set_height(target.get_image_height());
+ this->set_size(target.get_image_width(),target.get_image_height());
  this->set_frames(target.get_frames());
  this->set_kind(target.get_kind());
  this->set_transparent(target.get_transparent());
@@ -2419,7 +2412,7 @@ void Tileset::load_tileset(Image &buffer,const unsigned long int row_amount,cons
 {
  if ((row_amount>0)&&(column_amount>0))
  {
-  this->load_from_buffer(buffer);
+  this->load_image(buffer);
   rows=row_amount;
   columns=column_amount;
   tile_width=this->get_image_width()/rows;
@@ -2481,7 +2474,7 @@ void Text::draw_text(const char *text)
   this->draw_character(text[index]);
   this->increase_position();
  }
- this->restore_position();
+
 }
 
 void Text::draw_character(const unsigned long int x,const unsigned long int y,const char target)
@@ -2502,10 +2495,7 @@ Collision::Collision()
  first.y=0;
  first.width=0;
  first.height=0;
- second.x=0;
- second.y=0;
- second.width=0;
- second.height=0;
+ second=first;
 }
 
 Collision::~Collision()
